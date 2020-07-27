@@ -156,8 +156,6 @@ for (var i=0; i<shenfen.querySelectorAll('ul li').length; i++) {
   }
 }
 
-var shangyiye = document.querySelector('.shangyiye')
-
-shangyiye.onclick = function () {
+document.querySelector('.shangyiye').onclick = function () {
   window.history.go(-1); 
 }
