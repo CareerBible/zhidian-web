@@ -296,7 +296,8 @@ table.zhiwei th span svg:last-child {
 
 table.zhiwei td {
   height: 70px;
-  line-height: 70px;
+  padding: 10px 0;
+  line-height: 28px;
   font-size: 18px;
   position: relative;
 }

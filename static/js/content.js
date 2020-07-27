@@ -250,3 +250,23 @@ for (var i=0; i<shenfen.querySelectorAll('ul li').length; i++) {
 document.querySelector('.shangyiye').onclick = function () {
   window.history.go(-1); 
 }
+
+
+var tabTbody = document.querySelector('table tbody')
+
+var xhr = new XMLHttpRequest()
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code=080901')
+  xhr.send()
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      console.log(data)
+      if(data.code === 0) {
+        for(var i=0; i<data.data.length; i++){
+          tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
+        }
+      } else {
+        console.debug('fetchSearchHintList: connecting')
+      }
+    }
+  }
