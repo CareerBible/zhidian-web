@@ -1,4 +1,19 @@
 const HTTP_QZ= 'https://zhidian.dookbook.info'
+var discipline_code = getQueryVariable('code')
+
+/**
+  * 获取URL查询参数
+  * @param {String} param URL parameter name
+  */
+ function getQueryVariable (param) {
+  var query = window.location.search.substring(1)
+  var vars = query.split('&')
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=')
+    if (pair[0] === param) { return pair[1] }
+  }
+  return false
+}
 
 //切换
 var tab = document.querySelectorAll('.tab li')
@@ -255,13 +270,12 @@ document.querySelector('.shangyiye').onclick = function () {
 
 
 var tabTbody = document.querySelector('table tbody')
-getPositionList('080901')
+getPositionList()
 
 /**
  * 获取职位列表
- * @param {String} discipline_code 
  */
-function getPositionList(discipline_code) {
+function getPositionList() {
   var xhr = new XMLHttpRequest()
   xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code)
   xhr.send()
