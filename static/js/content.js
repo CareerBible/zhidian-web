@@ -349,19 +349,3 @@ function getSchoolList() {
 }
 
 getSchoolList()
-
-/* <li>
-            <em>1</em>
-            <section class="fl info">
-              <span>北京大学</span>
-              <p><span>985</span><span>211</span><span>双一流</span></p>
-              <section class="fenshu">
-                <p>院校代码：1101</p>
-                <p><span>2019年录取分数：690</span><span class="province">湖南</span></p>
-              </section>
-            </section>
-            <section>
-              <p>A+</p>
-              <p>专业评估</p>
-            </section>
-          </li>  */
