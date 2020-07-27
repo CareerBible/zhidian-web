@@ -5,6 +5,7 @@ var filter_city_rank = ''
 var filter_years = ''
 var filter_industry = ''
 var filter_salary = ''
+var load_school_rank = false
 
 /**
   * 获取URL查询参数
@@ -27,14 +28,17 @@ for (var i = 0; i < tab.length; i++){
   tab[i].index = i;
   tab[i].onclick = function () {
     for (var j = 0; j< tab.length; j++) {
-      tab[j].className=''
+      tab[j].classList.remove('active')
     }
     for (var j=0; j<ranking.length; j++) { 
       ranking[j].style.display='none'
     }
     
-    tab[this.index].className='active'
+    tab[this.index].classList.add('active')
     ranking[this.index].style.display='block'
+    if(tab[this.index].classList.contains('tab_school') && !load_school_rank){
+      getSchoolList()
+    }
   }
 }
 
@@ -333,8 +337,9 @@ function getPositionList() {
  var school = document.querySelector('.school')
 
 function getSchoolList() {
+  school.innerHTML = ''
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/edu/university/rank/?discipline_code'+discipline_code)
+  xhr.open('GET', HTTP_QZ + '/api/edu/university/rank/?discipline_code='+discipline_code)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -358,25 +363,8 @@ function getSchoolList() {
         alert(data.errmsg)
       }
     }else {
-      console.debug('获取职位列表: 正在连接中')
+      console.debug('获取高校列表: 正在连接中')
     }
   }
+  load_school_rank = true
 }
-
-getSchoolList()
-
-/* <li>
-            <em>1</em>
-            <section class="fl info">
-              <span>北京大学</span>
-              <p><span>985</span><span>211</span><span>双一流</span></p>
-              <section class="fenshu">
-                <p>院校代码：1101</p>
-                <p><span>2019年录取分数：690</span><span class="province">湖南</span></p>
-              </section>
-            </section>
-            <section>
-              <p>A+</p>
-              <p>专业评估</p>
-            </section>
-          </li>  */
