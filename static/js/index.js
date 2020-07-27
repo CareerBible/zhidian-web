@@ -56,7 +56,7 @@ text.oninput = debounce(function(e) {
     xiala.style.display = "block"
   }
   listText(this.value, xiala)
-}, 300)
+}, 240)
 
 text.onclick = function (event) {
   event.stopPropagation()
