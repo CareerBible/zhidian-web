@@ -132,20 +132,6 @@ backTop.addEventListener("click", function(){
   }, 16);
 })
 
-// 学校信息
-var school = document.querySelectorAll('.school li')
-for(var i=0; i<school.length; i++){
-  school[i].onclick = function () {
-    if (this.querySelector('.info section') != null) {
-      if(this.querySelector('.info section').style.display != 'block'){
-        this.querySelector('.info section').style.display = 'block'
-      } else {
-        this.querySelector('.info section').style.display = 'none'
-      }
-    }
-  }
-}
-
 var fenshu =  document.querySelectorAll('.fenshu')
 
 for (var i=0; i<fenshu.length; i++){
@@ -324,7 +310,6 @@ function getPositionList() {
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
-      console.log(data)
       if(data.code === 0) {
         if(filter_page === 0){
           tabTbody.innerHTML = ''
@@ -340,3 +325,58 @@ function getPositionList() {
     }
   }
 }
+
+/**
+ * 获取学校列表
+ */
+
+ var school = document.querySelector('.school')
+
+function getSchoolList() {
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', HTTP_QZ + '/api/edu/university/rank/?discipline_code'+discipline_code)
+  xhr.send()
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      if(data.code === 0) {
+        for(var i=0; i<data.data.length; i++){
+          school.innerHTML += '<li><em>'+(i+1)+'</em><section class="fl info"><span>'+data.data[i].name+'</span><p><span name='+data.data[i].is_985+'>985</span><span name='+data.data[i].is_211+'>211</span><span name='+data.data[i].is_dual+'>双一流</span></p><section class="fenshu"><p>院校代码：'+data.data[i].code+'</p><p><span>2019年录取分数：690</span><span class="province">湖南</span></p></section></section><section><p>'+data.data[i].rank+'</p><p>专业评估</p></section></li>'
+        }
+        for(var i=0; i<school.querySelectorAll("li").length; i++){
+          school.querySelectorAll("li")[i].addEventListener('click', function () {
+            if (this.querySelector('.info section') != null) {
+              if(this.querySelector('.info section').style.display != 'block'){
+                this.querySelector('.info section').style.display = 'block'
+              } else {
+                this.querySelector('.info section').style.display = 'none'
+              }
+            }
+          })
+        }
+      } else {
+        alert(data.errmsg)
+      }
+    }else {
+      console.debug('获取职位列表: 正在连接中')
+    }
+  }
+}
+
+getSchoolList()
+
+/* <li>
+            <em>1</em>
+            <section class="fl info">
+              <span>北京大学</span>
+              <p><span>985</span><span>211</span><span>双一流</span></p>
+              <section class="fenshu">
+                <p>院校代码：1101</p>
+                <p><span>2019年录取分数：690</span><span class="province">湖南</span></p>
+              </section>
+            </section>
+            <section>
+              <p>A+</p>
+              <p>专业评估</p>
+            </section>
+          </li>  */
