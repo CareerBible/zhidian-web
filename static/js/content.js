@@ -197,6 +197,10 @@ difference.onclick = function (event) {
   }
 }
 
+document.body.onclick = function () {
+  cXial.style.display = "none"
+}
+
 
 var qiehua = document.querySelectorAll('.qiehua li')
 var record = document.querySelectorAll('.record');
