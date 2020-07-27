@@ -180,14 +180,14 @@ function throttle(func, threshhold) {
 
 var difference = document.querySelector('section input[type="text"]')
 var cXial = document.querySelector('.c-xial')
-difference.oninput = function () {
+difference.oninput = debounce(function(e) {
   if(this.value == ''){
     cXial.style.display = "none"
   } else {
     cXial.style.display = "block"
   }
   listText(this.value, cXial)
-}
+}, 240)
 
 difference.onclick = function (event) {
   event.stopPropagation()
