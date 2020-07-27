@@ -22,7 +22,7 @@ text.oninput = function (event) {
         } else {
           xiala.innerHTML = ''
           for(var i=0;i<data.hints.length;i++){
-            xiala.innerHTML += '<ul><li><a href="'+data.hints[i].name+'">'+data.hints[i].name+'</a></li></ul>'
+            xiala.innerHTML += '<ul><li><a href="https://zhidian.dookbook.info/report/content/?code='+data.hints[i].code+'">'+data.hints[i].name+'</a></li></ul>'
           }
         }
       } else {
