@@ -277,7 +277,7 @@ function getPositionList(discipline_code) {
         alert(data.errmsg)
       }
     }else {
-      console.debug('fetchSearchHintList: connecting')
+      console.debug('获取职位列表: 正在连接中')
     }
   }
 }
