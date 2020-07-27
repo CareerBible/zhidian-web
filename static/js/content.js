@@ -255,9 +255,11 @@ document.querySelector('.shangyiye').onclick = function () {
 
 
 var tabTbody = document.querySelector('table tbody')
+getPositionList('080901')
 
-var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code=080901')
+function getPositionList(discipline_code) {
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -272,3 +274,4 @@ var xhr = new XMLHttpRequest()
       }
     }
   }
+}
