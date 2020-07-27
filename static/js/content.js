@@ -274,8 +274,10 @@ function getPositionList(discipline_code) {
           tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
         }
       } else {
-        console.debug('fetchSearchHintList: connecting')
+        alert(data.errmsg)
       }
+    }else {
+      console.debug('fetchSearchHintList: connecting')
     }
   }
 }
