@@ -436,6 +436,14 @@ select:nth-child(2) {
   border-radius: 4px;
 }
 
+.school li .info > p > span[name='true'] {
+  display: block;
+}
+
+.school li .info > p > span[name='false'] {
+  display: none;
+}
+
 .school li .info section {
   float: left;
   text-align: left;
