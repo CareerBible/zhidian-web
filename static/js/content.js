@@ -117,8 +117,10 @@ function listText(value, box){
           }
         }
       } else {
-        console.debug('fetchSearchHintList: connecting')
+        alert(data.errmsg)
       }
+    } else {
+      console.debug('fetchSearchHintList: connecting')
     }
   }
 }
