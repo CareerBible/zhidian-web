@@ -257,6 +257,10 @@ document.querySelector('.shangyiye').onclick = function () {
 var tabTbody = document.querySelector('table tbody')
 getPositionList('080901')
 
+/**
+ * 获取职位列表
+ * @param {String} discipline_code 
+ */
 function getPositionList(discipline_code) {
   var xhr = new XMLHttpRequest()
   xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code)
