@@ -19,9 +19,12 @@ function listText(value, box){
             box.innerHTML += '<ul><li><a href="https://zhidian.dookbook.info/report/content/?code='+data.hints[i].code+'">'+data.hints[i].name+'</a></li></ul>'
           }
         }
+        
       } else {
-        console.debug('fetchSearchHintList: connecting')
+        alert(data.errmsg)
       }
+    } else {
+      console.debug('fetchSearchHintList: connecting')
     }
   }
 }
