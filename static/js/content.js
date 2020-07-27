@@ -1,5 +1,9 @@
 const HTTP_QZ= 'https://zhidian.dookbook.info'
 var discipline_code = getQueryVariable('code')
+var filter_page = 0
+var filter_city_rank = ''
+var filter_years = ''
+var filter_industry = ''
 
 /**
   * 获取URL查询参数
@@ -61,10 +65,31 @@ for(var i=0; i<filter.length; i++){
   for(var j=0; j<spanbtn.length; j++){
     spanbtn[j].onclick = function () {
       var current = this.parentElement.children
-      for(var k=0;k<current.length;k++){
-        current[k].className = ''
+      for(var k=0; k<current.length; k++){
+        current[k].classList.remove('active')
       }
-      this.className='active'
+      this.classList.add('active')
+      if(this.classList.contains('filter_city_rank')){
+        if(this.textContent === '不限'){
+          filter_city_rank = ''
+        } else {
+          filter_city_rank = this.textContent
+        }
+      } else if(this.classList.contains('filter_years')){
+        if(this.textContent === '不限'){
+          filter_years = ''
+        } else {
+          filter_years = this.textContent
+        }
+      } else if(this.classList.contains('filter_industry')){
+        if(this.textContent === '不限'){
+          filter_industry = ''
+        } else {
+          filter_industry = this.textContent
+        }
+      }
+
+      getPositionList()
     }
   }
 }
@@ -258,17 +283,22 @@ document.querySelector('.shangyiye').onclick = function () {
 var tabTbody = document.querySelector('table tbody')
 getPositionList()
 
+
+
 /**
  * 获取职位列表
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
+        if(filter_page === 0){
+          tabTbody.innerHTML = ''
+        }
         for(var i=0; i<data.data.length; i++){
           tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
         }
