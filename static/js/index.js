@@ -3,16 +3,6 @@ const HTTP_QZ= 'https://zhidian.dookbook.info'
 var text = document.querySelector('.text')
 var xiala = document.querySelector('.xiala')
 
-text.oninput = function (event) {
-  event.stopPropagation()
-  if(this.value == ''){
-    xiala.style.display = "none"
-  } else {
-    xiala.style.display = "block"
-  }
-  listText(this.value, xiala)
-}
-
 function listText(value, box){
   var xhr = new XMLHttpRequest()
   xhr.open('GET', HTTP_QZ + '/api/edu/university/disciplines/?q=' + value)
@@ -36,6 +26,38 @@ function listText(value, box){
   }
 }
 
+/**
+ * 函数防抖，debounce
+ * 基本思路就是把多个信号合并为一个信号
+ * 
+ * @param {*} func 
+ * @param {*} delay 
+ */
+function debounce(func, delay) {
+  var timer = null
+  return function(e) {
+      console.log("clear", timer, e.target.value)
+      var context = this, args = arguments
+      clearTimeout(timer)
+
+      console.log("new event", timer, e.target.value)
+      timer = setTimeout(function(){
+        func.apply(context, args)
+      }, delay)
+  }
+}
+
+text.oninput = debounce(function(e) {
+  console.log('input starts ...')
+  e.stopPropagation()
+  if(this.value == ''){
+    xiala.style.display = "none"
+  } else {
+    xiala.style.display = "block"
+  }
+  listText(this.value, xiala)
+}, 300)
+
 text.onclick = function (event) {
   event.stopPropagation()
   if(this.value == '') {
@@ -58,5 +80,3 @@ for (var i=0; i<xiala.querySelectorAll('p').length; i++){
     xiala.style.display = "none"
   }
 }
-
-
