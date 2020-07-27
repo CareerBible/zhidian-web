@@ -10,19 +10,23 @@ text.oninput = function (event) {
   } else {
     xiala.style.display = "block"
   }
+  listText(this.value, xiala)
+}
+
+function listText(value, box){
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/edu/university/disciplines/?q=' + this.value)
+  xhr.open('GET', HTTP_QZ + '/api/edu/university/disciplines/?q=' + value)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
         if(data.hints == null || data.hints.length === 0){
-          xiala.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
+          box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
         } else {
-          xiala.innerHTML = ''
+          box.innerHTML = ''
           for(var i=0;i<data.hints.length;i++){
-            xiala.innerHTML += '<ul><li><a href="https://zhidian.dookbook.info/report/content/?code='+data.hints[i].code+'">'+data.hints[i].name+'</a></li></ul>'
+            box.innerHTML += '<ul><li><a href="https://zhidian.dookbook.info/report/content/?code='+data.hints[i].code+'">'+data.hints[i].name+'</a></li></ul>'
           }
         }
       } else {
@@ -38,27 +42,7 @@ text.onclick = function (event) {
     xiala.style.display = "none"
   } else {
     xiala.style.display = "block"
-    console.log(this.value)
-    var xhr = new XMLHttpRequest()
-    xhr.open('GET', HTTP_QZ + '/api/edu/university/disciplines/?q=' + this.value)
-    xhr.send()
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        var data = JSON.parse(xhr.responseText)
-        if(data.code === 0) {
-          if(data.hints == null || data.hints.length === 0){
-            xiala.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
-          } else {
-            xiala.innerHTML = ''
-            for(var i=0;i<data.hints.length;i++){
-              xiala.innerHTML += '<ul><li><a href="https://zhidian.dookbook.info/report/content/?code='+data.hints[i].code+'">'+data.hints[i].name+'</a></li></ul>'
-            }
-          }
-        } else {
-          console.debug('fetchSearchHintList: connecting')
-        }
-      }
-    }
+    listText(this.value, xiala)
   }
 }
 
