@@ -2,6 +2,8 @@ const HTTP_QZ= 'https://zhidian.dookbook.info'
 var discipline_code = getQueryVariable('code')
 var filter_page = 0
 var filter_city_rank = ''
+var filter_years = ''
+var filter_industry = ''
 
 /**
   * 获取URL查询参数
@@ -73,8 +75,19 @@ for(var i=0; i<filter.length; i++){
         } else {
           filter_city_rank = this.textContent
         }
+      } else if(this.classList.contains('filter_years')){
+        if(this.textContent === '不限'){
+          filter_years = ''
+        } else {
+          filter_years = this.textContent
+        }
+      } else if(this.classList.contains('filter_industry')){
+        if(this.textContent === '不限'){
+          filter_industry = ''
+        } else {
+          filter_industry = this.textContent
+        }
       }
-      console.log(filter_city_rank)
 
       getPositionList()
     }
@@ -291,7 +304,7 @@ getPositionList()
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
