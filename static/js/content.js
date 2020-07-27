@@ -4,6 +4,7 @@ var filter_page = 0
 var filter_city_rank = ''
 var filter_years = ''
 var filter_industry = ''
+var filter_salary = ''
 
 /**
   * 获取URL查询参数
@@ -86,6 +87,20 @@ for(var i=0; i<filter.length; i++){
           filter_industry = ''
         } else {
           filter_industry = this.textContent
+        }
+      }else if(this.classList.contains('filter_salary')){
+        if(this.textContent === '不限'){
+          filter_salary = ''
+        } else if (this.textContent === '2k-5k') {
+          filter_salary = '2000-5000'
+        }else if (this.textContent === '5k-8k') {
+          filter_salary = '5000-8000'
+        }else if (this.textContent === '8k-12k') {
+          filter_salary = '8000-12000'
+        }else if (this.textContent === '12k-15k') {
+          filter_salary = '12000-15000'
+        }else if (this.textContent === '15k以上') {
+          filter_salary = '5000-9999'
         }
       }
 
@@ -290,7 +305,7 @@ getPositionList()
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
