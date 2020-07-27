@@ -89,13 +89,6 @@ h3 {
   box-shadow: 4px 2px 6px rgba(24, 54, 106, 0.5);
 }
 
-.c header section span {
-  font-size: 14px;
-  position: absolute;
-  line-height: 64px;
-  right: 10px;
-}
-
 .c header section input[type='text'] {
   border: none;
   text-align: left;
@@ -138,7 +131,7 @@ h3 {
 .c .shangyiye {
   width: 80px;
   vertical-align: middle;
-  margin-top: -5px;
+  margin: -5px 0 0 -18px;
 }
 
 .tab {
@@ -219,61 +212,6 @@ h3 {
   background: #18366a;
   color: #fff;
   padding: 0 6px;
-}
-
-.city {
-  padding-bottom: 20px;
-  display: inline-block;
-}
-
-.city li {
-  line-height: 42px;
-  float: left;
-}
-
-.city > li > span {
-  float: left;
-  color: #333;
-  font-size: 22px;
-  margin: 0;
-  font-weight: bold;
-}
-
-.city li ul {
-  float: left;
-  padding: 0;
-}
-
-.city li ul li {
-  float: left;
-  font-size: 20px;
-  padding: 0 6px;
-  color: #434343;
-  margin-left: 15px;
-  cursor: pointer;
-}
-
-.city li ul li.active {
-  color: #18366a;
-  font-weight: bold;
-}
-
-.chengshi {
-  width: 100%;
-  float: left;
-}
-
-.chengshi span {
-  font-weight: normal;
-  font-size: 20px;
-  padding: 5px 6px;
-  margin-right: 15px;
-  color: #434343;
-}
-
-.chengshi span.active {
-  background: #18366a;
-  color: #fff;
 }
 
 table.zhiwei {
