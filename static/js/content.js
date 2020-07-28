@@ -7,6 +7,7 @@ var filter_industry = ''
 var filter_salary = ''
 var load_school_rank = false
 var has_next_page = false
+var filter_order = ''
 
 /**
   * 获取URL查询参数
@@ -113,15 +114,6 @@ for(var i=0; i<filter.length; i++){
       has_next_page = false
       getPositionList()
     }
-  }
-}
-
-var fenshu =  document.querySelectorAll('.fenshu')
-
-for (var i=0; i<fenshu.length; i++){
-  fenshu[i].onclick = function (event) {
-    event.stopPropagation()
-
   }
 }
 
@@ -285,7 +277,7 @@ getPositionList()
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary+'&order='+filter_order)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
