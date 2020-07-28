@@ -116,29 +116,6 @@ for(var i=0; i<filter.length; i++){
   }
 }
 
-// 回到顶部
-var backTop = document.querySelector(".top")
-window.onscroll = function (){
-  var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
-  if(scrollTop > 600){
-    backTop.style.display = "block"
-  } else {
-    backTop.style.display = "none"
-  }
-}
-
-var  time = null;
-backTop.addEventListener("click", function(){
-  time = setInterval(function(){
-    var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
-    if(scrollTop === 0){
-      clearInterval(time);
-    }
-    document.documentElement.scrollTop = scrollTop - 100
-    document.body.scrollTop = scrollTop - 100
-  }, 16);
-})
-
 var fenshu =  document.querySelectorAll('.fenshu')
 
 for (var i=0; i<fenshu.length; i++){
@@ -357,7 +334,23 @@ function getSchoolList() {
   load_school_rank = true
 }
 
+// 回到顶部
+var backTop = document.querySelector(".top")
+var  time = null;
+
+backTop.addEventListener("click", function(){
+  time = setInterval(function(){
+    var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
+    if(scrollTop === 0){
+      clearInterval(time);
+    }
+    document.documentElement.scrollTop = scrollTop - 100
+    document.body.scrollTop = scrollTop - 100
+  }, 16);
+})
+
 window.onscroll=function(){
+  var scrollTop = document.documentElement.scrollTop ? document.documentElement.scrollTop : document.body.scrollTop;
   var a = document.documentElement.scrollTop==0? document.body.clientHeight : document.documentElement.clientHeight;
   var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
   var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight
@@ -371,6 +364,11 @@ window.onscroll=function(){
     } else {
       document.querySelector('.load').innerHTML = '—— 不止诗与远方 ——'
     }
+  }
+  if(scrollTop > 600){
+    backTop.style.display = "block"
+  } else {
+    backTop.style.display = "none"
   }
 }
 
