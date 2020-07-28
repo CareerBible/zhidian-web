@@ -284,6 +284,7 @@ function getPositionList() {
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
+      showLoading(false)
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
         if(filter_page === 0){
@@ -297,6 +298,7 @@ function getPositionList() {
       }
     }else {
       console.debug('获取职位列表: 正在连接中')
+      showLoading(true)
     }
   }
 }
@@ -314,6 +316,7 @@ function getSchoolList() {
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
+      showLoading(false)
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
         for(var i=0; i<data.data.length; i++){
@@ -335,6 +338,7 @@ function getSchoolList() {
       }
     }else {
       console.debug('获取高校列表: 正在连接中')
+      showLoading(true)
     }
   }
   load_school_rank = true
@@ -358,6 +362,3 @@ function showLoading(show){
     document.querySelector('.loading').style.display = 'block'
   }
 }
-
-var show = false
-showLoading(show)
