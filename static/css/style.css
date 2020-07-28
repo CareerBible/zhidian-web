@@ -243,7 +243,7 @@ table.zhiwei {
   border: 3px solid #18366a;
   border-radius: 10px;
   text-align: center;
-  margin-top: 40px;
+  margin: 40px 0;
 }
 
 table.zhiwei tr {
