@@ -7,7 +7,8 @@ var filter_industry = ''
 var filter_salary = ''
 var load_school_rank = false
 var has_next_page = false
-var filter_order = ''
+var order_by = 'required'
+var reverse = '1'
 
 /**
   * 获取URL查询参数
@@ -277,7 +278,7 @@ getPositionList()
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary+'&order='+filter_order)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary+'&order='+order_by+'&reverse='+reverse)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -389,10 +390,28 @@ window.onscroll=function(){
   }
 }
 
+/* 加载中显示加载浮窗 */
 function showLoading(show){
   if(show){
     document.querySelector('.loading').style.display = 'block'
   } else {
     document.querySelector('.loading').style.display = 'none'
   }
+}
+
+/* 点击切换排序 */
+function swapReverse(){
+  if(reverse === '1'){
+    reverse = '0'
+  }else{
+    reverse = '1'
+  }
+}
+document.querySelector('#order_by_required').onclick = function() {
+  order_by = 'required'
+  swapReverse()
+}
+document.querySelector('#order_by_salary').onclick = function() {
+  order_by = 'salary'
+  swapReverse()
 }
