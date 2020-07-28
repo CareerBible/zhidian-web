@@ -303,12 +303,12 @@ table.zhiwei td {
 }
 
 table.zhiwei td:nth-child(1) {
-  width: 150px;
+  width: 130px;
   padding-left: 10px;
 }
 
 table.zhiwei td:nth-child(2) {
-  width: 80px;
+  width: 100px;
 }
 
 table.zhiwei td:nth-child(3) {
@@ -1112,6 +1112,47 @@ nav ul li ul li ul li:last-child {
 .loading svg {
   width: 36px;
   animation: load 2s infinite;
+}
+
+.no-data {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.no-data img {
+  width: 100%;
+  margin-top: -30px;
+}
+
+.no-data p {
+  font-size: 28px;
+  color: #888;
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.school .zanwu {
+  width: 100%;
+  border-bottom: none;
+  text-align: center;
+  font-size: 28px;
+  color: #888;
+  font-weight: normal;
+}
+
+.school .zanwu p {
+  width: 100%;
+  float: left;
+}
+
+.school .zanwu img {
+  margin-top: -50px;
+  width: 100%;
+  height: auto;
+  overflow: auto;
 }
 
 .show {

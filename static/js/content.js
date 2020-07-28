@@ -294,8 +294,12 @@ function getPositionList() {
           tabTbody.innerHTML = ''
         }
         has_next_page = data.has_next_page
-        for(var i=0; i<data.data.length; i++){
-          tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
+        if(data.data.length === 0 && data.page === 0) {
+          tabTbody.innerHTML = '<tr><td colspan="4"><div class="no-data"><img src="/static/img/no-data.jpg" alt="暂无数据"><p>暂无职位信息</p></div></td></tr>'
+        } else {
+          for(var i=0; i<data.data.length; i++){
+            tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
+          }
         }
       } else {
         alert(data.errmsg)
@@ -323,8 +327,13 @@ function getSchoolList() {
       showLoading(false)
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
-        for(var i=0; i<data.data.length; i++){
-          school.innerHTML += '<li><em>'+(i+1)+'</em><section class="fl info"><span>'+data.data[i].name+'</span><p><span name='+data.data[i].is_985+'>985</span><span name='+data.data[i].is_211+'>211</span><span name='+data.data[i].is_dual+'>双一流</span></p><section class="fenshu"><p>院校代码：'+data.data[i].code+'</p></section></section><section><p>'+data.data[i].rank+'</p><p>专业评估</p></section></li>'
+        if(data.data.length === 0) {
+          school.innerHTML = '<li class="zanwu"><div class="no-data"><img src="/static/img/no-data.jpg"><p>教育部暂无此专业评估报告</p></div></li>'
+          document.querySelector('.load').style.display = 'none'
+        } else {
+          for(var i=0; i<data.data.length; i++){
+            school.innerHTML += '<li><em>'+(i+1)+'</em><section class="fl info"><span>'+data.data[i].name+'</span><p><span name='+data.data[i].is_985+'>985</span><span name='+data.data[i].is_211+'>211</span><span name='+data.data[i].is_dual+'>双一流</span></p><section class="fenshu"><p>院校代码：'+data.data[i].code+'</p></section></section><section><p>'+data.data[i].rank+'</p><p>专业评估</p></section></li>'
+          }
         }
         for(var i=0; i<school.querySelectorAll("li").length; i++){
           school.querySelectorAll("li")[i].addEventListener('click', function () {
@@ -356,7 +365,11 @@ window.onscroll=function(){
     if(has_next_page){
       filter_page += 1
       getPositionList()
+      document.querySelector('.load').style.display = 'block'
+      document.querySelector('.load').innerHTML = '<img src="/static/img/load.svg" alt="">加载中'
       document.querySelector('.load img').style.animation = 'load 2s infinite'
+    } else {
+      document.querySelector('.load').innerHTML = '—— 不止诗与远方 ——'
     }
   }
 }
