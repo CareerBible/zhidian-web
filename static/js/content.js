@@ -357,8 +357,8 @@ window.onscroll=function(){
 
 function showLoading(show){
   if(show){
-    document.querySelector('.loading').style.display = 'none'
-  } else {
     document.querySelector('.loading').style.display = 'block'
+  } else {
+    document.querySelector('.loading').style.display = 'none'
   }
 }
