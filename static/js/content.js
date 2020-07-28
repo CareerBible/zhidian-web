@@ -410,8 +410,10 @@ function swapReverse(){
 document.querySelector('#order_by_required').onclick = function() {
   order_by = 'required'
   swapReverse()
+  getPositionList()
 }
 document.querySelector('#order_by_salary').onclick = function() {
   order_by = 'salary'
   swapReverse()
+  getPositionList()
 }
