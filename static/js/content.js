@@ -6,6 +6,7 @@ var filter_years = ''
 var filter_industry = ''
 var filter_salary = ''
 var load_school_rank = false
+var has_next_page = false
 
 /**
   * 获取URL查询参数
@@ -108,6 +109,8 @@ for(var i=0; i<filter.length; i++){
         }
       }
 
+      filter_page = 0
+      has_next_page = false
       getPositionList()
     }
   }
@@ -290,6 +293,7 @@ function getPositionList() {
         if(filter_page === 0){
           tabTbody.innerHTML = ''
         }
+        has_next_page = data.has_next_page
         for(var i=0; i<data.data.length; i++){
           tabTbody.innerHTML += '<tr><td>'+data.data[i].name+'</td><td>'+data.data[i].industry+'</td><td>'+data.data[i].required+'</td><td>'+data.data[i].salary+'</td></tr>'
         }
@@ -349,9 +353,11 @@ window.onscroll=function(){
   var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
   var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight
   if(a+b>c-80){
-    filter_page += 1
-    getPositionList()
-    document.querySelector('.load img').style.animation = 'load 2s infinite'
+    if(has_next_page){
+      filter_page += 1
+      getPositionList()
+      document.querySelector('.load img').style.animation = 'load 2s infinite'
+    }
   }
 }
 
