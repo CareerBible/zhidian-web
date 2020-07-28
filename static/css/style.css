@@ -477,14 +477,28 @@ select:nth-child(2) {
 .load {
   width: 100%;
   text-align: center;
-  padding: 30px 0;
   font-size: 16px;
 }
 
 .load img {
-  width: 35px;
+  width: 36px;
   vertical-align: middle;
   padding-right: 10px;
+  /* animation: load 2s infinite; */
+}
+
+table.zhiwei tfoot {
+  width: 100%;
+}
+
+table.zhiwei tfoot tr {
+  width: 100%;
+}
+
+table.zhiwei tfoot tr td:first-child{
+  width: 100%;
+  float: left;
+  padding: 0;
 }
 
 .top {
@@ -731,11 +745,13 @@ table.biaoge th:first-child {
 .xiala ul li {
   font-size: 20px;
   width: 100%;
-  line-height: 50px;
 }
 
 .xiala ul li a {
+  line-height: 50px;
   color: #333;
+  width: 100%;
+  display: inline-block;
 }
 
 /* b */
@@ -1076,4 +1092,40 @@ nav ul li ul li ul li:last-child {
   width: 50px;
   vertical-align: middle;
   left: 20px;
+}
+
+.loading {
+  text-align: center;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+  top:50%;
+  left: 50%;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px 0;
+  width: 100px;
+  font-size: 18px;
+  margin: 50px 0 0 -50px;
+}
+
+.loading svg {
+  width: 36px;
+  animation: load 2s infinite;
+}
+
+.show {
+  display: none;
+}
+
+@keyframes load {
+  0% {
+    transform: rotate(0);
+    transform-origin:18px 18px;
+  }
+  100% {
+    transform: rotate(360deg);
+    transform-origin:18px 18px;
+
+  }
 }

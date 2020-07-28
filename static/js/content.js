@@ -248,7 +248,6 @@ document.body.onclick = function () {
   cXial.style.display = "none"
 }
 
-
 var qiehua = document.querySelectorAll('.qiehua li')
 var record = document.querySelectorAll('.record');
 for (var i = 0; i < qiehua.length; i++){
@@ -263,34 +262,6 @@ for (var i = 0; i < qiehua.length; i++){
     
     qiehua[this.index].className='active'
     record[this.index].style.display='block'
-  }
-}
-
-
-var shenfen = document.querySelector('.shenfen')
-var close1 = document.querySelector('.close1')
-var province = document.querySelectorAll('.province')
-
-for (var i=0; i<province.length; i++) {
-  province[i].onclick = function () {
-    shenfen.style.display = "block"
-  }
-}
-
-close1.onclick = function () {
-  shenfen.style.display = "none"
-}
-
-
-for (var i=0; i<shenfen.querySelectorAll('ul li').length; i++) {
-  shenfen.querySelectorAll('ul li')[i].index = i
-  shenfen.querySelectorAll('ul li')[i].onclick = function () {
-    for(var j=0; j<shenfen.querySelectorAll('ul li').length; j++){
-      shenfen.querySelectorAll('ul li')[j].style.color = '#333'
-      shenfen.querySelectorAll('ul li')[j].style.fontWeight='normal'
-    }
-    shenfen.querySelectorAll('ul li')[this.index].style.color='#18366a'
-    shenfen.querySelectorAll('ul li')[this.index].style.fontWeight='bold'
   }
 }
 
@@ -346,7 +317,7 @@ function getSchoolList() {
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
         for(var i=0; i<data.data.length; i++){
-          school.innerHTML += '<li><em>'+(i+1)+'</em><section class="fl info"><span>'+data.data[i].name+'</span><p><span name='+data.data[i].is_985+'>985</span><span name='+data.data[i].is_211+'>211</span><span name='+data.data[i].is_dual+'>双一流</span></p><section class="fenshu"><p>院校代码：'+data.data[i].code+'</p><p><span>2019年录取分数：690</span><span class="province">湖南</span></p></section></section><section><p>'+data.data[i].rank+'</p><p>专业评估</p></section></li>'
+          school.innerHTML += '<li><em>'+(i+1)+'</em><section class="fl info"><span>'+data.data[i].name+'</span><p><span name='+data.data[i].is_985+'>985</span><span name='+data.data[i].is_211+'>211</span><span name='+data.data[i].is_dual+'>双一流</span></p><section class="fenshu"><p>院校代码：'+data.data[i].code+'</p></section></section><section><p>'+data.data[i].rank+'</p><p>专业评估</p></section></li>'
         }
         for(var i=0; i<school.querySelectorAll("li").length; i++){
           school.querySelectorAll("li")[i].addEventListener('click', function () {
@@ -368,3 +339,25 @@ function getSchoolList() {
   }
   load_school_rank = true
 }
+
+window.onscroll=function(){
+  var a = document.documentElement.scrollTop==0? document.body.clientHeight : document.documentElement.clientHeight;
+  var b = document.documentElement.scrollTop==0? document.body.scrollTop : document.documentElement.scrollTop;
+  var c = document.documentElement.scrollTop==0? document.body.scrollHeight : document.documentElement.scrollHeight
+  if(a+b>c-80){
+    filter_page += 1
+    getPositionList()
+    document.querySelector('.load img').style.animation = 'load 2s infinite'
+  }
+}
+
+function showLoading(show){
+  if(show){
+    document.querySelector('.loading').style.display = 'none'
+  } else {
+    document.querySelector('.loading').style.display = 'block'
+  }
+}
+
+var show = false
+showLoading(show)
