@@ -291,9 +291,7 @@ function getPositionList() {
 /**
  * 获取学校列表
  */
-
- var school = document.querySelector('.school')
-
+var school = document.querySelector('.school')
 function getSchoolList() {
   school.innerHTML = ''
   var xhr = new XMLHttpRequest()
