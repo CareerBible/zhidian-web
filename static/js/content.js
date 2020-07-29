@@ -285,7 +285,8 @@ function getPositionList() {
       showLoading(false)
       var data = JSON.parse(xhr.responseText)
       if(data.code === 0) {
-        if(filter_page === 0){
+        filter_page = data.page
+        if(data.page === 0){
           tabTbody.innerHTML = ''
         }
         has_next_page = data.has_next_page
