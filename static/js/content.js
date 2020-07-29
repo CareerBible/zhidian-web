@@ -7,6 +7,8 @@ var filter_industry = ''
 var filter_salary = ''
 var load_school_rank = false
 var has_next_page = false
+var order_by = 'required'
+var reverse = '1'
 
 /**
   * 获取URL查询参数
@@ -113,15 +115,6 @@ for(var i=0; i<filter.length; i++){
       has_next_page = false
       getPositionList()
     }
-  }
-}
-
-var fenshu =  document.querySelectorAll('.fenshu')
-
-for (var i=0; i<fenshu.length; i++){
-  fenshu[i].onclick = function (event) {
-    event.stopPropagation()
-
   }
 }
 
@@ -246,7 +239,32 @@ for (var i = 0; i < qiehua.length; i++){
 }
 
 document.querySelector('.shangyiye').onclick = function () {
-  window.history.go(-1); 
+  goBack()
+}
+
+function goBack(){
+  if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)){ // IE
+    if(history.length > 0){
+      window.history.go( -1 );
+    }else{
+      window.location.href = "/";
+    }
+  }else{ //非IE浏览器
+    if (navigator.userAgent.indexOf('Firefox') >= 0 ||
+      navigator.userAgent.indexOf('Opera') >= 0 ||
+      navigator.userAgent.indexOf('Safari') >= 0 ||
+      navigator.userAgent.indexOf('Chrome') >= 0 ||
+      navigator.userAgent.indexOf('WebKit') >= 0){
+
+      if(window.history.length > 1){
+        window.history.go( -1 );
+      }else{
+        window.location.href = "/";
+      }
+    }else{ //未知的浏览器
+      window.history.go( -1 );
+    }
+  }
 }
 
 
@@ -260,7 +278,7 @@ getPositionList()
  */
 function getPositionList() {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary)
+  xhr.open('GET', HTTP_QZ + '/api/report/positions/?discipline_code='+discipline_code+'&city_rank='+filter_city_rank+'&page='+filter_page+'&years='+filter_years+'&industry='+filter_industry+'&salary='+filter_salary+'&order='+order_by+'&reverse='+reverse)
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -370,10 +388,30 @@ window.onscroll=function(){
   }
 }
 
+/* 加载中显示加载浮窗 */
 function showLoading(show){
   if(show){
     document.querySelector('.loading').style.display = 'block'
   } else {
     document.querySelector('.loading').style.display = 'none'
   }
+}
+
+/* 点击切换排序 */
+function swapReverse(){
+  if(reverse === '1'){
+    reverse = '0'
+  }else{
+    reverse = '1'
+  }
+}
+document.querySelector('#order_by_required').onclick = function() {
+  order_by = 'required'
+  swapReverse()
+  getPositionList()
+}
+document.querySelector('#order_by_salary').onclick = function() {
+  order_by = 'salary'
+  swapReverse()
+  getPositionList()
 }
