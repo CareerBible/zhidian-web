@@ -1,0 +1,86 @@
+/*页面公共区域*/
+#pro {
+    position: absolute;
+    width: 640px;
+    height: 100%;
+    overflow: hidden;
+    left: 0;
+    top: 0;
+}
+
+.page {
+    width: 640px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.page .p {
+    width: 640px;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+h1 {
+    color: #ffffff;
+    font-size: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#box .page0 {
+    background: url('/static/img/1.jpg') no-repeat;
+    background-size: 100%;
+    background-position: 20%;
+}
+
+#box .page1 {
+    background: url('/static/img/2.jpg') no-repeat;
+    background-size: 100%;
+    background-position: 20%;
+}
+
+#box .page2 {
+    background: url('/static/img/3.jpg') no-repeat;
+    background-size: 100%;
+    background-position: 20%;
+}
+
+#box .page3 {
+    background: url('/static/img/4.jpg') no-repeat;
+    background-size: 100%;
+    background-position: 20%;
+}
+
+#box .page4 {
+    background: url('/static/img/5.jpg') no-repeat bottom;
+    background-size: 100%;
+}
+
+.wipeUp {
+    width: 0;
+    height: 0;
+    border-bottom: 20px solid #fff;
+    border-top:  transparent;
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: upWard 1s linear 0s infinite alternate;
+    transform: translateX(-50%);
+}
+
+@keyframes upWard {
+    from {
+        bottom: 20px;
+    }
+    to {
+        bottom: 60px;
+    }
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>职典</title>
+    <script>
+        var phoneWidth = parseInt(window.screen.width);
+        var phoneScale = phoneWidth / 640;
+        var ua = navigator.userAgent;//判断浏览器类型
+        if (/Android (\d+\.\d+)/.test(ua)) {
+            var version = parseFloat(RegExp.$1);
+            if (version > 2.3) {
+                document.write('<meta name="viewport" content="width=640, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
+            } else {
+                document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
+            }
+        } else {
+            document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
+        }
+    </script>
+    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
+    <meta name="format-detection" content="telephone=no"/>
+    <link rel="stylesheet" href="/static/css/common.css">
+    <link rel="stylesheet" href="/static/css/index.css">
+    <script src="/static/js/jquery-2.0.0.min.js"></script>
+    <script src="/static/js/touch-0.2.14.min.js"></script>
+    <script>
+        $(function () {
+            var touchB = true;
+            var curpage = $('.curpage');
+            var scrollH = $('#pro').height();
+            parr = curpage.find('.p');
+            var curp = 0;
+
+            touch.on(document, 'swipeup swipedown', function (ev) {
+                if (!touchB) {
+                    return;
+                }
+                if (ev.type == 'swipeup') {
+                    if (curp == parr.length - 1) {
+                        return;
+                    }
+                    curp++;
+                    $('.curpage').animate({top: -(scrollH * curp) + 'px'});
+                    return;
+                }
+                if (ev.type == 'swipedown') {
+                    if (curp == 0) {
+                        $(".page0 ul li").css({"opacity":"0"})
+                        return;
+                    }
+                    curp--;
+                    $('.curpage').animate({top: -(scrollH * curp) + 'px'});
+                    return;
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+<div id="pro">
+    <div id="box" class="page curpage">
+        <div class="page0 p curp "></div>
+        <div class="page1 p "></div>
+        <div class="page2 p"></div>
+        <div class="page3 p"></div>
+        <div class="page4 p"></div>
+    </div>
+</div>
+<!--箭头-->
+<div class="wipeUp"></div>
+</body>
+</html>
