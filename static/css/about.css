@@ -1,4 +1,8 @@
 /*页面公共区域*/
+*{
+	margin: 0;
+	padding: 0;
+}
 #pro {
 	position: fixed;
 	width: 640px;
@@ -29,8 +33,25 @@
 }
 
 .page .p:last-child img {
-	top:auto;
-	bottom: 0;
+	top: -100px;
+}
+
+.page .p .wx-code {
+	text-align: center;
+	position: absolute;
+	bottom: 40px;
+	top: auto;
+	right: 40px;
+	color: #fff;
+	font-size: 18px;
+	text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+}
+
+.page .p .wx-code img {
+	width: 150px;
+	position: static;
+	margin-bottom: 5px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 #box .page0 {
