@@ -766,6 +766,23 @@ table.biaoge th:first-child {
   display: inline-block;
 }
 
+.chaxun span {
+  font-size: 28px;
+  color: #b20404;
+  font-weight: bold;
+  padding-right: 4px;
+}
+
+.wx-code {
+  width: 180px;
+  margin-top: 50px;
+}
+
+.index .gzh {
+  margin-top: 0;
+  font-size: 18px;
+}
+
 /* b */
 nav {
   padding: 0 30px;
