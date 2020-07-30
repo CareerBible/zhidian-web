@@ -1,9 +1,0 @@
-body,ul,p,h1,h2,h3,h4,ol,li,table,tr,td{padding: 0;margin: 0;font-family: "微软雅黑"; color: #666 }
-h1,h2,h3,h4{font-weight: normal}
-ul,li,ol{list-style: none;}
-a{text-decoration: none;color:#666;}
-a:active{text-decoration: none;color:#666;}
-.cur{cursor: pointer}
-.dis{display:none}
-img{border:0px;}
-

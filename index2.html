@@ -3,24 +3,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>职典</title>
-    <script>
-        var phoneWidth = parseInt(window.screen.width);
-        var phoneScale = phoneWidth / 640;
-        var ua = navigator.userAgent;//判断浏览器类型
-        if (/Android (\d+\.\d+)/.test(ua)) {
-            var version = parseFloat(RegExp.$1);
-            if (version > 2.3) {
-                document.write('<meta name="viewport" content="width=640, minimum-scale = ' + phoneScale + ', maximum-scale = ' + phoneScale + ', target-densitydpi=device-dpi">');
-            } else {
-                document.write('<meta name="viewport" content="width=640, target-densitydpi=device-dpi">');
-            }
-        } else {
-            document.write('<meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">');
-        }
-    </script>
-    <meta name="viewport" content="width=640, user-scalable=no, target-densitydpi=device-dpi">
-    <meta name="format-detection" content="telephone=no"/>
-    <link rel="stylesheet" href="/static/css/common.css">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
     <link rel="stylesheet" href="/static/css/index.css">
     <script src="/static/js/jquery-2.0.0.min.js"></script>
     <script src="/static/js/touch-0.2.14.min.js"></script>
@@ -64,7 +48,7 @@
         <div class="page1 p "></div>
         <div class="page2 p"></div>
         <div class="page3 p"></div>
-        <div class="page4 p"></div>
+        <div class="page4 p"><img src="/static/img/5.jpg" alt=""></div>
     </div>
 </div>
 <!--箭头-->
