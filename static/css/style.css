@@ -792,8 +792,9 @@ nav {
 
 nav ul li {
   border-bottom: 1px solid #e5e5e5;
-  font-size: 24px;
+  font-size: 26px;
   color: #000;
+  font-weight: bold;
 }
 
 nav ul li svg {
@@ -809,6 +810,11 @@ nav ul li ul {
   display: none;
   padding-left: 30px;
   color: #666;
+}
+
+nav ul li ul li {
+  font-weight: normal;
+  font-size: 24px;
 }
 
 nav ul li ul li ul li a {
