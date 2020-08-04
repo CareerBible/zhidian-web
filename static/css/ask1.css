@@ -58,28 +58,28 @@ body {
   position: relative;
   background: linear-gradient(#3742fd, #151db8);
   padding: 0 30px;
-  color: #333;
+  color: #666;
 }
 
 main {
   background: #fff;
   border-radius: 20px;
   padding: 30px;
-  font-size: 20px;
-  line-height: 30px;
+  font-size: 26px;
+  line-height: 40px;
   margin: 30px 0;
 }
 
 h1 {
   width: 100%;
   text-align: center;
-  font-size: 26px;
+  font-size: 32px;
   padding-bottom: 20px;
   color: #000;
 }
 
 h2 {
-  font-size: 22px;
+  font-size: 28px;
   padding: 40px 0 20px;
   color: #000;
 }
@@ -87,8 +87,28 @@ h2 {
 label {
   width: 100%;
   display: inline-block;
-  height: 55px;
-  line-height: 55px;
+  /* height: 65px; */
+  line-height: 65px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+  border-radius: 5px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.checked {
+  border: 1px solid #fff;;
+  box-shadow: 0 0 7px rgba(70, 70, 70, 0.3);
+  color: #000;
+}
+
+.disabled {
+  border: 1px solid #ddd;
+  color: #ccc;
+}
+
+p {
+  color: #999;
 }
 
 span {
@@ -96,26 +116,31 @@ span {
 }
 
 input[type='text'] {
-  width: 50%;
+  width: 100%;
   background: none;
-  border: 1px solid #ccc;
-  height: 50px;
-  margin-left: 10px;
+  border: none;
+  border-top: 1px solid #ddd;
+  height: 60px;
   font-size: 22px;
   padding: 0 10px;
   color: #333;
+  box-sizing: border-box;
+  vertical-align: 3px;
 }
 
 input[type='text'].text {
-  width: 80%;
+  width: 100%;
   margin-left: 0;
+  height: 65px;
+  line-height: 65px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
 input[type='radio'],
 input[type='checkbox'] {
-  margin-right: 10px;
+  margin-right: 20px;
   background: #fff;
-  vertical-align: middle;
   width: 20px;
   height: 20px;
   border: 1px solid #ccc;
@@ -171,6 +196,10 @@ main.tijiao {
   border-radius: 0;
 }
 
+main.tijiao p {
+  color: #fff;
+}
+
 section {
   color: #fff;
   line-height: 50px;
@@ -185,4 +214,33 @@ section {
 
 main.tijiao svg {
   width: 200px;
+}
+
+#profession-text,
+#career-text,
+#treatment-text,
+#employment-text {
+  display: none;
+}
+
+#university-error,
+#age-error,
+#professional-error,
+#treatment-error,
+#profession-error,
+#career-error,
+#employment-error {
+  color: #f00;
+  font-size: 20px;
+  margin-top: 10px;
+  display: none;
+}
+
+#profession-text-error,
+#career-text-error,
+#treatment-text-error,
+#employment-text-error {
+  font-size: 18px;
+  line-height: 65px;
+  display: none;
 }
