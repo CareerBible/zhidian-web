@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <title>问卷</title>
+  <link rel="stylesheet" href="/static/css/questionnaire.css">
+</head>
+<body>
+  <main>
+    <h1>大学专业与就业问卷调查</h1>
+    <p>此问卷旨在搜集您在专业对口、职业规划及择业方面遇到的困惑，以便提供更具有针对性的服务，为您接下来择业提供数据参考和指导建议</p>
+    <form action="/q.html">
+      <h2>1.您就读的大学名称<span>*</span></h2>
+      <input type="text" class="text" required>
+      <h2>2.您就读的年级<span>*</span></h2>
+      <label><input type="radio" name="1" required>大一</label>
+      <label><input type="radio" name="1" required>大二</label>
+      <label><input type="radio" name="1" required>大三</label>
+      <label><input type="radio" name="1" required>大四</label>
+      <label><input type="radio" name="1" required>研一</label>
+      <label><input type="radio" name="1" required>研二</label>
+      <label><input type="radio" name="1" required>研三</label>
+      <h2>3.您的专业是<span>*</span></h2>
+      <input type="text" class="text" required>
+      <h2>4.您选择这个专业的原因是<span>*</span></h2>
+      <label><input type="checkbox" name="profession">兴趣爱好</label>
+      <label><input type="checkbox" name="profession">就业前景</label>
+      <label><input type="checkbox" name="profession">专业调剂</label>
+      <label><input type="checkbox" name="profession">高考分数限制</label>
+      <label><input type="checkbox" name="profession">父母意愿</label>
+      <label><input type="checkbox" name="profession">一顿乱选</label>
+      <label><input type="checkbox" name="profession">其他<input type="text"></label>
+      <h2>5.择业时，您考量最多的是<span>*</span></h2>
+      <label><input type="checkbox" name="Career">薪资待遇</label>
+      <label><input type="checkbox" name="Career">市场需求（招聘岗位数）</label>
+      <label><input type="checkbox" name="Career">专业对口</label>
+      <label><input type="checkbox" name="Career">地域（一二线发达城市或海外）</label>
+      <label><input type="checkbox" name="Career">地域（离家近）</label>
+      <label><input type="checkbox" name="Career">行业领域</label>
+      <label><input type="checkbox" name="Career">稳定性</label>
+      <label><input type="checkbox" name="Career">其他<input type="text"></label>
+      <h2>6.您了解自己专业匹配的市场岗位和未来薪资待遇吗？<span>*</span></h2>
+      <label><input type="radio" name="2" required>非常了解</label>
+      <label><input type="radio" name="2" required>一般般</label>
+      <label><input type="radio" name="2" required>比较迷茫</label>
+      <label><input type="radio" name="2" required>其他<input type="text"></label>
+      <h2>7.曾经从哪些渠道了解过专业与就业相关的信息<span>*</span></h2>
+      <label><input type="checkbox" name="employment">网上查询</label>
+      <label><input type="checkbox" name="employment">亲朋好友咨询</label>
+      <label><input type="checkbox" name="employment">请教老师</label>
+      <label><input type="checkbox" name="employment">内推渠道</label>
+      <label><input type="checkbox" name="employment">其他<input type="text"></label>
+      <h2>8.您还想获得什么就业相关的信息？</h2>
+      <textarea></textarea>
+      <input type="submit">
+    </form>
+  </main>
+</body>
+</html>
