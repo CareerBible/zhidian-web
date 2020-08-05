@@ -260,7 +260,6 @@ document.querySelector('input[type="submit"]').onclick = function(){
     'choosingEmploymentConsiderations': _arrChoosingEmploymentConsiderations,
     'understandProfessionalInformation': _arrUnderstandProfessionalInformation,
   })
-  alert(reqData)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', '/api/employmentSurvey/add')
   xhr.setRequestHeader('Content-Type', 'application/json')
@@ -269,6 +268,7 @@ document.querySelector('input[type="submit"]').onclick = function(){
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
       if(data.code === 200) {
+        alert(data.msg)
         window.location.href = '/ask/ok.html'
       } else {
         alert(data.msg)
