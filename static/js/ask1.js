@@ -267,7 +267,7 @@ document.querySelector('input[type="submit"]').onclick = function(){
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
-      if(data.code === 200) {
+      if(data.code == 200) {
         alert(data.msg)
         window.location.href = '/ask/ok.html'
       } else {

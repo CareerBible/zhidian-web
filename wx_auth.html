@@ -36,9 +36,6 @@ function getWxUserInfo(code, redirect_url) {
         localStorage.setItem('wx_openid', data.data.openid)
         localStorage.setItem('wx_unionid', data.data.unionid)
         localStorage.setItem('uid', data.data.id)
-        alert(data.data.openid)
-        alert(data.data.unionid)
-        alert(data.data.id)
         window.location.href = redirect_url
       } else {
         alert(data.msg)
