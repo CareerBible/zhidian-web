@@ -232,7 +232,12 @@ document.querySelector('input[type="submit"]').onclick = function(){
     return false
   }
 
-  var reqData = formData2json(new FormData(document.querySelector('form')))
+  var formData = new FormData(document.querySelector('form'))
+  var selectProfessionalReasons = document.querySelectorAll('input[name="selectProfessionalReasons"]:checked')
+  for(var i=0; i<selectProfessionalReasons.length; i++){
+    formData.append('selectProfessionalReasons', selectProfessionalReasons[i].value)
+  }
+  var reqData = formData2json(formData)
   alert(reqData)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', '/api/employmentSurvey/add')
