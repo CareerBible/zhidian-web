@@ -3,7 +3,6 @@ var career = document.querySelectorAll('input[name="choosingEmploymentConsiderat
 var employment = document.querySelectorAll('input[name="understandProfessionalInformation"]')
 var age = document.querySelectorAll('input[name="grade"]')
 var treatment = document.querySelectorAll('input[name="understandFutureSalary"]')
-var submit = document.querySelector('input[type="submit"]')
 var professionNum = 0
 var careerNum = 0
 var employmentNum = 0
@@ -38,10 +37,10 @@ document.querySelector('#professional-text').onclick = function () {
 // 4.您选择这个专业的原因是
 for(var i=0; i<profession.length; i++){
   profession[i].onclick = function () {
-    if(this.value === '其他' && this.checked == true) {
+    if(this.value === '其他' && this.checked) {
       document.querySelector('#profession-text').style.display = 'block'
       document.querySelector('#profession-text').required = 'required'
-    } else if(this.value === '其他' && this.checked == false){
+    } else if(this.value === '其他' && !this.checked){
       document.querySelector('#profession-text').style.display = 'none'
       document.querySelector('#profession-text').required = ''
     }
@@ -59,14 +58,14 @@ for(var i=0; i<profession.length; i++){
     }
     if(professionNum == 3) {
       for(var j=0; j<profession.length; j++){
-        if(profession[j].checked == false) {
+        if(!profession[j].checked) {
           profession[j].disabled = 'disabled'
           profession[j].parentElement.classList.add('disabled')
         }
       }
     } else {
       for(var j=0; j<profession.length; j++){
-        if(profession[j].checked == false) {
+        if(!profession[j].checked) {
           profession[j].disabled = ''
           profession[j].parentElement.classList.remove('disabled')
         }
@@ -83,10 +82,10 @@ document.querySelector('#profession-text').onclick = function() {
 // 5.择业时，您考量最多的是
 for(var i=0; i<career.length; i++){
   career[i].onclick = function () {
-    if(this.value === '其他' && this.checked == true) {
+    if(this.value === '其他' && this.checked) {
       document.querySelector('#career-text').style.display = 'block'
       document.querySelector('#career-text').required = 'required'
-    } else if(this.value === '其他' && this.checked == false){
+    } else if(this.value === '其他' && !this.checked){
       document.querySelector('#career-text').style.display = 'none'
       document.querySelector('#career-text').required = ''
     }
@@ -102,14 +101,14 @@ for(var i=0; i<career.length; i++){
     }
     if(careerNum == 3) {
       for(var j=0; j<career.length; j++){
-        if(career[j].checked == false) {
+        if(!career[j].checked) {
           career[j].disabled = 'disabled'
           career[j].parentElement.classList.add('disabled')
         }
       }
     } else {
       for(var j=0; j<career.length; j++){
-        if(career[j].checked == false) {
+        if(!career[j].checked) {
           career[j].disabled = ''
           career[j].parentElement.classList.remove('disabled')
         }
@@ -126,7 +125,7 @@ document.querySelector('#career-text').onclick = function() {
 for(var i=0; i<treatment.length; i++){
   treatment[i].index = i
   treatment[i].onclick = function () {
-    if(this.value == '其他' && this.checked == true) {
+    if(this.value == '其他' && this.checked) {
       document.querySelector('#treatment-text').style.display = 'block'
       document.querySelector('#treatment-text').required = 'required'
     } else {
@@ -152,10 +151,10 @@ document.querySelector('#treatment-text').onclick = function() {
 // 7.曾经从哪些渠道了解过专业与就业相关的信息
 for(var i=0; i<employment.length; i++){
   employment[i].onclick = function () {
-    if(this.value === '其他' && this.checked == true) {
+    if(this.value === '其他' && this.checked) {
       document.querySelector('#employment-text').style.display = 'block'
       document.querySelector('#employment-text').required = 'required'
-    } else if(this.value === '其他' && this.checked == false){
+    } else if(this.value === '其他' && !this.checked){
       document.querySelector('#employment-text').style.display = 'none'
       document.querySelector('#employment-text').required = ''
     }
@@ -186,7 +185,7 @@ var formData2json = function (formData) {
 }
 
 
-submit.onclick = function(){
+document.querySelector('input[type="submit"]').onclick = function(){
   if(document.querySelector('#university-text').value == ''){
     document.querySelector('#university-error').style.display = 'block'
     window.location.href = '#university'
@@ -203,7 +202,7 @@ submit.onclick = function(){
     window.location.href = '#profession'
     document.querySelector('#profession-error').style.display = 'block'
     return false
-  }else if(document.querySelector('#profession-text').value == '' && document.querySelector('#profession-text').required == true){
+  }else if(document.querySelector('#profession-text').value == '' && document.querySelector('#profession-text').required){
     window.location.href = '#profession'
     document.querySelector('#profession-text-error').style.display = 'block'
     return false
@@ -211,7 +210,7 @@ submit.onclick = function(){
     window.location.href = '#career'
     document.querySelector('#career-error').style.display = 'block'
     return false
-  }else if(document.querySelector('#career-text').value == '' && document.querySelector('#career-text').required == true){
+  }else if(document.querySelector('#career-text').value == '' && document.querySelector('#career-text').required){
     window.location.href = '#career'
     document.querySelector('#career-text-error').style.display = 'block'
     return false
@@ -219,7 +218,7 @@ submit.onclick = function(){
     document.querySelector('#treatment-error').style.display = 'block'
     window.location.href = '#treatment'
     return false
-  }else if(document.querySelector('#treatment-text').value == '' && document.querySelector('#treatment-text').required == true){
+  }else if(document.querySelector('#treatment-text').value == '' && document.querySelector('#treatment-text').required){
     window.location.href = '#treatment'
     document.querySelector('#treatment-text-error').style.display = 'block'
     return false
@@ -227,7 +226,7 @@ submit.onclick = function(){
     window.location.href = '#employment'
     document.querySelector('#employment-error').style.display = 'block'
     return false
-  }else if(document.querySelector('#employment-text').value == '' && document.querySelector('#employment-text').required == true){
+  }else if(document.querySelector('#employment-text').value == '' && document.querySelector('#employment-text').required){
     window.location.href = '#employment'
     document.querySelector('#employment-text-error').style.display = 'block'
     return false
