@@ -10,6 +10,26 @@ var employmentNum = 0
 var ageChecked = null
 var treatmentChecked = null
 
+var uid = localStorage.getItem('uid')
+
+function wxLogin() {
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', '/api/wechat/getAuthorizeCodeUrl')
+  xhr.send()
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      if(data.code == 200) {
+        window.location.href = data.data.url
+      }
+    }
+  }
+}
+
+if(uid == null) {
+  wxLogin()
+}
+
 // 1.您就读的大学名称
 document.querySelector('#university-text').onclick = function () {
   document.querySelector('#university-error').style.display = 'none'
