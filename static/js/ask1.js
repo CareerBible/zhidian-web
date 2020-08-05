@@ -136,7 +136,6 @@ for(var i=0; i<treatment.length; i++){
       treatment[j].parentElement.classList.remove('checked')
     }
     treatment[this.index].parentElement.classList.add('checked')
-    console.log(treatment[this.index].checked)
     treatmentChecked = treatment[this.index].checked
     if(treatmentChecked){
       document.querySelector('#treatment-error').style.display = 'none'
@@ -179,7 +178,7 @@ var formData2json = function (formData) {
   var objData = {};
 
   for (var entry of formData.entries()){
-      objData[entry[0]] = entry[1];
+    objData[entry[0]] = entry[1];
   }
   return JSON.stringify(objData);
 }
@@ -232,12 +231,35 @@ document.querySelector('input[type="submit"]').onclick = function(){
     return false
   }
 
-  var formData = new FormData(document.querySelector('form'))
   var selectProfessionalReasons = document.querySelectorAll('input[name="selectProfessionalReasons"]:checked')
+  var _arrSelectProfessionalReasons = new Array()
   for(var i=0; i<selectProfessionalReasons.length; i++){
-    formData.append('selectProfessionalReasons', selectProfessionalReasons[i].value)
+    _arrSelectProfessionalReasons.push(selectProfessionalReasons[i].value)
   }
-  var reqData = formData2json(formData)
+  var choosingEmploymentConsiderations = document.querySelectorAll('input[name="choosingEmploymentConsiderations"]:checked')
+  var _arrChoosingEmploymentConsiderations = new Array()
+  for(var i=0; i<choosingEmploymentConsiderations.length; i++){
+    _arrChoosingEmploymentConsiderations.push(choosingEmploymentConsiderations[i].value)
+  }
+  var understandProfessionalInformation = document.querySelectorAll('input[name="understandProfessionalInformation"]:checked')
+  var _arrUnderstandProfessionalInformation = new Array()
+  for(var i=0; i<understandProfessionalInformation.length; i++){
+    _arrUnderstandProfessionalInformation.push(understandProfessionalInformation[i].value)
+  }
+  
+
+  var reqData = JSON.stringify({
+    'universityCollegeId': document.querySelector('#university-text').value,
+    'weChatUserId': localStorage.getItem('uid'),
+    'elapsedTime': new Date().getTime(),
+    'employmentRelatedInformation': document.querySelector('#employmentRelatedInformation').value,
+    'disciplineId': document.querySelector('#professional-text').value,
+    'grade': document.querySelector('input[name="grade"]:checked').value,
+    'understandFutureSalary': document.querySelector('input[name="understandFutureSalary"]:checked').value,
+    'selectProfessionalReasons': _arrSelectProfessionalReasons,
+    'choosingEmploymentConsiderations': _arrChoosingEmploymentConsiderations,
+    'understandProfessionalInformation': _arrUnderstandProfessionalInformation,
+  })
   alert(reqData)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', '/api/employmentSurvey/add')
