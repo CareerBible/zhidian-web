@@ -266,6 +266,7 @@ document.querySelector('input[type="submit"]').onclick = function(){
   xhr.send(reqData)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
+      alert(xhr.responseText)
       var data = JSON.parse(xhr.responseText)
       if(data.code == 200) {
         alert(data.msg)
