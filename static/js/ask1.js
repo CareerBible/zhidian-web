@@ -233,10 +233,12 @@ submit.onclick = function(){
     return false
   }
 
+  var reqData = formData2json(new FormData(document.querySelector('form')))
+  alert(reqData)
   var xhr = new XMLHttpRequest()
   xhr.open('POST', '/api/employmentSurvey/add')
   xhr.setRequestHeader('Content-Type', 'application/json')
-  xhr.send(formData2json(new FormData(document.querySelector('form'))))
+  xhr.send(reqData)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
