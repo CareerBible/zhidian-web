@@ -25,7 +25,7 @@
 /**
  * 获取微信用户信息
  */
-function getWxUserInfo(code) {
+function getWxUserInfo(code, redirect_url) {
   var xhr = new XMLHttpRequest()
   xhr.open('GET', '/api/wechat/getUserInfo?code='+code)
   xhr.send()
@@ -35,7 +35,7 @@ function getWxUserInfo(code) {
       if(data.code == 200) {
         localStorage.setItem('wx_openid', data.openid)
         localStorage.setItem('wx_unionid', data.unionid)
-        window.location.href = '/ask1.html'
+        window.location.href = redirect_url
       } else {
         alert(data.msg)
       }
@@ -43,11 +43,12 @@ function getWxUserInfo(code) {
   }
 }
 
+const redirect_url = '/ask/1.html'
 var code = getQueryVariable('code')
 if(!code) {
   alert('code required')
 } else {
-  getWxUserInfo(code)
+  getWxUserInfo(code, redirect_url)
 }
 </script>
 </body>
