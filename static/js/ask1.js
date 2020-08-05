@@ -176,6 +176,15 @@ document.querySelector('#employment-text').onclick = function() {
   document.querySelector('#employment-text-error').style.display = 'none'
 }
 
+var formData2json = function (formData) {
+  var objData = {};
+
+  for (var entry of formData.entries()){
+      objData[entry[0]] = entry[1];
+  }
+  return JSON.stringify(objData);
+}
+
 
 submit.onclick = function(){
   if(document.querySelector('#university-text').value == ''){
@@ -222,5 +231,21 @@ submit.onclick = function(){
     window.location.href = '#employment'
     document.querySelector('#employment-text-error').style.display = 'block'
     return false
+  }
+
+  var xhr = new XMLHttpRequest()
+  xhr.open('POST', '/api/employmentSurvey/add')
+  xhr.setRequestHeader('Content-Type', 'application/json')
+  xhr.send(formData2json(new FormData(document.querySelector('form'))))
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      if(data.code === 200) {
+        window.location.href = '/ask/ok.html'
+      } else {
+        alert(data.msg)
+        window.location.href = '/ask/1.html'
+      }
+    }
   }
 }
