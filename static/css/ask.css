@@ -163,7 +163,7 @@ input[type='radio'] {
   border-radius: 20px;
 }
 
-input[type='submit'] {
+button[type='button'] {
   width: 100%;
   height: 70px;
   position: relative;
