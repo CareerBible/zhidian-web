@@ -32,6 +32,7 @@ function showUniversityList(searchText, box){
             _options[i].onclick = function() {
               document.querySelector('university-text').value = this.textContent
               universityCollegeId = this.getAttribute('data-id')
+              alert(universityCollegeId)
             }
           }
         }
