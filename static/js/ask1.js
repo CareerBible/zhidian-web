@@ -41,6 +41,37 @@ function showUniversityList(searchText, box){
   }
 }
 
+function showDisciplineList(searchText, box){
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', '/api/discipline/list?search='+searchText)
+  xhr.send()
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      if(data.code === 200) {
+        if(!data.data.list.length){
+          box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
+        } else {
+          box.innerHTML = ''
+          _ids = new Array()
+          for(var i=0; i<data.data.list.length; i++){
+            box.innerHTML += '<li class="discipline-options">'+data.data.list[i].name+'</li>'
+            _ids.push(data.data.list[i].id)
+          }
+          var _options = document.querySelectorAll('.discipline-options')
+          for(var i=0; i<_options.length; i++){
+            _options[i].onclick = function() {
+              document.querySelector('#professional-text').value = _ids[i]
+            }
+          }
+        }
+      } else {
+        alert(data.errmsg)
+      }
+    }
+  }
+}
+
 // 1.您就读的大学名称
 document.querySelector('#university-text').onclick = function (e) {
   e.stopPropagation()
@@ -54,17 +85,29 @@ document.querySelector('#university-text').onclick = function (e) {
 
 document.querySelector('#university-text').oninput = function (e) {
   e.stopPropagation()
-  var _universityList = document.querySelector('#university-list')
+  var _box = document.querySelector('#university-list')
   if(this.value == ''){
-    _universityList.style.display = 'none'
+    _box.style.display = 'none'
   } else {
-    showUniversityList(this.value, _universityList)
-    _universityList.style.display = 'block'
+    showUniversityList(this.value, _box)
+    _box.style.display = 'block'
+  }
+}
+
+document.querySelector('#professional-text').oninput = function (e) {
+  e.stopPropagation()
+  var _box = document.querySelector('#professional-list')
+  if(this.value == ''){
+    _box.style.display = 'none'
+  } else {
+    showDisciplineList(this.value, _box)
+    _box.style.display = 'block'
   }
 }
 
 document.body.onclick = function () {
   document.querySelector('#university-list').style.display = 'none'
+  document.querySelector('#professional-list').style.display = 'none'
 }
 
 // 2.您就读的年级
