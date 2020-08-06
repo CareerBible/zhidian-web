@@ -108,10 +108,10 @@ document.querySelector('#professional-text').oninput = function (e) {
   }
 }
 
-document.body.onclick = function () {
-  document.querySelector('#university-list').style.display = 'none'
-  document.querySelector('#professional-list').style.display = 'none'
-}
+// document.body.onclick = function () {
+//   document.querySelector('#university-list').style.display = 'none'
+//   document.querySelector('#professional-list').style.display = 'none'
+// }
 
 // 2.您就读的年级
 for(var i=0; i<age.length; i++){
