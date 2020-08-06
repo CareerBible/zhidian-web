@@ -266,10 +266,8 @@ document.querySelector('button[type="button"]').onclick = function(event){
   xhr.send(reqData)
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      alert(xhr.responseText)
       var data = JSON.parse(xhr.responseText)
       if(data.code == 200) {
-        alert(data.msg)
         window.location.href = '/ask/ok.html'
       } else {
         alert(data.msg)
