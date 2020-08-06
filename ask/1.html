@@ -14,7 +14,15 @@
     <form action="#" method="post">
       <h2 id="university">1.您就读的大学名称<span>*</span></h2>
       <p id="university-error">请输入内容</p>
-      <input type="text" class="text" id="university-text" name="universityCollegeId" value="">
+      <section id="university-box">
+        <input type="text" class="text" id="university-text" name="universityCollegeId" value="">
+        <ul id="university-list">
+          <li>北京大学</li>
+          <li>清华大学</li>
+          <li>复旦大学</li>
+          <li>南京大学</li>
+        </ul>
+      </section>
       <h2 id="age">2.您就读的年级<span>*</span></h2>
       <p id="age-error">请选择一个选项</p>
       <label><input type="radio" name="grade" value="大一">大一</label>
@@ -26,7 +34,15 @@
       <label><input type="radio" name="grade" value="研三">研三</label>
       <h2 id="professional">3.您的专业是<span>*</span></h2>
       <p id="professional-error">请输入内容</p>
-      <input type="text" class="text" id="professional-text" name="disciplineId" value="">
+      <section id="professional-box">
+        <input type="text" class="text" id="professional-text" name="disciplineId" value="">
+        <ul id="professional-list">
+          <li>软件工程</li>
+          <li>数字媒体</li>
+          <li>计算机</li>
+          <li>互联网</li>
+        </ul>
+      </section>
       <h2 id="profession">4.您选择这个专业的原因是<span>*</span></h2>
       <p>请选择1-3项</p>
       <p id="profession-error">请选择选项</p>
@@ -72,7 +88,7 @@
       <input type="submit">
     </form>
   </main>
-  <script src="/static/js/wx.js"></script>
+  <!-- <script src="/static/js/wx.js"></script> -->
   <script src="/static/js/ask1.js"></script>
 </body>
 </html>

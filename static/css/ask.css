@@ -216,6 +216,36 @@ main.tijiao svg {
   width: 200px;
 }
 
+#university-box,
+#professional-box {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  text-align: left;
+}
+
+#university-list,
+#professional-list {
+  display: none;
+  width: 100%;
+  background: #fff;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  padding: 15px 25px;
+  box-sizing: border-box;
+  position: absolute;
+  color: #333;
+  font-size: 22px;
+}
+
+#university-list li,
+#professional-list li {
+  width: 100%;
+  line-height: 55px;
+  display: inline-block;
+}
+
 #profession-text,
 #career-text,
 #treatment-text,
