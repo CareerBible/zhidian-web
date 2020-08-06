@@ -10,36 +10,42 @@ var ageChecked = null
 var treatmentChecked = null
 
 
-// function listText(box){
-//   var xhr = new XMLHttpRequest()
-//   xhr.open('GET', '/api/discipline/list')
-//   xhr.send()
-//   xhr.onreadystatechange = function () {
-//     if (xhr.readyState === 4) {
-//       var data = JSON.parse(xhr.responseText)
-//       if(data.code === 200) {
-//         if(data.data == null || data.data.length === 0){
-//           box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
-//         } else {
-//           box.innerHTML = ''
-//           for(var i=0;i<data.data.length; i++){
-//             box.innerHTML += '<li>'+data.data[i].universityName+'</li>'
-//           }
-//         }
-//       } else {
-//         alert(data.errmsg)
-//       }
-//     } else {
-//       console.debug('fetchSearchHintList: connecting')
-//     }
-//   }
-// }
+function showUniversityList(searchText, box){
+  var xhr = new XMLHttpRequest()
+  xhr.open('GET', '/api/universityCollege/list?search='+searchText)
+  xhr.send()
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) {
+      var data = JSON.parse(xhr.responseText)
+      if(data.code === 200) {
+        if(!data.data.list.length){
+          box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
+        } else {
+          box.innerHTML = ''
+          universityIds = new Array()
+          for(var i=0; i<data.data.list.length; i++){
+            box.innerHTML += '<li class="university-options">'+data.data.list[i].name+'</li>'
+            universityIds.push(data.data.list[i].id)
+          }
+          var universityOptions = document.querySelectorAll('.university-options')
+          for(var i=0; i<universityOptions.length; i++){
+            universityOptions[i].onclick = function() {
+              document.querySelector('#university-text').value = universityIds[i]
+            }
+          }
+        }
+      } else {
+        alert(data.errmsg)
+      }
+    }
+  }
+}
 
 // 1.您就读的大学名称
 document.querySelector('#university-text').onclick = function (e) {
   e.stopPropagation()
   document.querySelector('#university-error').style.display = 'none'
-  if( this.value == ''){
+  if(this.value == ''){
     document.querySelector('#university-list').style.display = 'none'
   } else {
     document.querySelector('#university-list').style.display = 'block'
@@ -48,12 +54,13 @@ document.querySelector('#university-text').onclick = function (e) {
 
 document.querySelector('#university-text').oninput = function (e) {
   e.stopPropagation()
-  if( this.value == ''){
-    document.querySelector('#university-list').style.display = 'none'
+  var _universityList = document.querySelector('#university-list')
+  if(this.value == ''){
+    _universityList.style.display = 'none'
   } else {
-    document.querySelector('#university-list').style.display = 'block'
+    showUniversityList(this.value, _universityList)
+    _universityList.style.display = 'block'
   }
-  // listText(document.querySelector('#university-list'))
 }
 
 document.body.onclick = function () {
@@ -220,14 +227,14 @@ document.querySelector('#employment-text').onclick = function() {
   document.querySelector('#employment-text-error').style.display = 'none'
 }
 
-var formData2json = function (formData) {
-  var objData = {};
+// var formData2json = function (formData) {
+//   var objData = {};
 
-  for (var entry of formData.entries()){
-    objData[entry[0]] = entry[1];
-  }
-  return JSON.stringify(objData);
-}
+//   for (var entry of formData.entries()){
+//     objData[entry[0]] = entry[1];
+//   }
+//   return JSON.stringify(objData);
+// }
 
 
 document.querySelector('input[type="submit"]').onclick = function(event){
