@@ -9,6 +9,7 @@ var employmentNum = 0
 var ageChecked = null
 var treatmentChecked = null
 var universityCollegeId = null
+var disciplineId = null
 
 
 function showUniversityList(searchText, box){
@@ -23,15 +24,14 @@ function showUniversityList(searchText, box){
           box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
         } else {
           box.innerHTML = ''
-          universityIds = new Array()
           for(var i=0; i<data.data.list.length; i++){
-            box.innerHTML += '<li class="university-options">'+data.data.list[i].name+'</li>'
-            universityIds.push(data.data.list[i].id)
+            box.innerHTML += '<li class="university-options" data-id="'+data.data.list[i].id+'">'+data.data.list[i].name+'</li>'
           }
-          var universityOptions = document.querySelectorAll('.university-options')
-          for(var i=0; i<universityOptions.length; i++){
-            universityOptions[i].onclick = function() {
-              universityCollegeId = universityIds[i]
+          var _options = document.querySelectorAll('.university-options')
+          for(var i=0; i<_options.length; i++){
+            _options[i].onclick = function() {
+              document.querySelector('university-text').value = this.textContent
+              universityCollegeId = this.getAttribute('data-id')
             }
           }
         }
@@ -54,15 +54,14 @@ function showDisciplineList(searchText, box){
           box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
         } else {
           box.innerHTML = ''
-          _ids = new Array()
           for(var i=0; i<data.data.list.length; i++){
-            box.innerHTML += '<li class="discipline-options">'+data.data.list[i].name+'</li>'
-            _ids.push(data.data.list[i].id)
+            box.innerHTML += '<li class="discipline-options" data-id="'+data.data.list[i].id+'">'+data.data.list[i].name+'</li>'
           }
           var _options = document.querySelectorAll('.discipline-options')
           for(var i=0; i<_options.length; i++){
             _options[i].onclick = function() {
-              document.querySelector('#professional-text').value = _ids[i]
+              document.querySelector('#professional-text').value = this.textContent
+              disciplineId = this.getAttribute('data-id')
             }
           }
         }
