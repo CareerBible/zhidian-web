@@ -12,6 +12,14 @@ var universityCollegeId = null
 var disciplineId = null
 
 
+function chooseUniversity(id, text, box){
+  alert(text)
+  alert(id)
+  universityCollegeId = id
+  document.querySelector('university-text').value = text
+  box.innerHTML = ''
+}
+
 function showUniversityList(searchText, box){
   var xhr = new XMLHttpRequest()
   xhr.open('GET', '/api/universityCollege/list?search='+searchText)
@@ -25,17 +33,7 @@ function showUniversityList(searchText, box){
         } else {
           box.innerHTML = ''
           for(var i=0; i<data.data.list.length; i++){
-            box.innerHTML += '<li class="university-options" data-id="'+data.data.list[i].id+'">'+data.data.list[i].name+'</li>'
-          }
-          var _options = document.querySelectorAll('.university-options')
-          for(var i=0; i<_options.length; i++){
-            _options[i].onclick = function() {
-              document.querySelector('university-text').value = this.textContent
-              alert(this)
-              alert(this.data_id)
-              universityCollegeId = this.getAttribute('data-id')
-              alert(universityCollegeId)
-            }
+            box.innerHTML += '<li onclick="chooseUniversity('+data.data.list[i].id+','+data.data.list[i].name+','+box+');">'+data.data.list[i].name+'</li>'
           }
         }
       } else {
