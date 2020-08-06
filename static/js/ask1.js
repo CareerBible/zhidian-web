@@ -31,6 +31,8 @@ function showUniversityList(searchText, box){
           for(var i=0; i<_options.length; i++){
             _options[i].onclick = function() {
               document.querySelector('university-text').value = this.textContent
+              alert(this)
+              alert(this.data_id)
               universityCollegeId = this.getAttribute('data-id')
               alert(universityCollegeId)
             }
