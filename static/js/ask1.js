@@ -184,7 +184,7 @@ var formData2json = function (formData) {
 }
 
 
-document.querySelector('button[type="button"]').onclick = function(event){
+document.querySelector('input[type="submit"]').onclick = function(event){
   if(document.querySelector('#university-text').value == ''){
     document.querySelector('#university-error').style.display = 'block'
     window.location.href = '#university'
