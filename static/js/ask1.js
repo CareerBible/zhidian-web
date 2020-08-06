@@ -9,9 +9,55 @@ var employmentNum = 0
 var ageChecked = null
 var treatmentChecked = null
 
+
+// function listText(box){
+//   var xhr = new XMLHttpRequest()
+//   xhr.open('GET', '/api/discipline/list')
+//   xhr.send()
+//   xhr.onreadystatechange = function () {
+//     if (xhr.readyState === 4) {
+//       var data = JSON.parse(xhr.responseText)
+//       if(data.code === 200) {
+//         if(data.data == null || data.data.length === 0){
+//           box.innerHTML = '<li><a href="#" class="search-results">暂无搜索结果</a></li>'
+//         } else {
+//           box.innerHTML = ''
+//           for(var i=0;i<data.data.length; i++){
+//             box.innerHTML += '<li>'+data.data[i].universityName+'</li>'
+//           }
+//         }
+//       } else {
+//         alert(data.errmsg)
+//       }
+//     } else {
+//       console.debug('fetchSearchHintList: connecting')
+//     }
+//   }
+// }
+
 // 1.您就读的大学名称
-document.querySelector('#university-text').onclick = function () {
+document.querySelector('#university-text').onclick = function (e) {
+  e.stopPropagation()
   document.querySelector('#university-error').style.display = 'none'
+  if( this.value == ''){
+    document.querySelector('#university-list').style.display = 'none'
+  } else {
+    document.querySelector('#university-list').style.display = 'block'
+  }
+}
+
+document.querySelector('#university-text').oninput = function (e) {
+  e.stopPropagation()
+  if( this.value == ''){
+    document.querySelector('#university-list').style.display = 'none'
+  } else {
+    document.querySelector('#university-list').style.display = 'block'
+  }
+  // listText(document.querySelector('#university-list'))
+}
+
+document.body.onclick = function () {
+  document.querySelector('#university-list').style.display = 'none'
 }
 
 // 2.您就读的年级
