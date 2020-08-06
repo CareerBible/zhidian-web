@@ -184,7 +184,7 @@ var formData2json = function (formData) {
 }
 
 
-document.querySelector('input[type="submit"]').onclick = function(){
+document.querySelector('input[type="submit"]').onclick = function(event){
   if(document.querySelector('#university-text').value == ''){
     document.querySelector('#university-error').style.display = 'block'
     window.location.href = '#university'
@@ -246,8 +246,8 @@ document.querySelector('input[type="submit"]').onclick = function(){
   for(var i=0; i<understandProfessionalInformation.length; i++){
     _arrUnderstandProfessionalInformation.push(understandProfessionalInformation[i].value)
   }
-  
 
+  event.preventDefault()
   var reqData = JSON.stringify({
     'universityCollegeId': document.querySelector('#university-text').value,
     'weChatUserId': localStorage.getItem('uid'),
