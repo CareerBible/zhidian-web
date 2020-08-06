@@ -8,6 +8,7 @@ var careerNum = 0
 var employmentNum = 0
 var ageChecked = null
 var treatmentChecked = null
+var universityCollegeId = null
 
 
 function showUniversityList(searchText, box){
@@ -30,7 +31,7 @@ function showUniversityList(searchText, box){
           var universityOptions = document.querySelectorAll('.university-options')
           for(var i=0; i<universityOptions.length; i++){
             universityOptions[i].onclick = function() {
-              document.querySelector('#university-text').value = universityIds[i]
+              universityCollegeId = universityIds[i]
             }
           }
         }
@@ -281,7 +282,7 @@ document.querySelector('#employment-text').onclick = function() {
 
 
 document.querySelector('input[type="submit"]').onclick = function(event){
-  if(document.querySelector('#university-text').value == ''){
+  if(universityCollegeId == null){
     document.querySelector('#university-error').style.display = 'block'
     window.location.href = '#university'
     return false
@@ -345,7 +346,7 @@ document.querySelector('input[type="submit"]').onclick = function(event){
 
   event.preventDefault()
   var reqData = JSON.stringify({
-    'universityCollegeId': document.querySelector('#university-text').value,
+    'universityCollegeId': universityCollegeId,
     'weChatUserId': localStorage.getItem('uid'),
     'elapsedTime': new Date().getTime(),
     'employmentRelatedInformation': document.querySelector('#employmentRelatedInformation').value,
