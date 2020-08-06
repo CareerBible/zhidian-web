@@ -12,12 +12,16 @@ var universityCollegeId = null
 var disciplineId = null
 
 
-function chooseUniversity(id, text, box){
-  alert(text)
-  alert(id)
+function chooseUniversity(id, text){
   universityCollegeId = id
-  document.querySelector('university-text').value = text
-  box.innerHTML = ''
+  document.getElementById("university-text").value=text;
+  document.querySelector('#university-list').innerHTML = ''
+}
+
+function chooseDiscipline(id, text){
+  disciplineId = id
+  document.getElementById("professional-text").value=text;
+  document.querySelector('#professional-list').innerHTML = ''
 }
 
 function showUniversityList(searchText, box){
@@ -33,7 +37,7 @@ function showUniversityList(searchText, box){
         } else {
           box.innerHTML = ''
           for(var i=0; i<data.data.list.length; i++){
-            box.innerHTML += '<li onclick="chooseUniversity('+data.data.list[i].id+','+data.data.list[i].name+','+box+');">'+data.data.list[i].name+'</li>'
+            box.innerHTML += '<li onclick= chooseUniversity('+data.data.list[i].id+',"'+data.data.list[i].name+'");>'+data.data.list[i].name+'</li>'
           }
         }
       } else {
@@ -56,15 +60,9 @@ function showDisciplineList(searchText, box){
         } else {
           box.innerHTML = ''
           for(var i=0; i<data.data.list.length; i++){
-            box.innerHTML += '<li class="discipline-options" data-id="'+data.data.list[i].id+'">'+data.data.list[i].name+'</li>'
+            box.innerHTML += '<li onclick= chooseDiscipline('+data.data.list[i].id+',"'+data.data.list[i].name+'");>'+data.data.list[i].name+'</li>'
           }
-          var _options = document.querySelectorAll('.discipline-options')
-          for(var i=0; i<_options.length; i++){
-            _options[i].onclick = function() {
-              document.querySelector('#professional-text').value = this.textContent
-              disciplineId = this.getAttribute('data-id')
-            }
-          }
+          
         }
       } else {
         alert(data.errmsg)
@@ -350,7 +348,7 @@ document.querySelector('input[type="submit"]').onclick = function(event){
     'weChatUserId': localStorage.getItem('uid'),
     'elapsedTime': new Date().getTime(),
     'employmentRelatedInformation': document.querySelector('#employmentRelatedInformation').value,
-    'disciplineId': document.querySelector('#professional-text').value,
+    'disciplineId': disciplineId,
     'grade': document.querySelector('input[name="grade"]:checked').value,
     'understandFutureSalary': document.querySelector('input[name="understandFutureSalary"]:checked').value,
     'selectProfessionalReasons': _arrSelectProfessionalReasons,
