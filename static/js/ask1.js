@@ -10,6 +10,7 @@ var ageChecked = null
 var treatmentChecked = null
 var universityCollegeId = null
 var disciplineId = null
+var startedTime = new Date().getTime()
 
 
 function chooseUniversity(id, text){
@@ -346,7 +347,7 @@ document.querySelector('input[type="submit"]').onclick = function(event){
   var reqData = JSON.stringify({
     'universityCollegeId': universityCollegeId,
     'weChatUserId': localStorage.getItem('uid'),
-    'elapsedTime': new Date().getTime(),
+    'elapsedTime': startedTime,
     'employmentRelatedInformation': document.querySelector('#employmentRelatedInformation').value,
     'disciplineId': disciplineId,
     'grade': document.querySelector('input[name="grade"]:checked').value,
