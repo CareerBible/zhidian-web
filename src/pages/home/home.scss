@@ -1,0 +1,125 @@
+.home-wrap{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  text-align: center;
+  color: #666;
+  font-size: 18px;
+  background-image: url('https://zhidian.dookbook.info/static/img/shouye-bg.jpg');
+  background-position: top center;
+  background-size: cover;
+}
+.home-cont{
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  margin-top: -300px;
+  display: inline-block;
+}
+.home-logo{
+  width: 90px;
+  height: 90px;
+  text-align: center;
+  margin: 0 auto;
+  .taro-img, image, img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.biaoyu {
+  font-size: 36px;
+  color: #18366a;
+  font-weight: bold;
+  letter-spacing: 3px;
+  margin-top: 20px;
+  .taro-text{
+    padding: 0 15px;
+  }
+}
+
+.shuruk {
+  position: relative;
+  display: flex;
+  margin: 30px 0 30px 10%;
+  width: 80%;
+  height: 70px;
+  background: #fff;
+  border: 2px solid #18366a;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(24, 54, 106, 0.4);
+  &:after{
+    display: none;
+  }
+  .at-input{
+    flex: 1;
+    background: none;
+    border: none;
+    font-size: 24px;
+    padding-left: 20px;
+    box-sizing: border-box;
+    color: #18366a;
+    padding: 0;
+    height: 100%;
+    text-align: left;
+    .at-input__container{
+      height: 100%;
+    }
+  }
+  .weui-btn_default, button{
+    background: #18366a;
+    border: none;
+    color: #fff;
+    width: 120px;
+    font-size: 20px;
+    height: 70px;
+    border-radius: 0 10px 10px 0;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    &.button-hover{
+      background: #18366a;
+      color: #fff;
+    }
+  }
+}
+
+.mulv {
+  width: 180px;
+  font-size: 24px;
+  color: #18366a;
+  padding: 7px 12px;
+  border: 2px solid #18366a;
+  border-radius: 10px;
+  background: #fff;
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.chaxun{
+  .taro-text{
+    font-size: 28px;
+    color: #b20404;
+    font-weight: bold;
+    padding-right: 4px;
+  }
+}
+
+.wx-code{
+  width: 180px;
+  height: 230px;
+  margin: 0 auto;
+  padding-top: 50px;
+  .taro-img, image, img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.gzh{
+  margin-top: 0;
+  font-size: 18px;
+}

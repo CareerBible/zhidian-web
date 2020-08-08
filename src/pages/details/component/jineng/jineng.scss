@@ -1,0 +1,211 @@
+// .jineng-wrap{
+//   // width: 100%;
+//   // height: 100%;
+//   // background-color: rgba(0, 0, 0, .5);
+//   // position: absolute;
+//   // z-index: 1;
+//   // left: 0;
+//   // bottom: 0;
+//   // background-color: rgba(0, 0, 0, 0);
+//   .jineng-classify{
+//     position: relative;
+//     &.green{
+//       .classify-round{
+//         border-color: #5dd3e9;
+//       }
+//       .classify-cont{
+//         border-color: #5dd3e9;
+//         .taro-text{
+//           background: #5dd3e9;
+//         }
+//       }
+//     }
+//     &.blue{
+//       .classify-round{
+//         border-color: #7aacfe;
+//       }
+//       .classify-cont{
+//         border-color: #7aacfe;
+//         .taro-text{
+//           background: #7aacfe;
+//         }
+//       }
+//     }
+//     &.yello{
+//       .classify-round{
+//         border-color: #fdb84d;
+//       }
+//       .classify-cont{
+//         border-color: #fdb84d;
+//         .taro-text{
+//           background: #fdb84d;
+//         }
+//       }
+//     }
+//     .classify-round{
+//       position: absolute;
+//       width: 110px;
+//       height: 110px;
+//       border-radius: 100%;
+//       text-align: center;
+//       line-height: 100px;
+//       border: solid 6px;
+//       background-color: #fff;
+//       z-index: 1;
+//       left: 50%;
+//       margin-left: -55px;
+//       top: -80px;
+//       font-size: 20px;
+//       color: #333;
+//     }
+//     .classify-cont{
+//       width: 300px;
+//       height: auto;
+//       border: solid 6px;
+//       padding: 30px 5px 108px 5px;
+//       border-radius: 20px;
+//       background-color: #fff;
+//       .taro-text{
+//         float: left;
+//         color: #fff;
+//         border-radius: 10px;
+//         margin: 5px;
+//         font-size: 14px;
+//         padding: 6px 12px;
+//         display: inline-block;
+//       }
+//     }
+//   }
+// }
+
+
+
+.yaoqiu-wrap{
+  width: 100%;
+  height: 400px;
+  position: relative;
+  .yaoqiu-round{
+    width: 316px;
+    height: 316px;
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    margin-left: -158px;
+    z-index: 0;
+    .taro-img, image, img{
+      width: 100%;
+      height: 100%;
+    }
+    .zhiwei{
+      width: 100%;
+      text-align: center;
+      line-height: 316px;
+      font-size: 32px;
+      position: absolute;
+      left: 0;
+    }
+  }
+  .yaoqiu-classify{
+    position: absolute;
+    width: 110px;
+    height: 110px;
+    z-index: 9;
+    &.active{
+      z-index: 10;
+      .classify-round{
+        z-index: 99;
+      }
+      .classify-cont{
+        display: block;
+        z-index: 88;
+      }
+      &.green{
+        .classify-round{
+          border-color: #5dd3e9;
+        }
+        .classify-cont{
+          border-color: #5dd3e9;
+          .taro-text{
+            background: #5dd3e9;
+          }
+        }
+      }
+      &.blue{
+        .classify-round{
+          border-color: #7aacfe;
+        }
+        .classify-cont{
+          border-color: #7aacfe;
+          .taro-text{
+            background: #7aacfe;
+          }
+        }
+      }
+      &.yello{
+        .classify-round{
+          border-color: #fdb84d;
+        }
+        .classify-cont{
+          border-color: #fdb84d;
+          .taro-text{
+            background: #fdb84d;
+          }
+        }
+      }
+    }
+    &.green{
+      top: 40px;
+      left: 50%;
+      margin-left: -168px;
+    }
+    &.blue{
+      top: 40px;
+      right: 50%;
+      margin-right: -168px;
+    }
+    &.yello{
+      top: 270px;
+      right: 50%;
+      margin-right: -55px;
+    }
+    .classify-round{
+      position: absolute;
+      width: 110px;
+      height: 110px;
+      border-radius: 100%;
+      text-align: center;
+      line-height: 100px;
+      border: solid 6px #fff;
+      background-color: #fff;
+      box-shadow: 0px 6px 10px rgba(0, 0, 0, .03);
+      z-index: 3;
+      font-size: 20px;
+      color: #333;
+      top: 0;
+      left: 0;
+    }
+    .classify-cont{
+      width: 300px;
+      height: auto;
+      border: solid 6px #fff;
+      padding: 20px 10px 10px 10px;
+      border-radius: 20px;
+      background-color: #fff;
+      z-index: 2;
+      position: absolute;
+      top: 90px;
+      left: 50%;
+      margin-left: -150px;
+      display: none;
+      .taro-text{
+        float: left;
+        color: #fff;
+        border-radius: 10px;
+        margin: 5px;
+        font-size: 14px;
+        padding: 6px 12px;
+        display: inline-block;
+      }
+    }
+  }
+}

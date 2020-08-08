@@ -1,0 +1,24 @@
+.catalog-wrap{
+  background: #fff;
+  padding-right: 20px;
+  .catalog-item{
+    font-size: 28px;
+    padding-left: 20px;
+    &.collapsed{
+      .catalog-item-cont{
+        display: none;
+      }
+    }
+    .catalog-item-title{
+      width: 100%;
+      border-bottom: solid 1px #e5e5e5;
+      padding: 20px 0;
+      .at-icon{
+        margin-right: 10px;
+      }
+    }
+    .catalog-item-cont{
+      display: block;
+    }
+  }
+}

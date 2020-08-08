@@ -1,0 +1,30 @@
+{
+  "id": "1987541",
+  "name": "zhidian",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "6119216",
+      "name": "上-三角",
+      "font_class": "top-s",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "6119218",
+      "name": "下-三角",
+      "font_class": "below-s",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "1602518",
+      "name": "进度查询",
+      "font_class": "search",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    }
+  ]
+}

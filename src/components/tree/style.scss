@@ -1,0 +1,62 @@
+
+// @import "~taro-ui/dist/style/components/icon.scss";
+// @import "~taro-ui/dist/style/components/checkbox.scss";
+@import './utils.scss';
+
+$cls-prefix: 'cp-tree';
+
+.#{$cls-prefix} {
+  .tree {
+    padding-left: 36px;
+    &-item{
+      // padding: 10px 0;
+    }
+    &-item-content {
+      position: relative;
+    }
+    &-item-more {
+      width: 40px;
+      height: 90px;
+      position: absolute;
+      padding-right: 16px;
+      top: 0;
+      left: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+  }
+}
+
+.#{$cls-prefix}-radio {
+  .tree-item-radio {
+    color: #333;
+    font-size: 32px;
+    @include hairline-bottom(#d6e4ef);
+    // padding-bottom: 24px;
+    // padding-left: 48px;
+    padding: 20px 0 20px 48px;
+    .label {
+      padding-right: 24px;
+    }
+    .checked {
+      // color: #1890FF;
+    }
+    .disabled {
+      opacity: 0.3;
+    }
+    .at-icon-check{
+      opacity: 0;
+    }
+  }
+}
+
+
+.#{$cls-prefix}-multiple {
+  .at-checkbox::before {
+    border-top: 0;
+  }
+}
+
+
