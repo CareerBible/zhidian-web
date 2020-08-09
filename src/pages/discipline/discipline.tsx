@@ -111,7 +111,7 @@ const optionBing = {
 
 export default class Discipline extends Component<any,any> {
   config = {
-    navigationBarTitleText: '专业职位列表'
+    // navigationBarTitleText: '专业名称 - 职典'
   }
   constructor(props) {
     super(props);
@@ -134,7 +134,7 @@ export default class Discipline extends Component<any,any> {
         ]},
         {title: '年限', key: 'workingYears', itemCurrentName: '不限', expand: false, list: [
           {name: '不限', code: '0'},
-          {name: '2年以下', code: '1'},
+          {name: '1年以下', code: '1'},
           {name: '1-3年', code: '2'},
           {name: '3-5年', code: '3'},
           {name: '5-10年', code: '4'},
@@ -163,7 +163,7 @@ export default class Discipline extends Component<any,any> {
 
     if (this.$router.params.name) {
       Taro.setNavigationBarTitle({
-        title: decodeURI(this.$router.params.name) + '专业'
+        title: decodeURI(this.$router.params.name) + ' - 职典'
       })
     }
   }

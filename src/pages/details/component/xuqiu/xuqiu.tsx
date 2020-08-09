@@ -61,7 +61,7 @@ const optionBing4 = {
     trigger: 'item',
     formatter: '{a} <br/>{b}: {c} ({d}%)'
   },
-  legend: { orient: 'vertical', left: 10, data: ['互联网', '房地产', '金融', '银行', '媒体'] },
+  legend: { orient: 'vertical', left: 10, data: [] },
   series: {
     name: '访问来源',
     type: 'pie',
@@ -111,6 +111,7 @@ export default class Xuqiu extends Component<any, any> {
       biyerenshuSeriesData: [],
       zaipinzhiweiSeriesData: [],
       chengshizhanbiSeriesData: [],
+      hangyetop5LegendData: [],
       hangyetop5SeriesData: [],
       zhiweifenbuSeriesData: [],
     }
@@ -226,7 +227,7 @@ export default class Xuqiu extends Component<any, any> {
 
   // 行业top5
   listTotalIndustry = () => {
-    let { hangyetop5SeriesData } = this.state
+    let { hangyetop5LegendData, hangyetop5SeriesData } = this.state
     let params = {
       positionId: this.$router.params.positionid,
       disciplineCode: this.$router.params.disciplineCode,
@@ -234,20 +235,25 @@ export default class Xuqiu extends Component<any, any> {
     CommonApi.listTotalIndustry(params).then(resp => {
       console.log('🧚‍♀️ 🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️行业top5 resp: ', resp)
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        hangyetop5LegendData = resp.data.list.map(item => {
+          return item.industry
+        })
         hangyetop5SeriesData = resp.data.list.map(item => {
           return {name: item.industry, value: +item.totalnumber}
         })
       } else {
+        hangyetop5LegendData = []
         hangyetop5SeriesData = []
       }
       this.setState({
-        hangyetop5SeriesData
+        hangyetop5LegendData,
+        hangyetop5SeriesData,
       })
     })
   };
 
   render() {
-    let { biyerenshuSeriesData, zaipinzhiweiSeriesData, chengshizhanbiSeriesData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state
+    let { biyerenshuSeriesData, zaipinzhiweiSeriesData, chengshizhanbiSeriesData, hangyetop5LegendData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state
     return (
       <View className="echarts-box-wrap">
         {/* 2个饼图合集 */}
@@ -272,7 +278,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 中国地图 */}
         <View className="has-title-box">
-          <View className="box-title">在聘职位-<Text className="color-orange">城市分布</Text></View>
+          <View className="box-title"><Text className="color-orange">区域分布</Text></View>
           <View className="box-cont">
             <ChinaMap ref={this.refMapChart} />
           </View>
@@ -280,7 +286,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 实心饼图 */}
         <View className="has-title-box">
-          <View className="box-title">在聘职位-<Text className="color-orange">城市占比</Text></View>
+          <View className="box-title"><Text className="color-orange">城市分布</Text></View>
           <View className="box-cont pr-30">
             {chengshizhanbiSeriesData.length
             ? <Chart
@@ -296,14 +302,14 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 空心饼图 */}
         <View className="has-title-box">
-          <View className="box-title">在聘职位-<Text className="color-orange">行业TOP5</Text></View>
+          <View className="box-title"><Text className="color-orange">行业TOP5</Text></View>
           <View className="box-cont pr-30">
             {hangyetop5SeriesData.length
             ? <Chart
                 chartId='ddd'
                 width='100%'
                 height='300px'
-                option={{...optionBing4, series: {...optionBing4.series, data: hangyetop5SeriesData}}}
+                option={{...optionBing4, legend: {...optionBing4.legend, data: hangyetop5LegendData}, series: {...optionBing4.series, data: hangyetop5SeriesData}}}
               />
             : <View className="no-data"></View>
             }
@@ -312,7 +318,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 南丁格尔饼图 */}
         <View className="has-title-box">
-          <View className="box-title">在聘职位-<Text className="color-orange">职位分布</Text></View>
+          <View className="box-title"><Text className="color-orange">工作经验</Text></View>
           <View className="box-cont pr-30">
             {zhiweifenbuSeriesData.length
             ? <Chart

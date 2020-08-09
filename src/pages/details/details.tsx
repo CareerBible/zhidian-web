@@ -11,7 +11,7 @@ import arrow from '@/assets/images/arrow.png';
 
 export default class Details extends Component<any,any> {
   config = {
-    navigationBarTitleText: '详情'
+    // navigationBarTitleText: '职位名称 - 职典'
   }
   constructor(props) {
     super(props);
@@ -32,6 +32,9 @@ export default class Details extends Component<any,any> {
     if (this.$router.params.positionname) {
       this.setState({
         positionName: decodeURI(this.$router.params.positionname)
+      })
+      Taro.setNavigationBarTitle({
+        title: decodeURI(this.$router.params.positionname) + ' - 职典'
       })
     }
   }

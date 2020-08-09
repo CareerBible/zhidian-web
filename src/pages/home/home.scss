@@ -46,7 +46,6 @@
   width: 80%;
   height: 70px;
   background: #fff;
-  border: 2px solid #18366a;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(24, 54, 106, 0.4);
   &:after{
@@ -60,9 +59,12 @@
     padding-left: 20px;
     box-sizing: border-box;
     color: #18366a;
-    padding: 0;
+    padding: 0 20px;
     height: 100%;
     text-align: left;
+    border: 1px solid #18366a;
+    margin-left: 0;
+    border-radius: 10px;
     .at-input__container{
       height: 100%;
     }
@@ -83,6 +85,25 @@
     &.button-hover{
       background: #18366a;
       color: #fff;
+    }
+  }
+  .down-box{
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 20px;
+    color: #666;
+    position: absolute;
+    left: 0;
+    top: 60px;
+    background-color: #fff;
+    line-height: 30px;
+    border-radius: 0 0 10px 10px;
+    z-index: 9;
+    border: 1px solid #18366a;
+    border-top: none;
+    .down-box-item{
+      padding: 10px 0;
+      text-align: left;
     }
   }
 }

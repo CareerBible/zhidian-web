@@ -1,6 +1,12 @@
 import http from '@/utils/http.js'
 
 export class CommonApi {
+  // 获取codeURL
+  static getAuthorizeCodeUrl = (data) => http.getData('/api/wechat/getAuthorizeCodeUrl', data)
+
+  // 根据code获取用户信息
+  static getUserInfo = (data) => http.getData('/api/wechat/getUserInfo', data)
+
   // 根据专业名称搜索
   static searchDisciplineName = (data) => http.getData('/api/discipline/list', data)
 

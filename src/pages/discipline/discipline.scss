@@ -203,21 +203,20 @@
     .down-box{
       width: 100%;
       padding: 10px 20px;
-      font-size: 24px;
+      font-size: 20px;
       color: #666;
       position: absolute;
       left: 0;
-      top: 60px;
+      top: 70px;
       background-color: #fff;
-      line-height: 48px;
-      border-radius: 10px;
+      line-height: 30px;
+      border-radius: 20px;
       z-index: 9;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-top: none;
       .down-box-item{
-        border-bottom: dashed 1px #e5e5e5;
         padding: 10px 0;
-        &:last-child{
-          border-bottom: none;
-        }
+        text-align: left;
       }
     }
   }

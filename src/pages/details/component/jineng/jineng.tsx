@@ -103,9 +103,9 @@ export default class Xuqiu extends Component<any, any> {
     })
   };
 
-  // 职业要求
+  // 职位要求
   professionalRequirements = () => {
-    console.log('🇫🇯 职业要求', )
+    console.log('🇫🇯 职位要求', )
     let { professionalRequirements }= this.state
     let params = {
       positionId: this.$router.params.positionid,
@@ -113,7 +113,7 @@ export default class Xuqiu extends Component<any, any> {
     }
     CommonApi.professionalRequirements(params).then(resp => {
       if (resp.code == 200 && resp.data) {
-        console.log('🇫🇯 职业要求 resp: ', resp)
+        console.log('🇫🇯 职位要求 resp: ', resp)
         resp.data.professionalRequirementsList.map(item => {
           if (item.name == '工作技能') {
             professionalRequirements.jineng = item.list
@@ -130,7 +130,7 @@ export default class Xuqiu extends Component<any, any> {
     })
   };
 
-  // 点击查看职业要求
+  // 点击查看职位要求
   handleViewCont = (str) => {
     let { requireData } = this.state
     console.log('str: ', str)
@@ -166,7 +166,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 空心饼图 */}
         <View className="has-title-box position-relative" style={{marginBottom: requireData.zhishi ? '150px' : '50px'}}>
-          <View className="box-title">职业要求</View>
+          <View className="box-title">职位要求</View>
           <View className="box-cont2">
             {/* <Chart
               chartId='bbb'
