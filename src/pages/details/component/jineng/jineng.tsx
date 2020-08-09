@@ -4,6 +4,7 @@ import { AtTabs, AtTabsPane } from 'taro-ui';
 import './jineng.scss';
 import Chart from 'taro-echarts';
 import jineng from '@/assets/images/jineng.png';
+import { CommonApi } from '@/api/Common.api';
 
 // 词云文字颜色集
 const colorList = ['#333333', '#514991', '#529b6e', '#5c315d', '#568096', '#3b9b0b', '#951b5a', '#b8976e', '#56a19b']
@@ -62,42 +63,70 @@ export default class Xuqiu extends Component<any, any> {
         jineng: false,
         suzhi: false,
         zhishi: true,
+      },
+      professionalRequirements: {
+        jineng: [],
+        suzhi: [],
+        zhishi: [],
       }
     }
   };  
 
   componentWillMount () {
-    this.queryWordCloudData()
+    // this.queryWordCloudData()
+    this.dataAnalysis()
+    this.professionalRequirements()
   };
 
   componentDidMount () { };
 
-  // 获取词云参数
-  queryWordCloudData = () => {
-    let arr:any = []
-    let wordCloudData = [
-      { name: "aaaaaaaaaaa", value: 237 },
-      { name: "按时发大水打发", value: 221 },
-      { name: "去玩儿群无", value: 222 },
-      { name: "更舒服大概", value: 224 },
-      { name: "阿斯顿发阿斯顿发", value: 245 },
-      { name: "阿萨", value: 346 },
-      { name: "万千瓦若", value: 241 },
-      { name: "电饭锅和", value: 242 },
-      { name: "几个号", value: 237 },
-      { name: "申达股份是的", value: 221 },
-      { name: "航空港好接口哥哥", value: 237 },
-      { name: "改改改返回电饭锅和", value: 224 },
-      { name: "十多个从VB是否", value: 345 },
-      { name: "陈先生的发个", value: 346 },
-      { name: "认为他问", value: 241 },
-      { name: "薪酬VB", value: 242 },
-    ]
-    wordCloudData.map((item:any, idx:number) => {
-      arr.push({...item, label: {color: colorList[idx%9], fontSize: Math.floor(item.value/14)}})
+  // 数据分析
+  dataAnalysis = () => {
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.dataAnalysis(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        console.log('🧚‍♀️ 数据分析 resp: ', resp)
+        let arr:any = []
+        let wordCloudData:any = resp.data.list.map(item => {
+          return {name: item.name, value: +item.percentage}
+        })
+        wordCloudData.map((item:any, idx:number) => {
+          arr.push({...item, label: {color: colorList[idx%9], fontSize: Math.floor(item.value/14)}})
+        })
+        this.setState({
+          wordCloudArr: arr
+        })
+      }
     })
-    this.setState({
-      wordCloudArr: arr
+  };
+
+  // 职业要求
+  professionalRequirements = () => {
+    console.log('🇫🇯 职业要求', )
+    let { professionalRequirements }= this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.professionalRequirements(params).then(resp => {
+      if (resp.code == 200 && resp.data) {
+        console.log('🇫🇯 职业要求 resp: ', resp)
+        resp.data.professionalRequirementsList.map(item => {
+          if (item.name == '工作技能') {
+            professionalRequirements.jineng = item.list
+          } else if (item.name == '通用素质') {
+            professionalRequirements.suzhi = item.list
+          } else if (item.name == '专业知识') {
+            professionalRequirements.zhishi = item.list
+          }
+        })
+        this.setState({
+          professionalRequirements
+        })
+      }
     })
   };
 
@@ -118,8 +147,8 @@ export default class Xuqiu extends Component<any, any> {
   };
 
   render() {
-    const jinengClassify = ['JAVA', 'HTML', 'CSS', 'DUBBO', 'VUE', 'JVM', 'HTML']
-    let { requireData, wordCloudArr } = this.state
+    // const jinengClassify = ['JAVA', 'HTML', 'CSS', 'DUBBO', 'VUE', 'JVM', 'HTML']
+    let { requireData, wordCloudArr, professionalRequirements } = this.state
 
     return (
       <View className="echarts-box-wrap">
@@ -148,33 +177,39 @@ export default class Xuqiu extends Component<any, any> {
             <View className="yaoqiu-wrap">
               <View className={requireData.jineng ? 'yaoqiu-classify green active' : 'yaoqiu-classify green'}>
                 <View className="classify-round" onClick={() => {this.handleViewCont('jineng')}}>工作技能</View>
-                <View className="classify-cont">
-                  {jinengClassify && jinengClassify.map((item:any, idx:number) => {
-                    return (<Text key={idx}>{item}</Text>)
-                  })}
-                </View>
+                  {professionalRequirements && professionalRequirements.jineng.length 
+                    ? <View className="classify-cont">
+                      {professionalRequirements.jineng.map((item:any, idx:number) => {
+                        return (<Text key={idx}>{item}</Text>)
+                      })}
+                    </View>
+                  : null}
               </View>
 
               <View className={requireData.suzhi ? 'yaoqiu-classify blue active' : 'yaoqiu-classify blue'}>
                 <View className="classify-round" onClick={() => {this.handleViewCont('suzhi')}}>通用素质</View>
-                <View className="classify-cont">
-                  {jinengClassify && jinengClassify.map((item:any, idx:number) => {
-                    return (<Text key={idx}>{item}</Text>)
-                  })}
-                </View>
+                  {professionalRequirements && professionalRequirements.suzhi.length 
+                    ? <View className="classify-cont">
+                      {professionalRequirements.suzhi.map((item:any, idx:number) => {
+                        return (<Text key={idx}>{item}</Text>)
+                      })}
+                    </View>
+                  : null}
               </View>
 
               <View className={requireData.zhishi ? 'yaoqiu-classify yello active' : 'yaoqiu-classify yello'}>
                 <View className="classify-round" onClick={() => {this.handleViewCont('zhishi')}}>专业知识</View>
-                <View className="classify-cont">
-                  {jinengClassify && jinengClassify.map((item:any, idx:number) => {
-                    return (<Text key={idx}>{item}</Text>)
-                  })}
-                </View>
+                {professionalRequirements && professionalRequirements.zhishi.length 
+                    ? <View className="classify-cont">
+                      {professionalRequirements.zhishi.map((item:any, idx:number) => {
+                        return (<Text key={idx}>{item}</Text>)
+                      })}
+                    </View>
+                  : null}
               </View>
 
               <View className="yaoqiu-round">
-                <View className="zhiwei">JAVA工程师</View>
+                <View className="zhiwei">{decodeURI(this.$router.params.positionname)}</View>
                 <Image src={jineng} />
               </View>
             </View>

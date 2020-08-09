@@ -1,8 +1,9 @@
 import Taro, { Component } from '@tarojs/taro';
-import { View, Text, Button, Image } from '@tarojs/components';
+import { View, Text, Button, Image, Input } from '@tarojs/components';
 import './discipline.scss';
-import { AtIcon, AtButton, AtSearchBar } from 'taro-ui';
+import { AtIcon, AtButton, AtSearchBar, AtInput } from 'taro-ui';
 import Chart from 'taro-echarts';
+import { Common } from '@/utils/common.js';
 import { CommonApi } from '@/api/Common.api';
 
     
@@ -115,6 +116,7 @@ export default class Discipline extends Component<any,any> {
   constructor(props) {
     super(props);
     this.state = {
+      searchDisciplineCode: null,
       sortXinchou: 'DESC',
       sortZhiwei: null,
       filterData: {
@@ -148,6 +150,8 @@ export default class Discipline extends Component<any,any> {
         ]}
       ],
       dataSource: [],
+      searchDownlist: [],
+      isShowDownBox: true,
     }
   };
 
@@ -166,9 +170,9 @@ export default class Discipline extends Component<any,any> {
 
   // 根据专业检索职位列表
   query = () => {
-    let { filterData, sortXinchou, sortZhiwei } = this.state
+    let { searchDisciplineCode, filterData, sortXinchou, sortZhiwei } = this.state
     var params = {
-      disciplineCode: this.$router.params.code,
+      disciplineCode: searchDisciplineCode ? searchDisciplineCode : this.$router.params.code,
       whetherOrderBySalaryMin: sortXinchou,
       whetherOrderByPosts: sortZhiwei
     }
@@ -193,6 +197,10 @@ export default class Discipline extends Component<any,any> {
         })
         this.setState({
           dataSource: arr
+        })
+      } else {
+        this.setState({
+          dataSource: []
         })
       }
     })
@@ -241,18 +249,44 @@ export default class Discipline extends Component<any,any> {
 
   // 搜索栏-输入改变
   searchBarOnChange (value) {
-    let { filterData } = this.state
+    let { filterData, searchDownlist, isShowDownBox } = this.state
+    console.log('value: ', value)
+    CommonApi.searchDisciplineName({search: value}).then(resp => {
+      console.log('👺 根据专业名称获取目录 resp: ', resp)
+      if (resp.code == 200) {
+        let arr:any = Common.getTree(resp.data.list, 'name', 'code', 'listChild')
+        this.setState({
+          searchDownlist: arr,
+        })
+      }
+    })
     filterData.searchVal = value
+    isShowDownBox = true
     this.setState({
-      filterData
+      filterData,
+      searchDownlist,
+      isShowDownBox,
     })
   };
 
+  // 点击搜索下拉
+  handleClickSearchItem = (val, name) => {
+    let { filterData, searchDisciplineCode, isShowDownBox } = this.state
+    filterData.searchVal = name
+    searchDisciplineCode = val
+    isShowDownBox = false
+    this.setState({
+      filterData,
+      searchDisciplineCode,
+      isShowDownBox,
+    })
+    setTimeout(() => {
+      this.query() 
+    });
+  }
+
   // 搜索栏-确定搜索
   handOnSearch () {
-    // setTimeout(() => {
-    //   this.query()
-    // });
     Taro.navigateTo({
       url: '/pages/catalog/catalog?search=' + this.state.filterData.searchVal,
     })
@@ -273,18 +307,26 @@ export default class Discipline extends Component<any,any> {
   }
 
   render() {
-    const { filterData, filterList, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData } = this.state
+    const { filterData, filterList, searchDownlist, isShowDownBox, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData } = this.state
 
     return (
       <View className='discipline-wrap'>
         <View className="discipline-header">
           <View className="at-row discipline-search">
-            <View className="at-col" onClick={this.goBack}>
-              <AtIcon value='chevron-left' size='30' color='#fff'></AtIcon>
+            <View className="at-col at-col-2">
+              <AtIcon value='chevron-left' size='30' color='#fff' onClick={this.goBack}></AtIcon>
             </View>
-            <View className="at-col">
+            <View className="at-col at-col-10 discipline-search-input-wrap">
+              <AtInput name="searchVal" value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} />
+              {filterData.searchVal && searchDownlist.length && isShowDownBox
+                 ? <View className="down-box">
+                    {searchDownlist.map(searchItem => {
+                      return (<View className="down-box-item" onClick={() => this.handleClickSearchItem(searchItem.value, searchItem.name)}>{searchItem.name}</View>)
+                    })}
+                  </View>
+                : null
+              }
               {/* <AtSearchBar value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} onActionClick={this.handOnSearch.bind(this)} /> */}
-              <AtSearchBar value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} onActionClick={this.handOnSearch.bind(this)} />
             </View>
           </View>
           {/* 筛选 */}

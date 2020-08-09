@@ -117,9 +117,11 @@ export default class Xuqiu extends Component<any, any> {
   };
 
   componentWillMount () {
-    this.queryTestData()
     this.listTotalArea()
     this.listTotalCity()
+    this.listTotalPosition()
+    this.listTotalNumber()
+    this.listTotalIndustry()
   };
 
   componentDidMount() {}
@@ -170,46 +172,71 @@ export default class Xuqiu extends Component<any, any> {
     })
   };
 
-  queryTestData = () => {
-    let { biyerenshuSeriesData, zaipinzhiweiSeriesData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state
-
-    // 毕业人数数据
-    biyerenshuSeriesData = [
-      {value: 335, name: '直接访问'},
-      {value: 310, name: '邮件营销'},
-    ]
-
-    // 在聘职位数据
-    zaipinzhiweiSeriesData = [
-      {value: 335, name: '直接访问'},
-      {value: 310, name: '邮件营销'},
-    ]
-
-    // 行业TOP5
-    hangyetop5SeriesData = [
-      {value: 335, name: '互联网'},
-      {value: 310, name: '房地产'},
-      {value: 234, name: '金融'},
-      {value: 235, name: '银行'},
-      {value: 348, name: '媒体'}
-    ]
-
-    // 职位分布
-    zhiweifenbuSeriesData = [
-      {value: 335, name: '直接访问'},
-      {value: 310, name: '邮件营销'},
-      {value: 274, name: '联盟广告'},
-      {value: 235, name: '视频广告'},
-      {value: 400, name: '搜索引擎'}
-    ]
-
-    this.setState({
-      biyerenshuSeriesData,
-      zaipinzhiweiSeriesData,
-      hangyetop5SeriesData,
-      zhiweifenbuSeriesData,
+  // 职位分布
+  listTotalPosition = () => {
+    let { zhiweifenbuSeriesData } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalPosition(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        console.log('🧚‍♀️ 职位分布 resp: ', resp)
+        zhiweifenbuSeriesData = resp.data.list.map(item => {
+          return {name: item.positionname, value: +item.number}
+        })
+        this.setState({
+          zhiweifenbuSeriesData
+        })
+      }
     })
-  }
+  };
+
+  // 统计同届毕业人数，在聘职位数
+  listTotalNumber = () => {
+    let { biyerenshuSeriesData, zaipinzhiweiSeriesData } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalNumber(params).then(resp => {
+      if (resp.code == 200 && resp.data) {
+        console.log('🧚‍♀️ 统计同届毕业人数，在聘职位数 resp: ', resp)
+        biyerenshuSeriesData = [
+          {value: resp.data.graduatesNumber, name: '同届毕业人数'},
+          {value: resp.data.graduatesNumber, name: '-'},
+        ]
+        zaipinzhiweiSeriesData = [
+          {value: resp.data.hiringNumber, name: '在聘职位数'},
+          {value: resp.data.hiringNumber, name: '-'},
+        ]
+        this.setState({
+          biyerenshuSeriesData,
+          zaipinzhiweiSeriesData
+        })
+      }
+    })
+  };
+
+  // 行业top5
+  listTotalIndustry = () => {
+    let { hangyetop5SeriesData } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalIndustry(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        console.log('🧚‍♀️ 行业top5 resp: ', resp)
+        hangyetop5SeriesData = resp.data.list.map(item => {
+          return {name: item.industry, value: +item.totalnumber}
+        })
+        this.setState({
+          hangyetop5SeriesData
+        })
+      }
+    })
+  };
 
   render() {
     let { biyerenshuSeriesData, zaipinzhiweiSeriesData, chengshizhanbiSeriesData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state

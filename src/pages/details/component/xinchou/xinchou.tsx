@@ -3,12 +3,13 @@ import { View, Text, Image, Button } from '@tarojs/components';
 import { AtTabs, AtTabsPane } from 'taro-ui';
 import './xinchou.scss';
 import Chart from 'taro-echarts';
+import { CommonApi } from '@/api/Common.api';
 
 // 饼状图配置
 const optionBing1 = {
   color: ["#dedede", "#4ccec4"],
   title: {
-    text: '12568',
+    // text: '12568',
     subtext: '实习薪酬',
     left: 'center',
     top: '40%',
@@ -169,66 +170,173 @@ export default class Xinchou extends Component<any, any> {
     super(props, context)
 
     this.state = {
-      shixiXc: [{value: 335, name: '直接访问'}, {value: 310, name: '邮件营销'}],
-      zuigaoXc: [{value: 335, name: '直接访问'}, {value: 310, name: '邮件营销'}],
-      pingjunXc: [{value: 335, name: '直接访问'}, {value: 310, name: '邮件营销'}],
-      zhongweiXc: [{value: 335, name: '直接访问'}, {value: 310, name: '邮件营销'}],
-      cityArr: ['北京', '上海', '深圳', '广州', '苏州', '杭州', '南京', '福州', '青岛', '济南', '长春', '大连', '温州', '郑州', '武汉', '成都', '东莞', '沈阳', '烟台'],
+      shixiXc: [],
+      zuigaoXc: [],
+      pingjunXc: [],
+      zhongweiXc: [],
+      cityArr: [],
       chengshiXinchouSeries: [],
-      hangyeXinChouXAxisData: ['互联网', '房地产', '金融', '银行', '媒体'],
+      hangyeXinChouXAxisData: [],
       hangyeXinChouSeries: [],
-      pingjunXinChouXAxisData: ['1年以下', '1-3年', '3-5年', '5-7年', '10年以上'],
+      pingjunXinChouXAxisData: [],
       pingjunXinChouSeries: [],
+      salaryInternship: 0,
+      salaryAvg: 0,
+      salaryMax: 0,
+      salaryMedian: 0,
     }
   };
 
   componentWillMount () {
-    this.queryTestData()
+    // this.queryTestData()
+    this.listTotalSalary()
+    this.listTotalCitySalary()
+    this.listTotalWorkingYearsSalaryAvg()
+    this.listTotalIndustrySalary()
   };
 
   componentDidMount () { }
 
-  queryTestData = () => {
-    let { chengshiXinchouSeries, hangyeXinChouSeries, pingjunXinChouSeries } = this.state
-
-    // 城市薪酬
-    optionZhuzuang.series.map((seriesItem:any, seriesIdx:number) => {
-      let obj:any = seriesIdx == 0
-      ? {...seriesItem, data: testData.map(function (d) { return d[0] })}
-      : {...seriesItem, data: testData.map(function (d) { return d[1] - d[0] })}
-      chengshiXinchouSeries.push(obj)
+  // 统计薪酬，最高、中位值、平均、实习
+  listTotalSalary = () => {
+    let { shixiXc, zuigaoXc, pingjunXc, zhongweiXc, salaryInternship,salaryMax, salaryAvg, salaryMedian } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalSalary(params).then(resp => {
+      if (resp.code == 200 && resp.data) {
+        salaryInternship = resp.data.salaryInternship
+        salaryAvg = resp.data.salaryAvg
+        salaryMax = resp.data.salaryMax
+        salaryMedian = resp.data.salaryMedian
+        shixiXc = [
+          {value: resp.data.salaryInternship, name: '实习薪酬'},
+          {value: resp.data.salaryAvg, name: '-'},
+        ]
+        zuigaoXc = [
+          {value: resp.data.salaryMax, name: '最高薪酬'},
+          {value: resp.data.salaryAvg, name: '-'},
+        ]
+        pingjunXc = [
+          {value: resp.data.salaryAvg, name: '平均'},
+          {value: resp.data.salaryAvg, name: '-'},
+        ]
+        zhongweiXc = [
+          {value: resp.data.salaryMedian, name: '中位'},
+          {value: resp.data.salaryAvg, name: '-'},
+        ]
+        console.log('🌞 shixiXc: ', shixiXc)
+        this.setState({
+          shixiXc, zuigaoXc, pingjunXc, zhongweiXc,
+          salaryInternship,salaryMax, salaryAvg, salaryMedian
+        })
+      }
     })
+  };
 
-    // 行业薪酬
-    optionDuidie.series.map((seriesItem:any, seriesIdx:number) => {
-      let arr:any = [
-        [320, 332, 301, 334, 390],
-        [220, 182, 191, 234, 290],
-        [150, 232, 201, 154, 190],
-        [98, 77, 101, 99, 40]
-      ]
-      let obj = {...seriesItem, data: arr[seriesIdx]}
-      console.log('obj: ', obj)
-      hangyeXinChouSeries.push(obj)
+  // 城市薪酬top20
+  listTotalCitySalary = () => {
+    let { cityArr, chengshiXinchouSeries } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalCitySalary(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        cityArr = resp.data.list.map((item:any) => {return item.cityname})
+        let arr:any = resp.data.list.map((item:any) => {
+          return [item.salary * 0.5, item.salary, item.salary * 0.6]
+        })
+        optionZhuzuang.series.map((seriesItem:any, seriesIdx:number) => {
+          let obj:any = seriesIdx == 0
+          ? {...seriesItem, data: arr.map(function (d) { return d[0] })}
+          : {...seriesItem, data: arr.map(function (d) { return d[1] - d[0] })}
+          chengshiXinchouSeries.push(obj)
+        })
+        this.setState({
+          cityArr,
+          chengshiXinchouSeries
+        })
+      }
     })
+  };
 
-    // 平均薪酬
+  // 工作经验平均薪酬
+  listTotalWorkingYearsSalaryAvg = () => {
+    let { pingjunXinChouXAxisData, pingjunXinChouSeries } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
     const colorArr = ['#fea67e', '#65e1e1', '#9fe7b9', '#38a1db', '#fad47f']
-    const arr = [1000, 2000, 3000, 4000, 5000]
-    arr.map((num:any, idx:number) => {
-      pingjunXinChouSeries.push({value: num, itemStyle: {normal: { color: colorArr[idx%5] }}})
+    
+    CommonApi.listTotalWorkingYearsSalaryAvg(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        console.log('🧚‍♀️ 工作经验平均薪酬 resp: ', resp)
+        pingjunXinChouXAxisData = resp.data.list.map(item => {
+          return item.workingYears
+        })
+        const arr = resp.data.list.map(item => {
+          return item.salary
+        })
+        arr.map((num:any, idx:number) => {
+          pingjunXinChouSeries.push({value: num, itemStyle: {normal: { color: colorArr[idx%5] }}})
+        })
+        this.setState({
+          pingjunXinChouXAxisData,
+          pingjunXinChouSeries,
+        })
+      }
     })
+  };
+
+  // 行业薪酬
+  listTotalIndustrySalary = () => {
+    let { hangyeXinChouXAxisData, hangyeXinChouSeries } = this.state
+    let params = {
+      positionId: this.$router.params.positionid,
+      disciplineCode: this.$router.params.disciplineCode,
+    }
+    CommonApi.listTotalIndustrySalary(params).then(resp => {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+        console.log('🧚‍♀️ 行业薪酬 resp: ', resp)
+        hangyeXinChouXAxisData = resp.data.list.map(item => {return item.industryname})
+        let arr:any = resp.data.list.map(item => {
+          return [item.salaryMin, item.salaryAvg, item.salaryMedian, item.salaryMax]
+        })
+        optionDuidie.series.map((seriesItem:any, seriesIdx:number) => {
+          let obj = {...seriesItem, data: arr[seriesIdx]}
+          hangyeXinChouSeries.push(obj)
+        })
+      }
+      this.setState({
+        hangyeXinChouXAxisData,
+        hangyeXinChouSeries,
+      })
+    })
+  };
+
+  queryTestData = () => {
+    let { chengshiXinchouSeries, hangyeXinChouSeries } = this.state
+
+    // // 城市薪酬
+    // optionZhuzuang.series.map((seriesItem:any, seriesIdx:number) => {
+    //   let obj:any = seriesIdx == 0
+    //   ? {...seriesItem, data: testData.map(function (d) { return d[0] })}
+    //   : {...seriesItem, data: testData.map(function (d) { return d[1] - d[0] })}
+    //   chengshiXinchouSeries.push(obj)
+    // })
 
     this.setState({
-      chengshiXinchouSeries,
-      hangyeXinChouSeries,
-      pingjunXinChouSeries,
+      // chengshiXinchouSeries,
     })
   }
 
   render() {
     let { 
-      shixiXc, zuigaoXc, pingjunXc, zhongweiXc, 
+      shixiXc, zuigaoXc, pingjunXc, zhongweiXc,
+      salaryInternship,salaryMax, salaryAvg, salaryMedian,
       cityArr, 
       chengshiXinchouSeries, // 城市薪酬-数据配置
       hangyeXinChouXAxisData, // 行业薪酬-X轴文字
@@ -245,7 +353,7 @@ export default class Xinchou extends Component<any, any> {
               chartId='aaa'
               width='100%'
               height='190px'
-              option={{...optionBing1, series: {...optionBing1.series, data: shixiXc}}}
+              option={{...optionBing1, title: {...optionBing1.title, text: salaryInternship}, series: {...optionBing1.series, data: shixiXc}}}
             />
           </View>
           <View className="at-col at-col-6 pr-20">
@@ -253,7 +361,7 @@ export default class Xinchou extends Component<any, any> {
               chartId='bbb'
               width='100%'
               height='190px'
-              option={{...optionBing2, series: {...optionBing2.series, data: zuigaoXc}}}
+              option={{...optionBing2, title: {...optionBing2.title, text: salaryMax}, series: {...optionBing2.series, data: zuigaoXc}}}
             />
           </View>
           <View className="at-col at-col-6 pr-20">
@@ -261,7 +369,7 @@ export default class Xinchou extends Component<any, any> {
               chartId='ccc'
               width='100%'
               height='190px'
-              option={{...optionBing3, series: {...optionBing3.series, data: pingjunXc}}}
+              option={{...optionBing3, title: {...optionBing3.title, text: salaryAvg}, series: {...optionBing3.series, data: pingjunXc}}}
             />
           </View>
           <View className="at-col at-col-6 pr-20">
@@ -269,14 +377,14 @@ export default class Xinchou extends Component<any, any> {
               chartId='ddd'
               width='100%'
               height='190px'
-              option={{...optionBing4, series: {...optionBing4.series, data: zhongweiXc}}}
+              option={{...optionBing4, title: {...optionBing4.title, text: salaryMedian}, series: {...optionBing4.series, data: zhongweiXc}}}
             />
           </View>
         </View>
 
         {/* 圆柱状图 */}
         <View className="has-title-box">
-          <View className="box-title">城市薪酬-<Text className="color-orange">TOP5</Text></View>
+          <View className="box-title">城市薪酬-<Text className="color-orange">TOP20</Text></View>
           <View className="box-cont pr-30">
             <Chart
               chartId='ddd'
