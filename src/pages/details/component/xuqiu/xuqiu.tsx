@@ -171,7 +171,7 @@ export default class Xuqiu extends Component<any, any> {
   };
 
   queryTestData = () => {
-    let { biyerenshuSeriesData, zaipinzhiweiSeriesData, chengshizhanbiSeriesData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state
+    let { biyerenshuSeriesData, zaipinzhiweiSeriesData, hangyetop5SeriesData, zhiweifenbuSeriesData } = this.state
 
     // 毕业人数数据
     biyerenshuSeriesData = [
@@ -184,31 +184,6 @@ export default class Xuqiu extends Component<any, any> {
       {value: 335, name: '直接访问'},
       {value: 310, name: '邮件营销'},
     ]
-
-    // 城市占比数据
-    // chengshizhanbiSeriesData = [
-    //   {value: 335, name: '北京'},
-    //   {value: 310, name: '天津'},
-    //   {value: 210, name: '河北'},
-    //   {value: 235, name: '山西'},
-    //   {value: 345, name: '内蒙古'},
-    //   {value: 235, name: '辽宁'},
-    //   {value: 532, name: '吉林'},
-    //   {value: 211, name: '黑龙江'},
-    //   {value: 234, name: '上海'},
-    //   {value: 234, name: '江苏'},
-    //   {value: 234, name: '浙江'},
-    //   {value: 234, name: '安徽'},
-    //   {value: 234, name: '福建'},
-    //   {value: 234, name: '陕西'},
-    //   {value: 234, name: '山西'},
-    //   {value: 234, name: '河南'},
-    //   {value: 234, name: '湖北'},
-    //   {value: 234, name: '湖南'},
-    //   {value: 234, name: '广东'},
-    //   {value: 234, name: '广西'},
-    //   {value: 234, name: '海南'},
-    // ]
 
     // 行业TOP5
     hangyetop5SeriesData = [
@@ -231,7 +206,6 @@ export default class Xuqiu extends Component<any, any> {
     this.setState({
       biyerenshuSeriesData,
       zaipinzhiweiSeriesData,
-      chengshizhanbiSeriesData,
       hangyetop5SeriesData,
       zhiweifenbuSeriesData,
     })

@@ -50,6 +50,8 @@ button {
   flex-direction: column;
 }
 .taro_page {
+  max-width: 750px;
+  margin: 0 auto;
   flex: 1;
   // background-color: #f7f7f7;
 }
