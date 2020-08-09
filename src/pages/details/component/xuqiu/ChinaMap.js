@@ -5,6 +5,11 @@ function setChartData(chart, data) {
   echarts.registerMap('map', geoJson);
   let option = {
     tooltip: {
+      trigger: 'item',
+      formatter: (params) => {
+        return params.data ? (params.data.name + ': ' + params.data.value) : null
+      },
+      position: 'top'
     },
     grid: {
       top: '5%',

@@ -17,12 +17,22 @@ export default class Details extends Component<any,any> {
     super(props);
 
     this.state = {
+      positionName: null,
       tabList: [
         {title: '技能要求'},
         {title: '职业薪酬'},
         {title: '市场供需'},
       ],
       currentTab: 1,
+    }
+  }
+
+  componentDidMount () {
+    console.log('🌸 this.$router.params: ', this.$router.params + ', name: ', decodeURI(this.$router.params.positionname))
+    if (this.$router.params.positionname) {
+      this.setState({
+        positionName: decodeURI(this.$router.params.positionname)
+      })
     }
   }
 
@@ -33,13 +43,13 @@ export default class Details extends Component<any,any> {
   }
 
   render() {
-    let { tabList, currentTab } = this.state
+    let { positionName, tabList, currentTab } = this.state
     return (
       <View className="details-wrap">
         <View className="details-header">
-          <View className="details-header-title">前端工程师</View>
+          <View className="details-header-title">{positionName}</View>
           <Image src={detailHeader} />
-          <View className="arrow">
+          <View className={currentTab == 1 ? 'arrow' : (currentTab == 0 ? 'arrow arrow-1' : 'arrow arrow-2')}>
             <Image src={arrow} />
           </View>
         </View>

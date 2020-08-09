@@ -35,6 +35,9 @@
           .taro-text{
             padding: 0 10px;
             display: inline-block;
+            &.active{
+              text-decoration: underline;
+            }
           }
         }
         .discipline-filter-action{
@@ -80,11 +83,13 @@
           border-top: 10px solid #bbb;
         }
         &.up{
+          color: #f60;
           &:before{
             border-bottom-color: #f60;
           }
         }
         &.down{
+          color: #f60;
           &:after{
             border-top-color: #f60;
           }
@@ -111,10 +116,14 @@
         }
         .professional-title-btn{
           float: right;
-          .at-button--secondary{
-            border-color: #32c5e9;
+          padding-top: 10px;
+          button{
+            border: solid 1px #32c5e9;
             color: #32c5e9;
-            font-size: 22px;
+            font-size: 18px;
+            border-radius: 100px;
+            height: 48px;
+            line-height: 48px;
           }
         }
       }
@@ -142,6 +151,28 @@
           font-size: 22px;
           padding-bottom: 5px;
         }
+      }
+    }
+  }
+}
+
+
+.discipline-search{
+  margin-bottom: 20px;
+  .at-search-bar{
+    background: none !important;
+    padding: 0;
+    height: 60px;
+    &:after{
+      display: none;
+    }
+    .at-search-bar__input-cnt{
+      height: 100%;
+      background-color: #3742fd !important;
+      border: solid 1px rgba(255, 255, 255, .5);
+      .weui-input, input{
+        height: 100% !important;
+        color: #fff;
       }
     }
   }

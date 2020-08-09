@@ -100,14 +100,14 @@ export default class Catalog extends Component<any,any> {
     console.log('👺 selectedObjArr: ',selectedObjArr)
     if (!(selectedObjArr[0].children && selectedObjArr[0].children.length)) {
       // let currentObj = selectedObjArr[0]
-      this.goToDiscipline(val, selectedObjArr[0].name)
+      this.goToDiscipline(selectedObjArr[0].code, selectedObjArr[0].name)
     }
   }
   
   // 去往专业页
   goToDiscipline = (val, name) => {
     Taro.navigateTo({
-      url: '/pages/discipline/discipline?code=' + val + '&name=' + name,
+      url: '/pages/discipline/discipline?code=' + val + '&name=' + encodeURI(name),
     })
   };
 

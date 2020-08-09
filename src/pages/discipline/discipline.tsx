@@ -1,7 +1,7 @@
 import Taro, { Component } from '@tarojs/taro';
 import { View, Text, Button, Image } from '@tarojs/components';
 import './discipline.scss';
-import { AtIcon, AtButton } from 'taro-ui';
+import { AtIcon, AtButton, AtSearchBar } from 'taro-ui';
 import Chart from 'taro-echarts';
 import { CommonApi } from '@/api/Common.api';
 
@@ -38,6 +38,7 @@ const optionZhu = {
     }
   }],
   yAxis: {
+    // show: false,
     type : 'value',
     axisLabel: {
       textStyle: { fontSize: 9 }
@@ -87,12 +88,20 @@ const optionBing = {
   series: {
     name: '访问来源',
     type: 'pie',
-    radius: ['40%','65%'],
+    // radius: ['40%','65%'],
     center : ['50%', 110],
     avoidLabelOverlap: false,
     label: {
-      position: 'center',
-      color: '#fff'
+      // show: false,
+      // position: 'center',
+      position: 'inside',
+      color: 'transparent',
+    },
+    emphasis: {
+      label: {
+        show: true,
+        color: '#fff',
+      }
     },
     labelLine: { show: false },
     // data: xueliData,
@@ -106,21 +115,22 @@ export default class Discipline extends Component<any,any> {
   constructor(props) {
     super(props);
     this.state = {
-      sortXinchou: null,
+      sortXinchou: 'DESC',
       sortZhiwei: null,
       filterData: {
+        searchVal: '',
         districtRank: null,
         workingYears: null,
         salary: null,
       },
       filterList: [
-        {title: '城市', key: 'districtRank', expand: false, list: [
+        {title: '城市', key: 'districtRank', itemCurrentName: '不限', expand: false, list: [
           {name: '不限', code: '0'},
           {name: '一线城市', code: '1'},
           {name: '二线城市', code: '2'},
           {name: '新一线城市', code: '3'}
         ]},
-        {title: '年限', key: 'workingYears', expand: false, list: [
+        {title: '年限', key: 'workingYears', itemCurrentName: '不限', expand: false, list: [
           {name: '不限', code: '0'},
           {name: '2年以下', code: '1'},
           {name: '1-3年', code: '2'},
@@ -128,7 +138,7 @@ export default class Discipline extends Component<any,any> {
           {name: '5-10年', code: '4'},
           {name: '10年以上', code: '5'}
         ]},
-        {title: '薪酬', key: 'salary', expand: false, list: [
+        {title: '薪酬', key: 'salary', itemCurrentName: '不限', expand: false, list: [
           {name: '不限', code: '0'},
           {name: '2k以下', code: '1'},
           {name: '2k-5k', code: '2'},
@@ -144,21 +154,23 @@ export default class Discipline extends Component<any,any> {
   componentDidMount () {
     console.log('this.$router.params: ', this.$router.params)
     if (this.$router.params.code) {
-      this.query(this.$router.params.code)
+      this.query()
     }
 
     if (this.$router.params.name) {
       Taro.setNavigationBarTitle({
-        title: this.$router.params.name + '专业'
+        title: decodeURI(this.$router.params.name) + '专业'
       })
     }
   }
 
   // 根据专业检索职位列表
-  query = (code) => {
-    let { filterData } = this.state
+  query = () => {
+    let { filterData, sortXinchou, sortZhiwei } = this.state
     var params = {
-      disciplineCode: code,
+      disciplineCode: this.$router.params.code,
+      whetherOrderBySalaryMin: sortXinchou,
+      whetherOrderByPosts: sortZhiwei
     }
     Object.keys(filterData).forEach(key => {
       if (filterData[key]) {
@@ -167,23 +179,20 @@ export default class Discipline extends Component<any,any> {
     })
     // console.log('👺 根据专业检索职位列表 params: ', params)
     CommonApi.queryRecruitmentDataList(params).then(resp => {
-      if (resp.code == 200) {
+      if (resp.code == 200 && resp.data.list && resp.data.list.length) {
         console.log('resp.data.list: ', resp.data.list)
+        let arr:any = []
+        resp.data.list.map(item => {
+          arr.push({
+            ...item,
+            xinchouData: [item.salarymax, item.salarymin, item.avg, item.median],
+            xueliData: item.totalEducation.map(Education => {
+              return {name: Education.education, value: Education.count}
+            })
+          })
+        })
         this.setState({
-          dataSource: [{
-            totalnumber: 10,
-            avgSalaryMax: '15K',
-            avgSalaryMin: '12K',
-            disciplinename: '专业名称',
-            positionname: '职位名称',
-            xinchouData: [100, 200, 300, 400],
-            xueliData: [
-              {name: '最低值', value: 100},
-              {name: '最高值', value: 200},
-              {name: '中位值', value: 300},
-              {name: '平均值', value: 400},
-            ]
-          }],
+          dataSource: arr
         })
       }
     })
@@ -199,44 +208,85 @@ export default class Discipline extends Component<any,any> {
   };
 
   // 点击筛选
-  handleFilter = (key, name) => {
-    let { filterData } = this.state
+  handleFilter = (idx, key, name) => {
+    let { filterList, filterData } = this.state
     filterData[key] = name
+    filterList[idx].itemCurrentName = name
+    // console.log('filterList[idx]: ', filterList[idx])
     this.setState({
-      filterData
+      filterList,
+      filterData,
     })
-    this.query(this.$router.params.code)
+    this.query()
   };
 
   // 点击排序
   handleChangeSort = (key:any) => {
     let { sortXinchou, sortZhiwei } = this.state
     if (key == 'xinchou') {
-      sortXinchou = !sortXinchou
-      this.setState({
-        sortXinchou
-      })
+      sortXinchou = sortXinchou == 'DESC' ? 'ASC' : 'DESC'
+      sortZhiwei = null
     } else if (key == 'zhiwei') {
-      sortZhiwei = !sortZhiwei
-      this.setState({
-        sortZhiwei
-      })
+      sortZhiwei = sortZhiwei == 'DESC' ? 'ASC' : 'DESC'
+      sortXinchou = null
     }
+    this.setState({
+      sortXinchou,
+      sortZhiwei,
+    })
+    setTimeout(() => {
+      this.query()
+    });
   };
 
-  // 去往详情页
-  goToDetails = (val) => {
-    Taro.navigateTo({
-      url: '/pages/details/details',
+  // 搜索栏-输入改变
+  searchBarOnChange (value) {
+    let { filterData } = this.state
+    filterData.searchVal = value
+    this.setState({
+      filterData
     })
   };
 
+  // 搜索栏-确定搜索
+  handOnSearch () {
+    // setTimeout(() => {
+    //   this.query()
+    // });
+    Taro.navigateTo({
+      url: '/pages/catalog/catalog?search=' + this.state.filterData.searchVal,
+    })
+  }
+
+  // 去往详情页
+  goToDetails = (id, name) => {
+    Taro.navigateTo({
+      url: '/pages/details/details?disciplineCode=' + this.$router.params.code + '&positionid=' + id + '&positionname=' + encodeURI(name),
+    })
+  };
+
+  // 返回上一级页面
+  goBack = () => {
+    Taro.navigateBack({
+      delta: 1
+    });
+  }
+
   render() {
-    const { filterList, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData } = this.state
+    const { filterData, filterList, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData } = this.state
 
     return (
       <View className='discipline-wrap'>
         <View className="discipline-header">
+          <View className="at-row discipline-search">
+            <View className="at-col" onClick={this.goBack}>
+              <AtIcon value='chevron-left' size='30' color='#fff'></AtIcon>
+            </View>
+            <View className="at-col">
+              {/* <AtSearchBar value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} onActionClick={this.handOnSearch.bind(this)} /> */}
+              <AtSearchBar value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} onActionClick={this.handOnSearch.bind(this)} />
+            </View>
+          </View>
           {/* 筛选 */}
           <View className="discipline-filter">
             {filterList.length && filterList.map((item:any, idx:number) => {
@@ -246,7 +296,7 @@ export default class Discipline extends Component<any,any> {
                   <View className="discipline-filter-item-rank">
                     {item.list && item.list.map((item_c:any, idx_c:number) => {
                       return (
-                        <Text key={idx_c} onClick={() => this.handleFilter(item.key, item_c.name)}>{item_c.name}</Text>
+                        <Text key={idx_c} className={item_c.name == item.itemCurrentName ? 'active': ''} onClick={() => this.handleFilter(idx, item.key, item_c.name)}>{item_c.name}</Text>
                       )
                     })}
                   </View>
@@ -262,10 +312,10 @@ export default class Discipline extends Component<any,any> {
           {/* 排序 */}
           <View className="at-row discipline-sort">
             <View className="at-col" onClick={() => this.handleChangeSort('xinchou')}>
-              <Text className={sortXinchou ? 'discipline-sort-text up' : 'discipline-sort-text down'}>按薪酬排序</Text>
+              <Text className={'discipline-sort-text ' + (sortXinchou == 'DESC' ? 'down' : (sortXinchou == 'ASC' ? 'up' : ''))}>按薪酬排序</Text>
             </View>
             <View className="at-col" onClick={() => this.handleChangeSort('zhiwei')}>
-              <Text className={sortZhiwei ? 'discipline-sort-text up' : 'discipline-sort-text down'}>按职位数排序</Text>
+              <Text className={'discipline-sort-text ' + (sortZhiwei == 'DESC' ? 'down' : (sortZhiwei == 'ASC' ? 'up' : ''))}>按职位数排序</Text>
             </View>
           </View>
         </View>
@@ -281,7 +331,7 @@ export default class Discipline extends Component<any,any> {
                     <View className="professional-title">
                       <View className="professional-title-text">{item.positionname}</View>
                       <View className="professional-title-btn">
-                        <AtButton type="secondary" size="small" circle onClick={this.goToDetails}>查看详情</AtButton>
+                        <Button onClick={() => this.goToDetails(item.positionid, item.positionname)}>查看详情</Button>
                       </View>
                     </View>
                     <View className="professional-cont">
