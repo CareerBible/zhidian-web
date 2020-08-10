@@ -61,10 +61,12 @@ const optionBing4 = {
     trigger: 'item',
     formatter: '{a} <br/>{b}: {c} ({d}%)'
   },
-  legend: { orient: 'vertical', left: 10, data: [] },
+  legend: { orient: 'vertical', left: 5, data: [] },
+  // grid: { top: '5%', left: '5%', right: '12%', bottom: '5%', containLabel: true },
   series: {
     name: '访问来源',
     type: 'pie',
+    center: ['60%', '50%'],
     radius: ['50%', '70%'],
     avoidLabelOverlap: false,
     label: { show: false, position: 'center' },

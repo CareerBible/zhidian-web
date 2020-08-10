@@ -18,6 +18,7 @@ export default class Home extends Component<any,any> {
       searchDisciplineCode: null,
       searchDownlist: [],
       isShowDownBox: true,
+      searchInpIsOnFocus: false,
       formData: {
         searchStr: null,
       }
@@ -90,6 +91,20 @@ export default class Home extends Component<any,any> {
     })
   };
 
+  searchBarOnFocus = () => {
+    this.setState({
+      searchInpIsOnFocus: true
+    })
+  };
+
+  searchBarOnBlur = () => {
+    this.setState({
+      searchInpIsOnFocus: false,
+      isShowDownBox: false,
+      searchDownlist: []
+    })
+  };
+
   // 根据专业名称搜索
   handleSearch = () => {
     console.log('🧚‍♀️ this.state.formData: ', this.state.formData)
@@ -106,12 +121,13 @@ export default class Home extends Component<any,any> {
   };
 
   render() {
-    let { formData, searchDisciplineCode, searchDownlist, isShowDownBox} = this.state
+    let { formData, searchDisciplineCode, searchDownlist, isShowDownBox, searchInpIsOnFocus } = this.state
     return (
       <View className='home-wrap'>
-        <View className="home-cont">
+        <View className="home-cont at-row">
           <View className="home-logo">
             <Image src={logo} />
+            <Text className="home-logo-txt">内测版</Text>
           </View>
 
           <View className="biaoyu">
@@ -135,6 +151,8 @@ export default class Home extends Component<any,any> {
               placeholder="请输入专业名称"
               value={formData.searchStr} 
               onChange={this.searchBarOnChange.bind(this)}
+              onFocus={this.searchBarOnFocus.bind(this)}
+              onBlur={this.searchBarOnBlur.bind(this)}
             />
             {formData.searchStr && searchDownlist.length && isShowDownBox
                 ? <View className="down-box">

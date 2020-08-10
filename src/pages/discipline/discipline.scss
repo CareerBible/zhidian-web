@@ -46,6 +46,33 @@
           right: -20px;
           top: 0;
           color: #fff;
+          .action-text{
+            position: relative;
+            &.sanjiao-top{
+              &:before{
+                content: "";
+                position: absolute;
+                right: -25px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                top: 50%;
+                margin-top: -5px;
+                border-bottom: 10px solid #fff;
+              }
+            }
+            &.sanjiao-below{
+              &:before{
+                content: "";
+                position: absolute;
+                right: -25px;
+                border-left: 8px solid transparent;
+                border-right: 8px solid transparent;
+                top: 50%;
+                margin-top: -5px;
+                border-top: 10px solid #fff;
+              }
+            }
+          }
         }
       }
     }
@@ -99,8 +126,9 @@
   }
 
   .professional-card{
+    padding-top: 70px;
     .professional{
-      padding: 110px 40px 0 40px;
+      padding: 50px 40px 0 40px;
       .professional-title{
         height: 76px;
         position: relative;
@@ -150,6 +178,7 @@
         .professional-cont-text{
           font-size: 22px;
           padding-bottom: 5px;
+          color: #333;
           .text-info{
             color: #32c5e9;
           }
@@ -183,6 +212,17 @@
     position: relative;
     float: right;
     transition: all .2s;
+    &.w-100{
+      width: 100%;
+    }
+    &.w-30{
+      width: 30%;
+    }
+    &:hover{
+      .down-box{
+        display: block;
+      }
+    }
     .at-input{
       height: 60px;
       background-color: #3742fd !important;
@@ -210,6 +250,7 @@
       }
     }
     .down-box{
+      display: none;
       width: 100%;
       padding: 10px 20px;
       font-size: 20px;
@@ -223,6 +264,7 @@
       z-index: 9;
       border: 1px solid rgba(0, 0, 0, 0.1);
       border-top: none;
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
       .down-box-item{
         padding: 10px 0;
         text-align: left;

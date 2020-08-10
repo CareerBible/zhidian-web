@@ -126,27 +126,27 @@ export default class Discipline extends Component<any,any> {
         salary: null,
       },
       filterList: [
-        {title: '城市', key: 'districtRank', itemCurrentName: '不限', expand: false, list: [
-          {name: '不限', code: '0'},
-          {name: '一线城市', code: '1'},
-          {name: '二线城市', code: '2'},
-          {name: '新一线城市', code: '3'}
+        {title: '城市', key: 'districtRank', itemCurrentCode: null, expand: false, list: [
+          {name: '不限', code: null},
+          {name: '一线城市', code: '一线城市'},
+          {name: '二线城市', code: '二线城市'},
+          {name: '新一线城市', code: '新一线城市'}
         ]},
-        {title: '年限', key: 'workingYears', itemCurrentName: '不限', expand: false, list: [
-          {name: '不限', code: '0'},
-          {name: '1年以下', code: '1'},
-          {name: '1-3年', code: '2'},
-          {name: '3-5年', code: '3'},
-          {name: '5-10年', code: '4'},
-          {name: '10年以上', code: '5'}
+        {title: '年限', key: 'workingYears', itemCurrentCode: null, expand: false, list: [
+          {name: '不限', code: null},
+          {name: '1年以下', code: '1年以下'},
+          {name: '1-3年', code: '1-3年'},
+          {name: '3-5年', code: '3-5年'},
+          {name: '5-10年', code: '5-10年'},
+          {name: '10年以上', code: '10年以上'}
         ]},
-        {title: '薪酬', key: 'salary', itemCurrentName: '不限', expand: false, list: [
-          {name: '不限', code: '0'},
-          {name: '2k以下', code: '1'},
-          {name: '2k-5k', code: '2'},
-          {name: '5k-8k', code: '3'},
-          {name: '8k-12k', code: '4'},
-          {name: '12k以上', code: '5'}
+        {title: '薪酬', key: 'salary', itemCurrentCode: null, expand: false, list: [
+          {name: '不限', code: null},
+          {name: '2k以下', code: '20-'},
+          {name: '2k-5k', code: '2-5'},
+          {name: '5k-8k', code: '5-8'},
+          {name: '8k-12k', code: '8-12'},
+          {name: '12k以上', code: '12+'}
         ]}
       ],
       dataSource: [],
@@ -171,6 +171,7 @@ export default class Discipline extends Component<any,any> {
 
   // 根据专业检索职位列表
   query = () => {
+    console.log('✨ 根据专业检索职位列表')
     let { searchDisciplineCode, filterData, sortXinchou, sortZhiwei } = this.state
     var params = {
       disciplineCode: searchDisciplineCode ? searchDisciplineCode : this.$router.params.code,
@@ -185,7 +186,7 @@ export default class Discipline extends Component<any,any> {
     // console.log('👺 根据专业检索职位列表 params: ', params)
     CommonApi.queryRecruitmentDataList(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('resp.data.list: ', resp.data.list)
+        console.log('👺👺resp.data.list: ', resp.data.list)
         let arr:any = []
         resp.data.list.map(item => {
           arr.push({
@@ -218,10 +219,11 @@ export default class Discipline extends Component<any,any> {
   };
 
   // 点击筛选
-  handleFilter = (idx, key, name) => {
+  handleFilter = (idx, key, code, name) => {
+    console.log('🌹 key: ', key, ', name: ', name)
     let { filterList, filterData } = this.state
-    filterData[key] = name
-    filterList[idx].itemCurrentName = name
+    filterData[key] = code
+    filterList[idx].itemCurrentCode = code
     // console.log('filterList[idx]: ', filterList[idx])
     this.setState({
       filterList,
@@ -258,7 +260,8 @@ export default class Discipline extends Component<any,any> {
   searchBarOnBlur = () => {
     this.setState({
       searchInpIsOnFocus: false,
-      isShowDownBox: false
+      isShowDownBox: false,
+      searchDownlist: []
     })
   };
 
@@ -284,7 +287,7 @@ export default class Discipline extends Component<any,any> {
     })
   };
 
-  // 点击搜索下拉
+  // 点击搜索下拉列表
   handleClickSearchItem = (val, name) => {
     let { filterData, searchDisciplineCode, isShowDownBox } = this.state
     filterData.searchVal = name
@@ -332,11 +335,11 @@ export default class Discipline extends Component<any,any> {
               <AtIcon value='chevron-left' size='30' color='#fff' onClick={this.goBack}></AtIcon>
             </View>
             <View className="at-col at-col-10">
-              <View className="discipline-search-input-wrap" style={searchInpIsOnFocus ? {width: '100%'} : {width: '50%'}}>
+              <View className={searchInpIsOnFocus ? 'discipline-search-input-wrap w-100' : 'discipline-search-input-wrap w-30'}>
                 <AtInput 
                   name="searchVal"
                   placeholder="专业"
-                  value={filterData.searchVal} 
+                  value={filterData.searchVal}
                   onChange={this.searchBarOnChange.bind(this)} 
                   onFocus={this.searchBarOnFocus.bind(this)} 
                   onBlur={this.searchBarOnBlur.bind(this)} 
@@ -362,13 +365,13 @@ export default class Discipline extends Component<any,any> {
                   <View className="discipline-filter-item-rank">
                     {item.list && item.list.map((item_c:any, idx_c:number) => {
                       return (
-                        <Text key={idx_c} className={item_c.name == item.itemCurrentName ? 'active': ''} onClick={() => this.handleFilter(idx, item.key, item_c.name)}>{item_c.name}</Text>
+                        <Text key={idx_c} className={item_c.code == item.itemCurrentCode ? 'active': ''} onClick={() => this.handleFilter(idx, item.key, item_c.code, item.c_name)}>{item_c.name}</Text>
                       )
                     })}
                   </View>
                   <View className="discipline-filter-action" onClick={() => this.handleToggle(idx)}>
-                    <Text className="pr-10">{item.expand ? '收起' : '展开'}</Text>
-                    <AtIcon prefixClass='icon' value={item.expand ? 'sanjiao-top' : 'sanjiao-below'} size="1" />
+                    <Text className={item.expand ? 'action-text sanjiao-top' : 'action-text sanjiao-below'}>{item.expand ? '收起' : '展开'}</Text>
+                    {/* <AtIcon prefixClass='icon' value={item.expand ? 'sanjiao-top' : 'sanjiao-below'} size="1" /> */}
                   </View>
                 </View>
               )
@@ -377,10 +380,10 @@ export default class Discipline extends Component<any,any> {
 
           {/* 排序 */}
           <View className="at-row discipline-sort">
-            <View className="at-col" onClick={() => this.handleChangeSort('xinchou')}>
+            <View className="at-col at-col-5" onClick={() => this.handleChangeSort('xinchou')}>
               <Text className={'discipline-sort-text ' + (sortXinchou == 'DESC' ? 'down' : (sortXinchou == 'ASC' ? 'up' : ''))}>按薪酬排序</Text>
             </View>
-            <View className="at-col" onClick={() => this.handleChangeSort('zhiwei')}>
+            <View className="at-col at-col-7" onClick={() => this.handleChangeSort('zhiwei')}>
               <Text className={'discipline-sort-text ' + (sortZhiwei == 'DESC' ? 'down' : (sortZhiwei == 'ASC' ? 'up' : ''))}>按职位数排序</Text>
             </View>
           </View>
@@ -429,7 +432,7 @@ export default class Discipline extends Component<any,any> {
                   </View>
                 )
               })
-            : <View className="pt-100 pb-60">
+            : <View className="pt-100 pb-150">
                 <View className="no-data"></View>
               </View>
           }

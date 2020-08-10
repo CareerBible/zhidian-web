@@ -92,22 +92,7 @@ const testData = [
   [5000, 10000, 6785.71],
   [4000, 10000, 6825],
   [3000, 6500, 4463.33],
-  [2500, 5600, 3793.83],
-  [2000, 4000, 3060],
-  [2000, 4000, 3222.33],
-  [2500, 4000, 3133.33],
-  [1800, 4000, 3100],
-  [2000, 3500, 2750],
-  [2000, 3000, 2500],
-  [1800, 3000, 2433.33],
-  [2000, 2700, 2375],
-  [1500, 2800, 2150],
-  [1500, 2300, 2100],
-  [1600, 3500, 2057.14],
-  [1500, 2600, 2037.5],
-  [1500, 2417.54, 1905.85],
-  [1500, 2000, 1775],
-  [1500, 1800, 1650]
+  [2500, 5600, 3793.83]
 ];
 const optionZhuzuang = {
   color: ['#6ea4fc'],
@@ -135,7 +120,7 @@ const labelOption = {
 const optionDuidie = {
   color: ['#fb633a', '#75a0ff', '#fad47f', '#44d2c2'],
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  grid: { top: '5%', left: '5%', right: '8%', bottom: '5%', containLabel: true },
+  // grid: { top: '5%', left: '5%', right: '10%', bottom: '5%', containLabel: true },
   legend: { show: false },
   xAxis: { type: 'category', axisTick: {show: false} },
   yAxis: [{ type: 'value' }],
@@ -189,7 +174,6 @@ export default class Xinchou extends Component<any, any> {
   };
 
   componentWillMount () {
-    // this.queryTestData()
     this.listTotalSalary()
     this.listTotalCitySalary()
     this.listTotalWorkingYearsSalaryAvg()
@@ -301,14 +285,18 @@ export default class Xinchou extends Component<any, any> {
     }
     CommonApi.listTotalIndustrySalary(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️ 行业薪酬 resp: ', resp)
+        console.log('🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️ 行业薪酬 resp: ', resp)
         hangyeXinChouXAxisData = resp.data.list.map(item => {return item.industryname})
-        let arr:any = resp.data.list.map(item => {
-          return [item.salaryMin, item.salaryAvg, item.salaryMedian, item.salaryMax]
-        })
+
+        let salaryMinArr = resp.data.list.map(item => {return item.salaryMin})
+        let salaryAvgArr = resp.data.list.map(item => {return item.salaryAvg})
+        let salaryMedianArr = resp.data.list.map(item => {return item.salaryMedian})
+        let salaryMaxArr = resp.data.list.map(item => {return item.salaryMax})
+        let arr:any = [salaryMinArr, salaryAvgArr, salaryMedianArr, salaryMaxArr]
+        console.log('🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️ arr: ', arr)
         optionDuidie.series.map((seriesItem:any, seriesIdx:number) => {
           let obj = {...seriesItem, data: arr[seriesIdx]}
-          hangyeXinChouSeries.push(obj)
+            hangyeXinChouSeries.push(obj)
         })
       }
       this.setState({

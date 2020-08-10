@@ -27,8 +27,11 @@ $cls-prefix: 'cp-tree';
       justify-content: flex-end;
     }
   }
+  .tree-item-more{
+    position: static;
+    float: left;
+  }
 }
-
 .#{$cls-prefix}-radio {
   .tree-item-radio {
     color: #333;
@@ -36,7 +39,7 @@ $cls-prefix: 'cp-tree';
     @include hairline-bottom(#d6e4ef);
     // padding-bottom: 24px;
     // padding-left: 48px;
-    padding: 20px 0 20px 48px;
+    padding: 20px 0 20px 0;
     .label {
       padding-right: 24px;
     }
