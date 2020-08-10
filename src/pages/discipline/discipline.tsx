@@ -13,7 +13,7 @@ const optionZhu = {
     text: '薪酬',
     left: 'center',
     top: 10,
-    textStyle: { color: '#37a2da', fontWeight: 'normal', fontSize: 16 }
+    textStyle: { color: '#32c5e9', fontWeight: 'normal', fontSize: 16 }
   },
   grid: {
     top: '25%',
@@ -78,7 +78,7 @@ const optionBing = {
     text: '学历',
     left: 'center',
     top: 10,
-    textStyle: { color: '#37a2da', fontWeight: 'normal', fontSize: 16 }
+    textStyle: { color: '#32c5e9', fontWeight: 'normal', fontSize: 16 }
   },
   tooltip: {
     show: false
@@ -89,23 +89,23 @@ const optionBing = {
   series: {
     name: '访问来源',
     type: 'pie',
-    // radius: ['40%','65%'],
-    center : ['50%', 110],
-    avoidLabelOverlap: false,
+    radius: '60%',
+    center: ['50%', '60%'],
     label: {
-      // show: false,
-      // position: 'center',
-      position: 'inside',
-      color: 'transparent',
+      fontSize: 10,
     },
     emphasis: {
-      label: {
-        show: true,
-        color: '#fff',
+      itemStyle: {
+        shadowBlur: 10,
+        shadowOffsetX: 0,
+        shadowColor: 'rgba(0, 0, 0, 0.5)'
       }
     },
-    labelLine: { show: false },
-    // data: xueliData,
+    labelLine: {
+      show: true,
+      length: 5,
+      length2: 5,
+    }
   }
 };
 
@@ -152,6 +152,7 @@ export default class Discipline extends Component<any,any> {
       dataSource: [],
       searchDownlist: [],
       isShowDownBox: true,
+      searchInpIsOnFocus: false,
     }
   };
 
@@ -211,7 +212,8 @@ export default class Discipline extends Component<any,any> {
     const { filterList } = this.state
     filterList[idx].expand = !filterList[idx].expand
     this.setState({
-      filterList
+      filterList,
+      isShowDownBox: false,
     })
   };
 
@@ -245,6 +247,19 @@ export default class Discipline extends Component<any,any> {
     setTimeout(() => {
       this.query()
     });
+  };
+
+  searchBarOnFocus = () => {
+    this.setState({
+      searchInpIsOnFocus: true
+    })
+  };
+
+  searchBarOnBlur = () => {
+    this.setState({
+      searchInpIsOnFocus: false,
+      isShowDownBox: false
+    })
   };
 
   // 搜索栏-输入改变
@@ -307,7 +322,7 @@ export default class Discipline extends Component<any,any> {
   }
 
   render() {
-    const { filterData, filterList, searchDownlist, isShowDownBox, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData } = this.state
+    const { filterData, filterList, searchDownlist, isShowDownBox, sortXinchou, sortZhiwei, dataSource, xinchouData, xueliData, searchInpIsOnFocus } = this.state
 
     return (
       <View className='discipline-wrap'>
@@ -316,16 +331,25 @@ export default class Discipline extends Component<any,any> {
             <View className="at-col at-col-2">
               <AtIcon value='chevron-left' size='30' color='#fff' onClick={this.goBack}></AtIcon>
             </View>
-            <View className="at-col at-col-10 discipline-search-input-wrap">
-              <AtInput name="searchVal" value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} />
-              {filterData.searchVal && searchDownlist.length && isShowDownBox
-                 ? <View className="down-box">
-                    {searchDownlist.map(searchItem => {
-                      return (<View className="down-box-item" onClick={() => this.handleClickSearchItem(searchItem.value, searchItem.name)}>{searchItem.name}</View>)
-                    })}
-                  </View>
-                : null
-              }
+            <View className="at-col at-col-10">
+              <View className="discipline-search-input-wrap" style={searchInpIsOnFocus ? {width: '100%'} : {width: '50%'}}>
+                <AtInput 
+                  name="searchVal"
+                  placeholder="专业"
+                  value={filterData.searchVal} 
+                  onChange={this.searchBarOnChange.bind(this)} 
+                  onFocus={this.searchBarOnFocus.bind(this)} 
+                  onBlur={this.searchBarOnBlur.bind(this)} 
+                />
+                {filterData.searchVal && searchDownlist.length && isShowDownBox
+                  ? <View className="down-box">
+                      {searchDownlist.map(searchItem => {
+                        return (<View className="down-box-item" onClick={() => this.handleClickSearchItem(searchItem.value, searchItem.name)}>{searchItem.name}</View>)
+                      })}
+                    </View>
+                  : null
+                }
+              </View>
               {/* <AtSearchBar value={filterData.searchVal} onChange={this.searchBarOnChange.bind(this)} onActionClick={this.handOnSearch.bind(this)} /> */}
             </View>
           </View>

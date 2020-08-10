@@ -25,6 +25,9 @@ export class CommonApi {
   // 行业top5
   static listTotalIndustry = (data) => http.getData('/api/recruitmentData/listTotalIndustry', data)
 
+  // 工作经验分布
+  static workExperienceDistributed = (data) => http.getData('/api/recruitmentData/workExperienceDistributed', data)
+
   // 职位分布
   static listTotalPosition = (data) => http.getData('/api/recruitmentData/listTotalPosition', data)
 

@@ -159,6 +159,7 @@ const optionPutong = {
       normal:{
         show: true,
         position: 'top',
+        color: '#333',
         textStyle:{ fontSize: 9 }
       }
     },
@@ -316,22 +317,6 @@ export default class Xinchou extends Component<any, any> {
       })
     })
   };
-
-  queryTestData = () => {
-    let { chengshiXinchouSeries, hangyeXinChouSeries } = this.state
-
-    // // 城市薪酬
-    // optionZhuzuang.series.map((seriesItem:any, seriesIdx:number) => {
-    //   let obj:any = seriesIdx == 0
-    //   ? {...seriesItem, data: testData.map(function (d) { return d[0] })}
-    //   : {...seriesItem, data: testData.map(function (d) { return d[1] - d[0] })}
-    //   chengshiXinchouSeries.push(obj)
-    // })
-
-    this.setState({
-      // chengshiXinchouSeries,
-    })
-  }
 
   render() {
     let { 

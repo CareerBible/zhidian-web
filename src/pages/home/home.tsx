@@ -25,7 +25,7 @@ export default class Home extends Component<any,any> {
   }
 
   componentDidMount () {
-    this.getAuthorizeCodeUrl()
+    // this.getAuthorizeCodeUrl()
   };
 
   // 获取codeURL
@@ -130,7 +130,12 @@ export default class Home extends Component<any,any> {
           </AtForm> */}
 
           <View className="shuruk">
-            <AtInput name="searchStr" value={formData.searchStr} onChange={this.searchBarOnChange.bind(this)} />
+            <AtInput
+              name="searchStr"
+              placeholder="请输入专业名称"
+              value={formData.searchStr} 
+              onChange={this.searchBarOnChange.bind(this)}
+            />
             {formData.searchStr && searchDownlist.length && isShowDownBox
                 ? <View className="down-box">
                   {searchDownlist.map(searchItem => {

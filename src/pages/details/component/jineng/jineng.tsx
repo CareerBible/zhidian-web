@@ -68,7 +68,8 @@ export default class Xuqiu extends Component<any, any> {
         jineng: [],
         suzhi: [],
         zhishi: [],
-      }
+      },
+      skillRequirements: '',
     }
   };  
 
@@ -106,7 +107,7 @@ export default class Xuqiu extends Component<any, any> {
   // 职位要求
   professionalRequirements = () => {
     console.log('🇫🇯 职位要求', )
-    let { professionalRequirements }= this.state
+    let { professionalRequirements, skillRequirements }= this.state
     let params = {
       positionId: this.$router.params.positionid,
       disciplineCode: this.$router.params.disciplineCode,
@@ -114,6 +115,7 @@ export default class Xuqiu extends Component<any, any> {
     CommonApi.professionalRequirements(params).then(resp => {
       if (resp.code == 200 && resp.data) {
         console.log('🇫🇯 职位要求 resp: ', resp)
+        skillRequirements = resp.data.skillRequirements
         resp.data.professionalRequirementsList.map(item => {
           if (item.name == '工作技能') {
             professionalRequirements.jineng = item.list
@@ -124,7 +126,8 @@ export default class Xuqiu extends Component<any, any> {
           }
         })
         this.setState({
-          professionalRequirements
+          professionalRequirements,
+          skillRequirements
         })
       }
     })
@@ -148,10 +151,12 @@ export default class Xuqiu extends Component<any, any> {
 
   render() {
     // const jinengClassify = ['JAVA', 'HTML', 'CSS', 'DUBBO', 'VUE', 'JVM', 'HTML']
-    let { requireData, wordCloudArr, professionalRequirements } = this.state
+    let { requireData, wordCloudArr, professionalRequirements, skillRequirements } = this.state
 
     return (
       <View className="echarts-box-wrap">
+        <View className="font-28 text-center text-gray pall-30">{skillRequirements}</View>
+
         {/* 数据分析图 */}
         <View className="at-row at-row--wrap default-box">
           <View className="at-col at-col-12 pr-20">
@@ -165,7 +170,7 @@ export default class Xuqiu extends Component<any, any> {
         </View>
 
         {/* 空心饼图 */}
-        <View className="has-title-box position-relative" style={{marginBottom: requireData.zhishi ? '150px' : '50px'}}>
+        <View className="has-title-box position-relative" style={{marginBottom: requireData.zhishi && professionalRequirements.zhishi.length ? '150px' : '50px'}}>
           <View className="box-title">职位要求</View>
           <View className="box-cont2">
             {/* <Chart

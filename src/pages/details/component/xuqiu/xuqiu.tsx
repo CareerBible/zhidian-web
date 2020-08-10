@@ -120,7 +120,7 @@ export default class Xuqiu extends Component<any, any> {
   componentWillMount () {
     this.listTotalArea()
     this.listTotalCity()
-    this.listTotalPosition()
+    this.workExperienceDistributed()
     this.listTotalNumber()
     this.listTotalIndustry()
   };
@@ -177,18 +177,18 @@ export default class Xuqiu extends Component<any, any> {
     })
   };
 
-  // 职位分布
-  listTotalPosition = () => {
+  // 工作经验分布
+  workExperienceDistributed = () => {
     let { zhiweifenbuSeriesData } = this.state
     let params = {
       positionId: this.$router.params.positionid,
       disciplineCode: this.$router.params.disciplineCode,
     }
-    CommonApi.listTotalPosition(params).then(resp => {
+    CommonApi.workExperienceDistributed(params).then(resp => {
+      console.log('🇨🇳🇨🇳🇨🇳 工作经验分布 resp: ', resp)
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️ 职位分布 resp: ', resp)
         zhiweifenbuSeriesData = resp.data.list.map(item => {
-          return {name: item.positionname, value: +item.number}
+          return {name: item.workingYears, value: +item.number}
         })
       } else {
         zhiweifenbuSeriesData = []
@@ -198,6 +198,28 @@ export default class Xuqiu extends Component<any, any> {
       })
     })
   };
+
+  // 职位分布
+  // listTotalPosition = () => {
+  //   let { zhiweifenbuSeriesData } = this.state
+  //   let params = {
+  //     positionId: this.$router.params.positionid,
+  //     disciplineCode: this.$router.params.disciplineCode,
+  //   }
+  //   CommonApi.listTotalPosition(params).then(resp => {
+  //     if (resp.code == 200 && resp.data.list && resp.data.list.length) {
+  //       console.log('🧚‍♀️ 职位分布 resp: ', resp)
+  //       zhiweifenbuSeriesData = resp.data.list.map(item => {
+  //         return {name: item.positionname, value: +item.number}
+  //       })
+  //     } else {
+  //       zhiweifenbuSeriesData = []
+  //     }
+  //     this.setState({
+  //       zhiweifenbuSeriesData
+  //     })
+  //   })
+  // };
 
   // 统计同届毕业人数，在聘职位数
   listTotalNumber = () => {
@@ -318,7 +340,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 南丁格尔饼图 */}
         <View className="has-title-box">
-          <View className="box-title"><Text className="color-orange">工作经验</Text></View>
+          <View className="box-title"><Text className="color-orange">工作经验分布</Text></View>
           <View className="box-cont pr-30">
             {zhiweifenbuSeriesData.length
             ? <Chart
