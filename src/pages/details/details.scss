@@ -67,20 +67,16 @@
         top: 8px;
         left: 50%;
         margin-left: -8px;
-        border-radius: 100px;
+        border-radius: 100%;
         display: block;
         transform: scaleX(1);
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTMyIDc5LjE1OTI4NCwgMjAxNi8wNC8xOS0xMzoxMzo0MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OThFQUUwMkREODcwMTFFQUFCQUE4Njc0QjY4MUE2QjYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OThFQUUwMkVEODcwMTFFQUFCQUE4Njc0QjY4MUE2QjYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5OEU3ODNGRUQ4NzAxMUVBQUJBQTg2NzRCNjgxQTZCNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5OEU3ODNGRkQ4NzAxMUVBQUJBQTg2NzRCNjgxQTZCNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pk5EZqIAAAFvSURBVHjarFO/S8NAGH1JakdHqQqCBau2YibpLh2io4PSyUXBFpds+he46VShWNHJRVfFQfwDdLEQij9AdBDF0UWIbeP70msbpbRBfPDIl7vvvTvu3mme5yGIqU0k+Vkh58hRNfxInpMlZwuVYL/WNKAwys82mSN1dEad3CNtGn22DJT4lMz0GcBiGpg3gbFYQ/Xwxskb4PgK+Kr5Q5eyQ5q4EeW8I+KBfqCwDEwO/VzWHGlwYQbIHwLvH5hVu13XUhteikU5GoFxlAcmBtEVd69Adhdwq5C9mLo6MGMp3VssGGeP9IpGtGJgyZ81jdAI9FpiEJcqORzeIHBGcR1/QLXeKl1dhQSVl/AGcq0Kz7pKGM7K4Q0kEwoXYrBP1iQkckW9cM/VT679Uq6xpDNNDosi7xU5huS2i4nMrR34GRAURdtMok0mmLBMttCOciLWXrVDlO3/e0y/nrNEe1UFTDLikk9yYOo5O8H+bwEGAPavfSmP8IoLAAAAAElFTkSuQmCC');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
+        background-color: #fff;
+        border: solid 2px #2b78ff;
       }
       &.at-tabs__item--active{
         .at-tabs__item-underline{
-          background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTMyIDc5LjE1OTI4NCwgMjAxNi8wNC8xOS0xMzoxMzo0MCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUuNSAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OThFQUUwMzVEODcwMTFFQUFCQUE4Njc0QjY4MUE2QjYiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OThFQUUwMzZEODcwMTFFQUFCQUE4Njc0QjY4MUE2QjYiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo5OEVBRTAzM0Q4NzAxMUVBQUJBQTg2NzRCNjgxQTZCNiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDo5OEVBRTAzNEQ4NzAxMUVBQUJBQTg2NzRCNjgxQTZCNiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/PnNMxDMAAADXSURBVHjaYvz//z8DMtCpZNACUilA7AnEilDhe0C8A4jnXGlnuIasnhFmAFAjG5DqA+JMIGZiwA7+AfFsIC4EGvQdbgBU81YgdmEgDuwDuRBoyC+YTf0kaAYBJ6hrGRi1K/5rA+mLQMzMQBr4C8T6TNAAI1UzA1RPCsgADwbygQfIACUKDFBiYqAMgGPhHgUGPGSCpjBywR6QAXOhUcJARjTOYQKmpitAxkwyDJgJ0gsLxEKQc0jQvA+qh0qZCS07g5J2KjSBgdLILyB+AHXhHKiX4QAgwAChHUNq2U53+wAAAABJRU5ErkJggg==');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
+          background-color: #2b78ff;
+          border-color: #2b78ff;
         }
       }
       &:nth-child(1){
@@ -126,7 +122,7 @@
       position: absolute;
       top: -42px;
       left: 0;
-      width: 30%;
+      width: 25%;
       height: 42px;
       border-radius: 100px 100px 0 0;
       background: #fff;
@@ -137,7 +133,7 @@
       position: absolute;
       top: -42px;
       right: 0;
-      width: 30%;
+      width: 25%;
       height: 42px;
       border-radius: 100px 100px 0 0;
       background: #fff;
@@ -152,10 +148,10 @@
       position: relative;
       &:before{
         content: '';
-        width: 40%;
+        width: 50%;
         height: 42px;
         top: -10px;
-        left: 30%;
+        left: 25%;
         background: #f8faff;
         position: absolute;
         border-radius: 0 0 60px 60px;

@@ -39,7 +39,7 @@ $cls-prefix: 'cp-tree';
     @include hairline-bottom(#d6e4ef);
     // padding-bottom: 24px;
     // padding-left: 48px;
-    padding: 20px 0 20px 48px;
+    padding: 20px 0 20px 34px;
     .label {
       padding-right: 24px;
     }
@@ -71,3 +71,6 @@ $cls-prefix: 'cp-tree';
 }
 
 
+.hide-children:last-of-type{
+  padding-left: 0;
+}

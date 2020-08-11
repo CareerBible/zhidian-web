@@ -4,7 +4,7 @@ import './catalog.scss';
 import Tree from '../../components/tree';
 import { Common } from '@/utils/common.js';
 import { CommonApi } from '@/api/Common.api';
-import { AtToast } from 'taro-ui';
+import { AtToast, AtIcon } from 'taro-ui';
 
 export default class Catalog extends Component<any,any> {
   config = {
@@ -73,12 +73,23 @@ export default class Catalog extends Component<any,any> {
     })
   };
 
+  // 返回上一级页面
+  goBack = () => {
+    Taro.navigateBack({
+      delta: 1
+    });
+  }
+
   render() {
     const { treeVal, dataSource, isLoadingOver } = this.state
     return (
       <View className='catalog-wrap'>
+        <View className="catalog-header">
+          <AtIcon value='arrow-left' size='34' color='#555' onClick={this.goBack}></AtIcon>
+          <View className="catalog-header-txt">专业类目</View>
+        </View>
         {isLoadingOver
-          ? <View>
+          ? <View className="catalog-cont">
             {dataSource.length
               ? <Tree
                 value={treeVal}

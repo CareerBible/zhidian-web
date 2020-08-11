@@ -217,6 +217,9 @@
     }
     &.w-30{
       width: 30%;
+      .down-box{
+        opacity: 0;
+      }
     }
     &:hover{
       .down-box{

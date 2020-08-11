@@ -79,6 +79,9 @@
     border-radius: 10px;
     .at-input__container{
       height: 100%;
+      input{
+        height: 100%;
+      }
       input::-webkit-input-placeholder{
         color: #18366a;
         font-size: 24px;

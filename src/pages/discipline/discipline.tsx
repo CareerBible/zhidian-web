@@ -424,7 +424,7 @@ export default class Discipline extends Component<any,any> {
                   </View>
                 )
               })
-            : <View className="pt-100 pb-150">
+            : <View className="pt-150 pb-150">
                 <View className="no-data"></View>
               </View>
           }
