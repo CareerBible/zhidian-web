@@ -107,8 +107,6 @@ export default class ChinaMap extends Component {
   };
 
   refresh(data) {
-    console.log('data: ', data)
-    console.log('this.Chart: ', this.Chart)
     const chart = echarts.init(this.Chart, null, {
       width: '400px',
       height: '300px'
@@ -117,7 +115,6 @@ export default class ChinaMap extends Component {
   }
 
   refChart = node => {
-    console.log('❀ node: ', node)
     this.Chart = node
   };
 

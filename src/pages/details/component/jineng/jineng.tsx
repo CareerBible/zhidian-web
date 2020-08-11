@@ -30,8 +30,8 @@ const optionShuju = {
   }
 };
 
-// 饼状图配置
-const optionBing1 = {
+// 柱状图配置
+const optionZhu = {
   grid: { left: '70', right: '90', bottom: '3%', top: '3%' },
   tooltip: {
     trigger: 'axis',
@@ -51,21 +51,18 @@ const optionBing1 = {
     inverse: true,
     axisLabel: {
       formatter:function(value){
-        var ret = "";//拼接加\n返回的类目项  
-        var maxLength = 5;//每项显示文字个数  
-        var valLength = value.length;//X轴类目项的文字个数  
-        var rowN = Math.ceil(valLength / maxLength); //类目项需要换行的行数  
-        if (rowN > 1)//如果类目项的文字大于5,
-        {  
-          var temp = "";//每次截取的字符串  
-          var start = 0;//开始截取的位置  
-          var end = maxLength;//结束截取的位置  
+        var ret = "";
+        var maxLength = 5;
+        var valLength = value.length; 
+        var rowN = Math.ceil(valLength / maxLength);
+        if (rowN > 1) {  
+          var temp = "";
+          var start = 0;
+          var end = maxLength;
           temp = value.substring(start, end)+'\n'+value.substring(end, valLength)					
-          ret += temp; //凭借最终的字符串  
-
+          ret += temp;
           return ret;  
-        }
-        else{
+        } else {
           return value;  
         }
       },
@@ -95,11 +92,6 @@ const optionBing1 = {
     name: '值',
     type: 'bar',
     zlevel: 1,
-    itemStyle: {
-      normal: {
-        color: '#4E7BFE'
-      },
-    },
     barWidth: 25,
   }
 }
@@ -115,16 +107,11 @@ export default class Xuqiu extends Component<any, any> {
         suzhi: false,
         zhishi: true,
       },
-      // professionalRequirements: {
-      //   jineng: [],
-      //   suzhi: [],
-      //   zhishi: [],
-      // },
-      // zhiweiyaoqiuNameArr: [],
-      // zhiweiyaoqiuYAxisData: [],
       skillRequirements: '',
+      professionalRequirementsList: [],
       zhiweiyaoqiuYAxisData: [],
       zhiweiyaoqiuSeriesData: [],
+      canvasHeight: '180px'
     }
   };
 
@@ -144,7 +131,6 @@ export default class Xuqiu extends Component<any, any> {
     }
     CommonApi.dataAnalysis(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️ 数据分析 resp: ', resp)
         let arr:any = []
         let wordCloudData:any = resp.data.list.map(item => {
           return {name: item.name, value: +item.percentage}
@@ -161,37 +147,42 @@ export default class Xuqiu extends Component<any, any> {
 
   // 职位要求
   professionalRequirements = () => {
-    console.log('🇫🇯 职位要求', )
-    let { professionalRequirements, zhiweiyaoqiuNameArr, zhiweiyaoqiuSeriesData, zhiweiyaoqiuYAxisData, skillRequirements }= this.state
+    let colorList = ['#ff9f7f', '#ffda59', '#9ee7b9', '#64e1e2', '#33c6eb', '#34a2db',]
+    let { zhiweiyaoqiuSeriesData, zhiweiyaoqiuYAxisData, skillRequirements, professionalRequirementsList, canvasHeight }= this.state
     let params = {
       positionId: this.$router.params.positionid,
       disciplineCode: this.$router.params.disciplineCode,
     }
     CommonApi.professionalRequirements(params).then(resp => {
       if (resp.code == 200 && resp.data) {
-        // console.log('🇫🇯 职位要求 resp: ', resp)
         skillRequirements = resp.data.skillRequirements
+        professionalRequirementsList =  resp.data.professionalRequirementsList
+        canvasHeight = resp.data.professionalRequirementsList.length * 50 + 'px'
+        let nameArr:any = resp.data.professionalRequirementsList.map(item => {return item.name})
+        let valueArr:any = resp.data.professionalRequirementsList.map((item:any, idx:number) => {
+          return {value: item.percentage.replace('%', ''), itemStyle: {color: colorList[idx%6]}}
+        })
         
-        const getmydmc:any=['留在','到地例','到中小例', 'bbb'];//数据点名称
-        const getmyd:any=[33, 44, 55, 66, 77];//学生满意度
-        const getmydzd:any =[];//学生满意度100%
-        for (let i = 0; i < getmyd.length; i++) {
-          getmydzd.push(100)
+        // const nameArr:any=['留在','到地例','到中小例', 'bbb'];//数据点名称
+        // const valueArr:any=[33, 44, 55, 66, 77];//学生满意度
+        const rateArr:any =[];//学生满意度100%
+        for (let i = 0; i < valueArr.length; i++) {
+          rateArr.push(100)
         }
-        zhiweiyaoqiuYAxisData = optionBing1.yAxis.map((yAxisItem:any, yAxisIdx:number) => {
+        zhiweiyaoqiuYAxisData = optionZhu.yAxis.map((yAxisItem:any, yAxisIdx:number) => {
           return {...yAxisItem, data: yAxisIdx == 0
-            ? getmydmc
-            : getmyd
+            ? nameArr
+            : valueArr
           }
         })
-        console.log('🇫🇯🇫🇯zhiweiyaoqiuYAxisData: ', zhiweiyaoqiuYAxisData)
-        zhiweiyaoqiuSeriesData = {...optionBing1.series, data: getmyd}
+        zhiweiyaoqiuSeriesData = {...optionZhu.series, data: valueArr}
 
         this.setState({
-          // professionalRequirements,
+          professionalRequirementsList,
           skillRequirements,
           zhiweiyaoqiuYAxisData,
           zhiweiyaoqiuSeriesData,
+          canvasHeight,
         })
       }
     })
@@ -200,7 +191,6 @@ export default class Xuqiu extends Component<any, any> {
   // 点击查看职位要求
   handleViewCont = (str) => {
     let { requireData } = this.state
-    console.log('str: ', str)
     Object.keys(requireData).forEach(key => {
       if (str == key) {
         requireData[key] = true
@@ -215,11 +205,11 @@ export default class Xuqiu extends Component<any, any> {
 
   render() {
     // const jinengClassify = ['JAVA', 'HTML', 'CSS', 'DUBBO', 'VUE', 'JVM', 'HTML']
-    let { requireData, wordCloudArr, professionalRequirements, skillRequirements, zhiweiyaoqiuYAxisData, zhiweiyaoqiuSeriesData } = this.state
+    let { requireData, wordCloudArr, professionalRequirementsList, skillRequirements, zhiweiyaoqiuYAxisData, zhiweiyaoqiuSeriesData, canvasHeight } = this.state
 
     return (
       <View className="echarts-box-wrap">
-        <View className="font-28 text-center text-gray pall-30">{skillRequirements}</View>
+        <View className="font-28 text-center text-gray pl-30 pr-20 pt-0 pb-20">{skillRequirements}</View>
 
         {/* 数据分析图 */}
         <View className="at-row at-row--wrap default-box">
@@ -234,55 +224,14 @@ export default class Xuqiu extends Component<any, any> {
         </View>
 
         {/* 空心饼图 */}
-        {/* <View className="has-title-box position-relative" style={{marginBottom: requireData.zhishi && professionalRequirements.zhishi.length ? '150px' : '50px'}}> */}
         <View className="has-title-box position-relative">
-          <View className="box-title">职位要求</View>
+          <View className="box-title"><Text className="box-title-text">职位要求</Text></View>
           <View className="box-cont2">
             <Chart
-              chartId='bbb'
+              chartId='zhiweiyaoqiu'
               width='100%'
-              height='300px'
-              option={{...optionBing1, yAxis: zhiweiyaoqiuYAxisData, series: zhiweiyaoqiuSeriesData}}
+              option={{...optionZhu, yAxis: zhiweiyaoqiuYAxisData, series: zhiweiyaoqiuSeriesData, height: canvasHeight}}
             />
-            {/* <View className="yaoqiu-wrap">
-              <View className={requireData.jineng ? 'yaoqiu-classify green active' : 'yaoqiu-classify green'}>
-                <View className="classify-round" onClick={() => {this.handleViewCont('jineng')}}>工作技能</View>
-                  {professionalRequirements && professionalRequirements.jineng.length 
-                    ? <View className="classify-cont">
-                      {professionalRequirements.jineng.map((item:any, idx:number) => {
-                        return (<Text key={idx}>{item}</Text>)
-                      })}
-                    </View>
-                  : null}
-              </View>
-
-              <View className={requireData.suzhi ? 'yaoqiu-classify blue active' : 'yaoqiu-classify blue'}>
-                <View className="classify-round" onClick={() => {this.handleViewCont('suzhi')}}>通用素质</View>
-                  {professionalRequirements && professionalRequirements.suzhi.length 
-                    ? <View className="classify-cont">
-                      {professionalRequirements.suzhi.map((item:any, idx:number) => {
-                        return (<Text key={idx}>{item}</Text>)
-                      })}
-                    </View>
-                  : null}
-              </View>
-
-              <View className={requireData.zhishi ? 'yaoqiu-classify yello active' : 'yaoqiu-classify yello'}>
-                <View className="classify-round" onClick={() => {this.handleViewCont('zhishi')}}>专业知识</View>
-                {professionalRequirements && professionalRequirements.zhishi.length 
-                    ? <View className="classify-cont">
-                      {professionalRequirements.zhishi.map((item:any, idx:number) => {
-                        return (<Text key={idx}>{item}</Text>)
-                      })}
-                    </View>
-                  : null}
-              </View>
-
-              <View className="yaoqiu-round">
-                <View className="zhiwei">{decodeURI(this.$router.params.positionname)}</View>
-                <Image src={jineng} />
-              </View>
-            </View> */}
           </View>
         </View>
 

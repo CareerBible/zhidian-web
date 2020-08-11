@@ -120,7 +120,7 @@ const labelOption = {
 const optionDuidie = {
   color: ['#fb633a', '#75a0ff', '#fad47f', '#44d2c2'],
   tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' } },
-  // grid: { top: '5%', left: '5%', right: '10%', bottom: '5%', containLabel: true },
+  grid: { top: '5%', left: '8%', right: '12%', bottom: '5%', containLabel: true },
   legend: { show: false },
   xAxis: { type: 'category', axisTick: {show: false} },
   yAxis: [{ type: 'value' }],
@@ -134,12 +134,12 @@ const optionDuidie = {
 
 // 普通柱状图
 const optionPutong = {
-  grid: { top: '5%', left: '5%', right: '8%', bottom: '5%', containLabel: true },
+  grid: { top: '5%', left: '8%', right: '12%', bottom: '5%', containLabel: true },
   xAxis: { type: 'category' },
   yAxis: { type: 'value' },
   series: {
     type: 'bar',
-    barWidth: 35,
+    barWidth: 30,
     label:{
       normal:{
         show: true,
@@ -211,7 +211,6 @@ export default class Xinchou extends Component<any, any> {
           {value: resp.data.salaryMedian, name: '中位'},
           {value: resp.data.salaryAvg, name: '-'},
         ]
-        console.log('🌞 shixiXc: ', shixiXc)
         this.setState({
           shixiXc, zuigaoXc, pingjunXc, zhongweiXc,
           salaryInternship,salaryMax, salaryAvg, salaryMedian
@@ -258,7 +257,6 @@ export default class Xinchou extends Component<any, any> {
     
     CommonApi.listTotalWorkingYearsSalaryAvg(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️ 工作经验平均薪酬 resp: ', resp)
         pingjunXinChouXAxisData = resp.data.list.map(item => {
           return item.workingYears
         })
@@ -285,7 +283,6 @@ export default class Xinchou extends Component<any, any> {
     }
     CommonApi.listTotalIndustrySalary(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️ 行业薪酬 resp: ', resp)
         hangyeXinChouXAxisData = resp.data.list.map(item => {return item.industryname})
 
         let salaryMinArr = resp.data.list.map(item => {return item.salaryMin})
@@ -293,7 +290,6 @@ export default class Xinchou extends Component<any, any> {
         let salaryMedianArr = resp.data.list.map(item => {return item.salaryMedian})
         let salaryMaxArr = resp.data.list.map(item => {return item.salaryMax})
         let arr:any = [salaryMinArr, salaryAvgArr, salaryMedianArr, salaryMaxArr]
-        console.log('🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️ arr: ', arr)
         optionDuidie.series.map((seriesItem:any, seriesIdx:number) => {
           let obj = {...seriesItem, data: arr[seriesIdx]}
             hangyeXinChouSeries.push(obj)
@@ -357,7 +353,7 @@ export default class Xinchou extends Component<any, any> {
 
         {/* 圆柱状图 */}
         <View className="has-title-box">
-          <View className="box-title">城市薪酬-<Text className="color-orange">TOP20</Text></View>
+          <View className="box-title"><Text className="box-title-text">城市薪酬-<Text className="color-orange">TOP20</Text></Text></View>
           <View className="box-cont pr-30">
             <Chart
               chartId='ddd'
@@ -374,8 +370,8 @@ export default class Xinchou extends Component<any, any> {
 
         {/* 堆叠柱状图 */}
         <View className="has-title-box">
-          <View className="box-title">行业薪酬-<Text className="color-orange">TOP5</Text></View>
-          <View className="box-cont pr-20">
+          <View className="box-title"><Text className="box-title-text">行业薪酬-<Text className="color-orange">TOP5</Text></Text></View>
+          <View className="box-cont">
             <Chart
               chartId='ddd'
               width='100%'
@@ -391,8 +387,8 @@ export default class Xinchou extends Component<any, any> {
 
         {/* 普通柱状图 */}
         <View className="has-title-box">
-          <View className="box-title">工作经验-<Text className="color-orange">平均薪酬</Text></View>
-          <View className="box-cont pr-20">
+          <View className="box-title"><Text className="box-title-text">工作经验-<Text className="color-orange">平均薪酬</Text></Text></View>
+          <View className="box-cont">
             <Chart
               chartId='ddd'
               width='100%'

@@ -32,7 +32,6 @@ export default class Home extends Component<any,any> {
   // 获取codeURL
   getAuthorizeCodeUrl = () => {
     CommonApi.getAuthorizeCodeUrl().then(resp => {
-      console.log('👺 获取codeURL resp: ', resp)
       if (resp.code == 200 && resp.data.url) {
         window.open(resp.data.url, '_blank')
       }
@@ -42,9 +41,7 @@ export default class Home extends Component<any,any> {
   // 搜索栏-输入改变
   searchBarOnChange (value) {
     let { formData, searchDownlist, isShowDownBox } = this.state
-    console.log('value: ', value)
     CommonApi.searchDisciplineName({search: value}).then(resp => {
-      console.log('👺 根据专业名称获取目录 resp: ', resp)
       if (resp.code == 200) {
         let arr:any = Common.getTree(resp.data.list, 'name', 'code', 'listChild')
         this.setState({
@@ -82,7 +79,6 @@ export default class Home extends Component<any,any> {
 
   // 输入框绑定
   handleInputChange = (key, val) => {
-    console.log('👺key: ', key, ', val: ', val)
     let { formData } = this.state
     formData[key] = val
 
@@ -107,7 +103,6 @@ export default class Home extends Component<any,any> {
 
   // 根据专业名称搜索
   handleSearch = () => {
-    console.log('🧚‍♀️ this.state.formData: ', this.state.formData)
     Taro.navigateTo({
       url: '/pages/catalog/catalog?search=' + this.state.formData.searchStr,
     })

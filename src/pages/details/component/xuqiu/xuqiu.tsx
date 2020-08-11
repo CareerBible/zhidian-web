@@ -82,11 +82,6 @@ const optionBing5 = {
     trigger: 'item',
     formatter: '{a} <br/>{b}: {c} ({d}%)'
   },
-  legend: {
-    orient: 'vertical',
-    left: 10,
-    data: ['互联网', '房地产', '金融', '银行', '媒体']
-  },
   series: {
     name: '访问来源',
     type: 'pie',
@@ -94,7 +89,7 @@ const optionBing5 = {
     center: ['50%', '50%'],
     roseType: 'radius',
     label: {},
-    labelLine: { smooth: 0.2, length: 10, length2: 20 },
+    // labelLine: { smooth: 0.2, length: 10, length2: 10 },
     animationType: 'scale',
     animationEasing: 'elasticOut',
     animationDelay: function (idx) {
@@ -130,7 +125,6 @@ export default class Xuqiu extends Component<any, any> {
   componentDidMount() {}
 
   refMapChart = (node) => {
-    console.log('node: ', node)
     this.mapChart = node
   }
 
@@ -142,10 +136,9 @@ export default class Xuqiu extends Component<any, any> {
       disciplineCode: this.$router.params.disciplineCode,
     }
     CommonApi.listTotalArea(params).then(resp => {
-      console.log('🧚‍♀️ 根据职位查询城市分布 resp: ', resp)
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
         fenbuchengshi = resp.data.list.map(item => {
-          return {name: item.name.replace('省',''), value: +item.totalnumber}
+          return {name: item.name.replace(/市|省/gi,''), value: +item.totalnumber}
         })
         this.setState({
           fenbuchengshi
@@ -166,7 +159,6 @@ export default class Xuqiu extends Component<any, any> {
     }
     CommonApi.listTotalCity(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('🧚‍♀️ 根据职位查询城市占比 resp: ', resp)
         chengshizhanbiSeriesData = resp.data.list.map(item => {
           return {name: item.name, value: +item.totalnumber}
         })
@@ -187,10 +179,9 @@ export default class Xuqiu extends Component<any, any> {
       disciplineCode: this.$router.params.disciplineCode,
     }
     CommonApi.workExperienceDistributed(params).then(resp => {
-      console.log('🇨🇳🇨🇳🇨🇳 工作经验分布 resp: ', resp)
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
         zhiweifenbuSeriesData = resp.data.list.map(item => {
-          return {name: item.workingYears, value: +item.number}
+          return {name: item.workingyears, value: +item.number}
         })
       } else {
         zhiweifenbuSeriesData = []
@@ -232,7 +223,6 @@ export default class Xuqiu extends Component<any, any> {
     }
     CommonApi.listTotalNumber(params).then(resp => {
       if (resp.code == 200 && resp.data) {
-        console.log('🧚‍♀️ 统计同届毕业人数，在聘职位数 resp: ', resp)
         biyerenshuSeriesData = [
           {value: resp.data.graduatesNumber, name: '同届毕业人数'},
           {value: resp.data.graduatesNumber, name: '-'},
@@ -257,7 +247,6 @@ export default class Xuqiu extends Component<any, any> {
       disciplineCode: this.$router.params.disciplineCode,
     }
     CommonApi.listTotalIndustry(params).then(resp => {
-      console.log('🧚‍♀️ 🧚‍♀️🧚‍♀️🧚‍♀️🧚‍♀️行业top5 resp: ', resp)
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
         hangyetop5LegendData = resp.data.list.map(item => {
           return item.industry
@@ -302,7 +291,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 中国地图 */}
         <View className="has-title-box">
-          <View className="box-title"><Text className="color-orange">区域分布</Text></View>
+          <View className="box-title"><Text className="box-title-text">区域分布</Text></View>
           <View className="box-cont">
             <ChinaMap ref={this.refMapChart} />
           </View>
@@ -310,7 +299,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 实心饼图 */}
         <View className="has-title-box">
-          <View className="box-title"><Text className="color-orange">城市分布</Text></View>
+          <View className="box-title"><Text className="box-title-text">城市分布</Text></View>
           <View className="box-cont pr-30">
             {chengshizhanbiSeriesData.length
             ? <Chart
@@ -326,7 +315,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 空心饼图 */}
         <View className="has-title-box">
-          <View className="box-title"><Text className="color-orange">行业TOP5</Text></View>
+          <View className="box-title"><Text className="box-title-text">行业TOP5</Text></View>
           <View className="box-cont pr-30">
             {hangyetop5SeriesData.length
             ? <Chart
@@ -342,7 +331,7 @@ export default class Xuqiu extends Component<any, any> {
 
         {/* 南丁格尔饼图 */}
         <View className="has-title-box">
-          <View className="box-title"><Text className="color-orange">工作经验分布</Text></View>
+          <View className="box-title"><Text className="box-title-text">工作经验分布</Text></View>
           <View className="box-cont pr-30">
             {zhiweifenbuSeriesData.length
             ? <Chart

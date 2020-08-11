@@ -129,8 +129,8 @@ export default class Discipline extends Component<any,any> {
         {title: '城市', key: 'districtRank', itemCurrentCode: null, expand: false, list: [
           {name: '不限', code: null},
           {name: '一线城市', code: '一线城市'},
+          {name: '新一线城市', code: '新一线城市'},
           {name: '二线城市', code: '二线城市'},
-          {name: '新一线城市', code: '新一线城市'}
         ]},
         {title: '年限', key: 'workingYears', itemCurrentCode: null, expand: false, list: [
           {name: '不限', code: null},
@@ -142,7 +142,7 @@ export default class Discipline extends Component<any,any> {
         ]},
         {title: '薪酬', key: 'salary', itemCurrentCode: null, expand: false, list: [
           {name: '不限', code: null},
-          {name: '2k以下', code: '20-'},
+          {name: '2k以下', code: '2-'},
           {name: '2k-5k', code: '2-5'},
           {name: '5k-8k', code: '5-8'},
           {name: '8k-12k', code: '8-12'},
@@ -157,7 +157,6 @@ export default class Discipline extends Component<any,any> {
   };
 
   componentDidMount () {
-    console.log('this.$router.params: ', this.$router.params)
     if (this.$router.params.code) {
       this.query()
     }
@@ -171,7 +170,6 @@ export default class Discipline extends Component<any,any> {
 
   // 根据专业检索职位列表
   query = () => {
-    console.log('✨ 根据专业检索职位列表')
     let { searchDisciplineCode, filterData, sortXinchou, sortZhiwei } = this.state
     var params = {
       disciplineCode: searchDisciplineCode ? searchDisciplineCode : this.$router.params.code,
@@ -183,10 +181,8 @@ export default class Discipline extends Component<any,any> {
         params[key] = filterData[key]
       }
     })
-    // console.log('👺 根据专业检索职位列表 params: ', params)
     CommonApi.queryRecruitmentDataList(params).then(resp => {
       if (resp.code == 200 && resp.data.list && resp.data.list.length) {
-        console.log('👺👺resp.data.list: ', resp.data.list)
         let arr:any = []
         resp.data.list.map(item => {
           arr.push({
@@ -220,11 +216,9 @@ export default class Discipline extends Component<any,any> {
 
   // 点击筛选
   handleFilter = (idx, key, code, name) => {
-    console.log('🌹 key: ', key, ', name: ', name)
     let { filterList, filterData } = this.state
     filterData[key] = code
     filterList[idx].itemCurrentCode = code
-    // console.log('filterList[idx]: ', filterList[idx])
     this.setState({
       filterList,
       filterData,
@@ -268,9 +262,7 @@ export default class Discipline extends Component<any,any> {
   // 搜索栏-输入改变
   searchBarOnChange (value) {
     let { filterData, searchDownlist, isShowDownBox } = this.state
-    console.log('value: ', value)
     CommonApi.searchDisciplineName({search: value}).then(resp => {
-      console.log('👺 根据专业名称获取目录 resp: ', resp)
       if (resp.code == 200) {
         let arr:any = Common.getTree(resp.data.list, 'name', 'code', 'listChild')
         this.setState({
@@ -338,7 +330,7 @@ export default class Discipline extends Component<any,any> {
               <View className={searchInpIsOnFocus ? 'discipline-search-input-wrap w-100' : 'discipline-search-input-wrap w-30'}>
                 <AtInput 
                   name="searchVal"
-                  placeholder="专业"
+                  placeholder={searchInpIsOnFocus ? '请输入专业名称' : ''}
                   value={filterData.searchVal}
                   onChange={this.searchBarOnChange.bind(this)} 
                   onFocus={this.searchBarOnFocus.bind(this)} 

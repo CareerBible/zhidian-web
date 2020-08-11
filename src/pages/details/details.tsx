@@ -28,7 +28,6 @@ export default class Details extends Component<any,any> {
   }
 
   componentDidMount () {
-    console.log('🌸 this.$router.params: ', this.$router.params + ', name: ', decodeURI(this.$router.params.positionname))
     if (this.$router.params.positionname) {
       this.setState({
         positionName: decodeURI(this.$router.params.positionname)

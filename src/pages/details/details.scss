@@ -108,34 +108,69 @@
 }
 
 .echarts-box-wrap{
-  padding: 30px;
+  padding: 0 30px;
   .default-box{
     background-color: #fff;
     border-radius: 20px;
-    margin-bottom: 50px;
+    margin-bottom: 80px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, .03);
   }
   .has-title-box{
     background-color: #fff;
-    border-radius: 40px;
+    border-radius: 0 0 50px 50px;
     position: relative;
-    margin-bottom: 50px;
-    // overflow: hidden;
+    margin-top: 80px;
     box-shadow: 0px 6px 10px rgba(0, 0, 0, .03);
+    &:after {
+      content: '';
+      position: absolute;
+      top: -42px;
+      left: 0;
+      width: 30%;
+      height: 42px;
+      border-radius: 100px 100px 0 0;
+      background: #fff;
+      box-shadow: 0 -3px 3px #f2f6ff;
+    }
+    &:before {
+      content: '';
+      position: absolute;
+      top: -42px;
+      right: 0;
+      width: 30%;
+      height: 42px;
+      border-radius: 100px 100px 0 0;
+      background: #fff;
+      box-shadow: 0 -3px 3px #f2f6ff;
+    }
     .box-title{
       width: 100%;
-      height: 120px;
+      height: 42px;
       text-align: center;
-      border-radius: 0 0 50px 50px;
-      line-height: 90px;
+      border-radius: 70px;
       font-size: 28px;
       position: relative;
-      background-image: url('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAeAAD/4QOMaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjYtYzEzMiA3OS4xNTkyODQsIDIwMTYvMDQvMTktMTM6MTM6NDAgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpPcmlnaW5hbERvY3VtZW50SUQ9InhtcC5kaWQ6NzBiYTdkNGItNDc0MC00MmEzLTkyYmUtOWI1YjU1NjJjYWIyIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkRDOEVBQ0Q2RDdBQTExRUFBRkVBQzY3NUZDMzE3MjU2IiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkRDOEVBQ0Q1RDdBQTExRUFBRkVBQzY3NUZDMzE3MjU2IiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCAyMS4wIChNYWNpbnRvc2gpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6ODJlYTk2MmMtMmI3OS00MDUzLTkwYWItOGU2ODc2MzdjNTJhIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6YmQyMzczYjgtMTk4My00YzRlLWJhZjItZTZmYjk0N2QzM2VhIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+/+4ADkFkb2JlAGTAAAAAAf/bAIQAEAsLCwwLEAwMEBcPDQ8XGxQQEBQbHxcXFxcXHx4XGhoaGhceHiMlJyUjHi8vMzMvL0BAQEBAQEBAQEBAQEBAQAERDw8RExEVEhIVFBEUERQaFBYWFBomGhocGhomMCMeHh4eIzArLicnJy4rNTUwMDU1QEA/QEBAQEBAQEBAQEBA/8AAEQgAeAKoAwEiAAIRAQMRAf/EAFwAAQEBAQEAAAAAAAAAAAAAAAACAQMGAQEBAQAAAAAAAAAAAAAAAAAAAQIQAQADAAIDAQEAAAAAAAAAAAABEQJBUSExcWESEQEBAQAAAAAAAAAAAAAAAAAAEQH/2gAMAwEAAhEDEQA/APegKgDPM+gbbLVGe2lEVPTa10sKqK10VrpYURWuitdLCiK10VrpYURWuitdLCiKnplujCibGznpPr2I0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACImQZZ5lcZiAqprXRWulhRFa6K10sKIrXRWulhRFa6K10sKIrXRWulhRz89FujJiJKJCczHpliNAAAABlXNA2Iv4qIo9NRQAAAAAAAAAAAAABkxbQHP1NS1uouP1MKjQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAZEXINiL+KGooAAAAAAAAAAAAAAmc39UA5tbqL+phUaADJVmKhPuadDVAEAAAAAAAAAAAAAAAABGoqbWyYuKMEjIaqAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMleYqE5i5+LNUAQAAAAAAAAAAAAAAAAEaipvtbNRcGCRkDSNz7WjHK01QBAAAAAAAAAAAAAAAAAABGoqfo3UXCYVGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMlrPc0orMePqmNZUAAAAAAAAAAAAAAAAAAY0BzgOZGkbjlaMcrTVAEAAAAAAAAAAAAAAAAAABGoqfxbJizBIyYmGtIAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMsCVZio/WZzzKzVAEAAAAAAAAAAAAAAAAAAAAHPmQ5kaRuOVoxytNUAQAAAAAAAAAAAAAAAAAAAAYmc9LAc6mOC3QWjnZboFHOy3QKOdlugUc7LdAo52W6BRzst0CjnZboFHOy3QKOdlugUc7LdAo52W6BRzst0CjnZboFHOy3QKOdnl0CiP5mWxmIUFABAAAAAAAAAAAAAAAAAAAAAABz5kOZGkbjlaMcrTVAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHPmQ5kaRuOVgmqAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAOfMgNI//Z');
-      background-position: center top;
-      background-repeat: no-repeat;
-      background-size: cover;
+      &:before{
+        content: '';
+        width: 40%;
+        height: 42px;
+        top: -10px;
+        left: 30%;
+        background: #f8faff;
+        position: absolute;
+        border-radius: 0 0 60px 60px;
+        box-shadow: inset 0 -10px 5px -10px rgba(197, 215, 255, 0.3);
+      }
       .color-orange{
         color: #ff6235;
+      }
+      .box-title-text{
+        width: 100%;
+        height: 42px;
+        position: absolute;
+        top: -30px;
+        left: 0;
+        color: #333;
       }
     }
     .box-cont{
@@ -147,6 +182,7 @@
     text-align: center;
     color: #666;
     line-height: 60px;
-    font-size: 24px;
+    font-size: 12px;
+    padding: 10px;
   }
 }

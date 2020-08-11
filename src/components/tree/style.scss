@@ -25,13 +25,13 @@ $cls-prefix: 'cp-tree';
       display: flex;
       align-items: center;
       justify-content: flex-end;
+      .at-icon-chevron-down{
+        color: #394f6e !important;
+      }
     }
   }
-  .tree-item-more{
-    position: static;
-    float: left;
-  }
 }
+
 .#{$cls-prefix}-radio {
   .tree-item-radio {
     color: #333;
@@ -39,7 +39,7 @@ $cls-prefix: 'cp-tree';
     @include hairline-bottom(#d6e4ef);
     // padding-bottom: 24px;
     // padding-left: 48px;
-    padding: 20px 0 20px 0;
+    padding: 20px 0 20px 48px;
     .label {
       padding-right: 24px;
     }
@@ -51,6 +51,14 @@ $cls-prefix: 'cp-tree';
     }
     .at-icon-check{
       opacity: 0;
+    }
+    &.show-children{
+      .label, .checked{
+        color: #394f6e;
+      }
+    }
+    &.hide-children{
+      // padding-left: 0;
     }
   }
 }

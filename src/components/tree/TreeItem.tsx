@@ -95,7 +95,7 @@ export default class TreeItem extends Taro.PureComponent<ITreeItem, ITreeItemSta
           {!multiple&&(
             <View 
               onClick={() => this.handleRadioTreeChange(value, disabled)} 
-              className="tree-item-radio"
+              className={visible ? "tree-item-radio show-children" : 'tree-item-radio hide-children'}
             >
               <Text className={cls('label',{checked, disabled})}>
                 {label}
