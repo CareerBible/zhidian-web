@@ -364,10 +364,10 @@ document.querySelector('input[type="submit"]').onclick = function(event){
     if (xhr.readyState === 4) {
       var data = JSON.parse(xhr.responseText)
       if(data.code == 200) {
-        window.location.href = '/ask/ok.html'
+        window.location.href = '/survey/ok.html'
       } else {
         alert(data.msg)
-        window.location.href = '/ask/1.html'
+        window.location.href = '/survey/1.html'
       }
     }
   }
