@@ -148,13 +148,13 @@ input[type='checkbox'] {
 }
 
 input[type='radio']:checked {
-  background: url('/static/survey/img/radio.svg');
+  background: url('/survey/static/img/radio.svg');
   background-size: 20px;
   border: none;
 }
 
 input[type='checkbox']:checked {
-  background: url('/static/survey/img/checkbox.svg') -10px -10px;
+  background: url('/survey/static/img/checkbox.svg') -10px -10px;
   background-size: 40px;
   border: none;
 }
