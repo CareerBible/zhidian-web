@@ -467,7 +467,6 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   color: #999;
   top: 50%;
   margin-top: -200px;
-  display: none;
 }
 
 .no-data p {

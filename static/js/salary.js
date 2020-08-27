@@ -4,6 +4,7 @@
     showSearch: false,
     searchTxt: '', //搜索框文字
     area: '全国',
+    titleName: '哲学',
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
     cityList:[],
@@ -83,15 +84,16 @@ var vm = new Vue({
     data: data,
     mounted: function(){
         this.salaryChart = echarts.init(document.getElementById('chart')); 
+        var that = this;
         this.$nextTick(function() {  
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
-          
+          window.document.title = that.titleName;
           //this.userId = window.localStorage.getItem('uid');
           //axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
-        window.document.title = '哲学';
+        
         this.getProfession('010101', false, '哲学');
     },
     methods: {  //  放方法函数
@@ -103,13 +105,26 @@ var vm = new Vue({
                 if(resData.code === 200){
                     that.showProvince = true;
                     that.areaList = resData.data.list;
+                    
+                    that.areaList.unshift({
+                      name: '全国',
+                      listChild: []
+                    });
                     for(var i = 0; i<that.areaList.length; i++){
-                      that.areaList[i].show = false;
+                      that.$set(that.areaList[i], 'show', false);
                     }
                 }
             });
         },
         selecteProvince: function(item){ //选中省
+          if(item.listChild.length==0){
+            this.showProvince = false;
+            this.showCity = false;
+            this.districtId = '';
+            this.area = '全国';
+            this.getProfession(this.jobCode, true, this.searchTxt);
+            return;
+          }
           item.show = true;
           this.showCity = item.show;
           this.cityList = item.listChild;
@@ -122,7 +137,9 @@ var vm = new Vue({
           this.showCity = false;
           this.districtId = item.id;
           this.area = item.name;
-          this.getProfession(this.jobCode, true, this.searchTxt);
+          this.titleName = item.name;
+          window.document.title = this.titleName;
+          this.getProfession(this.jobCode, false, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
@@ -157,14 +174,22 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
+            
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                  console.log(name);
-                    window.document.title = name;              
+                    that.titleName = name;
+                    window.document.title = that.titleName;              
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
+                    if(resData.data.disciplineAvgSalary === 0) {
+                      that.showNoData = true; 
+                      that.professionSalaryList=[]; 
+                      return;
+                    }else{
+                      that.showNoData = false;
+                    }
                     for(var i = 0; i < arr.length; i++){
                       that.professionSalaryList[i] = arr[i];
                     }
@@ -199,8 +224,11 @@ var vm = new Vue({
                     var arr = resData.data.listPositionAvgSalary;
                     if(arr.length == 0){
                         that.showNoData = true;
+                        that.jobList = [];
                         that.note = "暂无数据";
+                        return;
                     }else{
+                        that.showNoData = false;
                         if(isSearch){   //是否搜索来的
                             that.jobList = [];
                         }
@@ -231,9 +259,6 @@ var vm = new Vue({
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
-
-            // this.setFixed();
-
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
@@ -319,22 +344,6 @@ var vm = new Vue({
                 this.showChart = false;
           }
         },
-        // setFixed: function(){//固定图表
-        //     if(!this.showChart){return;}
-        //     var scrollTop = this.Dom.scrollTop;
-        //     var profession = document.querySelector('#profession');
-        //   if(scrollTop > 120){
-        //       profession.style.position = 'fixed'
-        //       profession.style.top = '0'
-        //       profession.style.width = 'calc(100% - 80px)'
-        //       profession.style.zIndex = '3'
-        //       profession.querySelector('section').style.marginTop = '0'
-        //   } else {
-        //       profession.style.position = 'static'
-        //       profession.querySelector('section').style.marginTop = '40px'
-        //       profession.style.width = '100%'
-        //   }
-        // },
         backTop: function(){  //回到顶部
           var time = null , that = this;
           var scrollTop = that.Dom.scrollTop;
@@ -358,10 +367,6 @@ var vm = new Vue({
                 this.chartOption.series = []
                 this.showChart = false; 
             }
-            //行业平均样式恢复
-            // profession.style.position = 'static';
-            // profession.querySelector('section').style.marginTop = '40px'
-            // profession.style.width = '100%'
         }
     },
     watch: {
