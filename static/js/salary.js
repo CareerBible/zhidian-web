@@ -84,10 +84,11 @@ var vm = new Vue({
     data: data,
     mounted: function(){
         this.salaryChart = echarts.init(document.getElementById('chart')); 
+        var that = this;
         this.$nextTick(function() {  
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
-          window.document.title = this.titleName;
+          window.document.title = that.titleName;
           //this.userId = window.localStorage.getItem('uid');
           //axios.defaults.headers.common["uid"] = this.userId;
         })
@@ -173,11 +174,12 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
+            
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                    this.titleName = name;
-                    window.document.title = this.titleName;              
+                    that.titleName = name;
+                    window.document.title = that.titleName;              
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
