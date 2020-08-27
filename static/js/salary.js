@@ -160,6 +160,7 @@ var vm = new Vue({
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
+                  console.log(name);
                     window.document.title = name;              
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
@@ -170,7 +171,7 @@ var vm = new Vue({
                 }
             });
             
-            this.getJodData(true);
+            this.getJodData(true, true);
             if(onOff){
                 var time = null;
                 time = setTimeout(function(){
@@ -179,9 +180,10 @@ var vm = new Vue({
                 }, 10000);
             }
         },
-        getJodData: function(isSearch){ //获取岗位数据
+        getJodData: function(isSearch, init){ //获取岗位数据
             var url = this.domain + '/api/statistical/listPage';
             const that = this;
+            if(init){this.page=1;}
             var params = {
               disciplineCode: this.jobCode,
               limit: this.limit,
@@ -220,7 +222,7 @@ var vm = new Vue({
           }else {
             this.showLogin = true;
             this.page++;
-            setTimeout(this.getJodData(false),500);
+            setTimeout(this.getJodData(false, false),500);
           }
         },
         viewmore: function() {  //加载更多
