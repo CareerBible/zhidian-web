@@ -62,8 +62,6 @@ window.onload = function(){
     }
     // isLogin();
 
-    // function 
-
     //得到code再获取用户信息
     function getUserInfo(str){
       var obj = GetRequest(str),

@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="/static/css/style.css"/>
 </head>
 <body>
-    <div id="salaryAnalysis" :style="{height:clientH + 'px'}" @scroll="viewmore">
+    <div id="salaryAnalysis" @click="showProvince=false;showCity=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
         <!---头部--->
         <header>
-            <div @click="getAreaOption">{{area}}</div>
+            <div @click.stop="getAreaOption($event)">{{area}}</div>
             <ul class="province" v-if="showProvince">
-              <li :class="{'active': item.show}" v-for="item in areaList" @click="selecteProvince(item)">{{item.name}}</li>
+              <li :class="{'active': item.show}" v-for="item in areaList" @click.stop="selecteProvince(item)">{{item.name}}</li>
             </ul>
             <ul class="city" v-if="showCity">
-              <li :class="{'active': obj.show}" @click="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
+              <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
             </ul>
             <section>
               <input type="text" placeholder="填专业，搜对口职位薪酬" v-model="searchTxt" @input="getSearchTxt">
