@@ -30,7 +30,7 @@
           <section id="profession">
             <section><h1>对口职位平均薪酬</h1><span><em>¥</em>{{professionAvg}}</span></section>
             <section>
-              <ul v-show="!showChart">
+              <ul>
                 <li v-for="item in professionSalaryList">
                   <p>{{item.disciplineavgsalaryworkingyears.toFixed(1)}}k</p>
                   <p>{{item.workingyears}}</p>
@@ -40,6 +40,7 @@
             </section>
           </section>
 
+          <div class="zhiwei">
           <!---职位--->
           <section v-for="item in jobList">
             <section>
@@ -64,7 +65,7 @@
               <button @click="compareOrCancel(item)" >{{item.compareBtn ? "+对比": "取消" }}</button>
             </section>
           </section>
-
+          </div>
           <!---top按钮--->
           <button class="top"  @click="backTop"><img src="/static/img/TOP.svg" alt=""></button>
 
