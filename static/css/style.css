@@ -428,7 +428,6 @@ main section section .average-value span em {
   color: #999;
   top: 50%;
   margin-top: -200px;
-  display: none;
 }
 
 .no-data p {

@@ -103,13 +103,22 @@ var vm = new Vue({
                 if(resData.code === 200){
                     that.showProvince = true;
                     that.areaList = resData.data.list;
+                    
+                    that.areaList.unshift({
+                      name: '全国',
+                      listChild: []
+                    });
                     for(var i = 0; i<that.areaList.length; i++){
-                      that.areaList[i].show = false;
+                      that.$set(that.areaList[i], show, false);
                     }
                 }
             });
         },
         selecteProvince: function(item){ //选中省
+          if(item.listChild.length==0){
+            item.show = false;
+            return;
+          }
           item.show = true;
           this.showCity = item.show;
           this.cityList = item.listChild;
@@ -145,6 +154,7 @@ var vm = new Vue({
             }
         },
         getProfession: function(code, onOff, name){ //选择专业获取行业数据
+            // if(name == ''){this.searchTxt = }
             this.searchTxt = '';
             this.jobCode = code;
             var url = this.domain + '/api/statistical/listDiscipline';
@@ -160,11 +170,12 @@ var vm = new Vue({
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                  console.log(name);
+                    
                     window.document.title = name;              
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
+                    if(arr.length === 0) {that.showNoData = true; that.professionSalaryList=[]; return;}else{that.showNoData = false;}
                     for(var i = 0; i < arr.length; i++){
                       that.professionSalaryList[i] = arr[i];
                     }
@@ -199,8 +210,11 @@ var vm = new Vue({
                     var arr = resData.data.listPositionAvgSalary;
                     if(arr.length == 0){
                         that.showNoData = true;
+                        that.jobList = [];
                         that.note = "暂无数据";
+                        return;
                     }else{
+                        that.showNoData = false;
                         if(isSearch){   //是否搜索来的
                             that.jobList = [];
                         }

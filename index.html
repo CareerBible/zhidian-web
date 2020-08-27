@@ -27,7 +27,7 @@
 
         <main>
           <!---行业--->
-          <section id="profession">
+          <section id="profession" v-show="!showNoData">
             <section><h1>对口职位平均薪酬</h1><span><em>¥</em>{{professionAvg}}</span></section>
             <section>
               <ul v-show="!showChart">
@@ -66,11 +66,11 @@
           </section>
 
           <!---top按钮--->
-          <button class="top"  @click="backTop"><img src="/static/img/TOP.svg" alt=""></button>
+          <button class="top"  @click="backTop"><img src="/static/img/top.svg" alt=""></button>
 
           <!---底部--->
           <p class="bottom" v-show="showLogin"><img src="/static//img/load.svg" alt=""> 加载中...</p>
-          <p class="bottom" v-show="!showLogin">—  不止诗与远方  —</p>
+          <p class="bottom" v-show="!showLogin && !showNoData">—  不止诗与远方  —</p>
           <section class="loading" v-show="showLoading">
             <img src="/static/img/loading.svg" alt="">
             <p>正在加载...</p>
@@ -100,7 +100,6 @@
           <span class="xian"></span>
           <img src="/static/img/shut-down.svg" alt="" class="shut-down">
         </div>
-        <button class="top"><img src="/static/img/top.svg" alt=""></button>
     </div>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
