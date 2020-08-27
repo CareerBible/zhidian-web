@@ -139,7 +139,7 @@ var vm = new Vue({
           this.area = item.name;
           this.titleName = item.name;
           window.document.title = this.titleName;
-          this.getProfession(this.jobCode, true, this.searchTxt);
+          this.getProfession(this.jobCode, false, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
