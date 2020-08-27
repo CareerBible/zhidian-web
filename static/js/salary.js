@@ -4,6 +4,7 @@
     showSearch: false,
     searchTxt: '', //搜索框文字
     area: '全国',
+    titleName: '哲学',
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
     cityList:[],
@@ -86,12 +87,12 @@ var vm = new Vue({
         this.$nextTick(function() {  
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
-          
+          window.document.title = this.titleName;
           //this.userId = window.localStorage.getItem('uid');
           //axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
-        window.document.title = '哲学';
+        
         this.getProfession('010101', false, '哲学');
     },
     methods: {  //  放方法函数
@@ -109,14 +110,18 @@ var vm = new Vue({
                       listChild: []
                     });
                     for(var i = 0; i<that.areaList.length; i++){
-                      that.$set(that.areaList[i], show, false);
+                      that.$set(that.areaList[i], 'show', false);
                     }
                 }
             });
         },
         selecteProvince: function(item){ //选中省
           if(item.listChild.length==0){
-            item.show = false;
+            this.showProvince = false;
+            this.showCity = false;
+            this.districtId = '';
+            this.area = '全国';
+            this.getProfession(this.jobCode, true, this.searchTxt);
             return;
           }
           item.show = true;
@@ -131,6 +136,8 @@ var vm = new Vue({
           this.showCity = false;
           this.districtId = item.id;
           this.area = item.name;
+          this.titleName = item.name;
+          window.document.title = this.titleName;
           this.getProfession(this.jobCode, true, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
@@ -154,7 +161,6 @@ var vm = new Vue({
             }
         },
         getProfession: function(code, onOff, name){ //选择专业获取行业数据
-            // if(name == ''){this.searchTxt = }
             this.searchTxt = '';
             this.jobCode = code;
             var url = this.domain + '/api/statistical/listDiscipline';
@@ -170,12 +176,18 @@ var vm = new Vue({
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                    
-                    window.document.title = name;              
+                    this.titleName = name;
+                    window.document.title = this.titleName;              
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                    if(arr.length === 0) {that.showNoData = true; that.professionSalaryList=[]; return;}else{that.showNoData = false;}
+                    if(resData.data.disciplineAvgSalary === 0) {
+                      that.showNoData = true; 
+                      that.professionSalaryList=[]; 
+                      return;
+                    }else{
+                      that.showNoData = false;
+                    }
                     for(var i = 0; i < arr.length; i++){
                       that.professionSalaryList[i] = arr[i];
                     }
