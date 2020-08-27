@@ -164,7 +164,9 @@ var vm = new Vue({
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                    that.professionSalaryList = arr;
+                    for(var i = 0; i < arr.length; i++){
+                      that.professionSalaryList[i] = arr[i];
+                    }
                 }
             });
             
@@ -262,7 +264,6 @@ var vm = new Vue({
               this.dataArr.push(num);
             }
             this.chartOption.legend.data.push(item.name);  //职业名称
-
             if(arr.length == 0){
                 this.addProfessionAvg();    //添加行业平均薪资
                 this.addFn(item, this.dataArr);
@@ -285,7 +286,7 @@ var vm = new Vue({
         addProfessionAvg: function(){   //对比图添加行业平均数据
             var arr = this.professionSalaryList, salaryLi = [];
             for(var i = 0; i < arr.length; i++){
-                salaryLi.push(arr[i].salary);
+                salaryLi.push(arr[i].disciplineavgsalaryworkingyears);
             }
             this.chartOption.legend.data.push('行业平均');
             this.chartOption.series.push({
