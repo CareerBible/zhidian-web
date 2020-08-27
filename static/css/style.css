@@ -320,6 +320,10 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   bottom: 0;
 }
 
+.zhiwei > section > section:last-child button.active {
+  background: #e53898;
+}
+
 .zhiwei section section h2 p img {
   width: 26px;
   vertical-align: top;

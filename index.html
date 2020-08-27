@@ -62,7 +62,7 @@
                   <p>{{obj.workingyears}}</p>
                 </li>
               </ul>
-              <button @click="compareOrCancel(item)" >{{item.compareBtn ? "+对比": "取消" }}</button>
+              <button @click="compareOrCancel(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
             </section>
           </section>
           </div>
