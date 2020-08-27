@@ -230,16 +230,15 @@ var vm = new Vue({
 
             this.setFixed();
 
-            if(domScrollTop > 600){
-              toTop.style.display = 'block';
-            }else{
-              toTop.style.display = 'none';
-            }
-            
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
                 this.showLogin = false;
+            }
+            if(domScrollTop < 600){
+              toTop.style.display = 'none';
+            }else{
+              toTop.style.display = 'block';
             }
         },
         compareOrCancel: function(item){  //对比/取消按钮
@@ -335,12 +334,14 @@ var vm = new Vue({
         },
         backTop: function(){  //回到顶部
           var time = null , that = this;
-          var scrollTop = this.Dom.scrollTop;
+          var scrollTop = that.Dom.scrollTop;
+         
           time = setInterval(function(){
-            if(scrollTop <= 0){
+            if(that.Dom.scrollTop === 0){
               clearInterval(time);
+            }else{
+              that.Dom.scrollTop -= 100;
             }
-            that.Dom.scrollTop -= 100;
           }, 16);
         },
         closePop: function(){   //未支付关闭弹窗
