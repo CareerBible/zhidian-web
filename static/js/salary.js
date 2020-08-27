@@ -268,7 +268,6 @@ var vm = new Vue({
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
-
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
@@ -377,10 +376,6 @@ var vm = new Vue({
                 this.chartOption.series = []
                 this.showChart = false; 
             }
-            //行业平均样式恢复
-            profession.style.position = 'static';
-            profession.querySelector('section').style.marginTop = '40px'
-            profession.style.width = '100%'
         }
     },
     watch: {

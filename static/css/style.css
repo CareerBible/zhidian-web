@@ -66,6 +66,9 @@ header {
   padding: 20px 40px;
   background: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  top: 0;
+  z-index: 4;
 }
 
 header section {
@@ -97,7 +100,6 @@ header section ul {
   box-sizing: border-box;
   right: 0;
   top: 84px;
-  z-index: 3;
   line-height: 48px;
   font-size: 24px;
   color: #999;
@@ -185,62 +187,6 @@ h2 {
   padding-top: 20px;
 }
 
-main > section > section:first-child {
-  background: #3589fc;
-  color: #fff;
-  height: 120px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(12, 49, 158, 0.3);
-  line-height: 120px;
-  padding: 0 30px 0 40px;
-  box-sizing: border-box;
-  position: relative;
-  z-index: 2;
-  margin-top: 40px;
-  overflow: hidden;
-}
-
-main > section > section:last-child {
-  background: #fff;
-  width: calc(100% - 40px);
-  margin-left: 20px;
-  display: inline-block;
-  clear: both;
-  margin-top: -20px;
-  padding: 45px 15px 57px 15px;
-  box-sizing: border-box;
-  box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
-  border-radius: 0 0 20px 20px;
-  position: relative;
-}
-
-main > section > section:last-child button {
-  background: #3589fc;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  text-align: center;
-  font-size: 20px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-main section section h2 p img {
-  width: 26px;
-  vertical-align: top;
-  margin: 7px 0 0 4px;
-  float: left;
-}
-
-main section section h2 p span {
-  float: left;
-  font-size: 20px;
-  color: #eee;
-  padding-right: 4px;
-}
-
 main > section:first-child > section:first-child {
   background-image: linear-gradient(to right, #e53698 , #f78e6e);
   color: #fff;
@@ -255,108 +201,190 @@ main > section:first-child > section:first-child {
   overflow: hidden;
 }
 
-main section:first-child section span {
+main > section:first-child section span {
   float: right;
   font-size: 50px;
   font-weight: bold;
   -webkit-text-stroke: 2px #fff;
 }
 
-main section:first-child section span em {
+main > section:first-child section span em {
   font-size: 24px;
   padding-right: 4px;
   -webkit-text-stroke: 0 #fff;
-}
-
-main section ul {
-  width: 100%;
-  text-align: center;
-}
-
-main section ul li {
-  display: inline-block;
-  color:#3589fc;
-  text-align: center;
-  padding-left: 12px;
-}
-
-main section ul li:first-child {
-  padding-left: 0;
 }
 
 main > section:first-child > section:last-child {
   background: #fff;
   width: calc(100% - 40px);
   margin-left: 20px;
-  padding: 45px 15px 25px 15px;
+  padding: 25px 15px;
   box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
   border-radius: 0 0 20px 20px;
   box-sizing: border-box;
 }
 
-main section:first-child ul {
+main > section:first-child ul {
   display: inline-block;
   clear: both;
   padding-bottom: 20px;
 }
 
-main section ul li p:first-child {
+main > section:first-child ul li {
+  display: inline-block;
+  color:#e53698;
+  text-align: center;
+  padding-left: 12px;
+}
+
+main > section:first-child ul li p:last-child {
+  font-size: 14px;
+  color: #e53698;
+}
+
+main > section:first-child ul li p:first-child {
+  border-bottom: 1px solid #3589fc;
+  padding: 0 4px 7px;
+  margin-bottom: 3px;
+}
+
+main > section:first-child ul li p:first-child {
+  border-bottom: 1px solid #e53698;
+  padding: 0 4px 7px;
+  margin-bottom: 3px;
+}
+
+main > section:first-child ul li:nth-child(1) p:first-child {
+  font-size: 24px;
+  margin-top: 22px;
+}
+
+main > section:first-child ul li:nth-child(2) p:first-child {
+  font-size: 28px;
+  margin-top: 17px;
+}
+
+main > section:first-child ul li:nth-child(3) p:first-child {
+  font-size: 32px;
+  margin-top: 12px;
+}
+
+main > section:first-child ul li:nth-child(4) p:first-child {
+  font-size: 36px;
+  margin-top: 5px;
+}
+
+main > section:first-child ul li:nth-child(5) p:first-child {
+  font-size: 40px;
+}
+
+.zhiwei > section > section:first-child {
+  background: #3589fc;
+  color: #fff;
+  height: 120px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(12, 49, 158, 0.3);
+  line-height: 120px;
+  padding: 0 30px 0 40px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 2;
+  margin-top: 40px;
+  overflow: hidden;
+}
+
+.zhiwei > section > section:last-child {
+  background: #fff;
+  width: calc(100% - 40px);
+  margin-left: 20px;
+  display: inline-block;
+  clear: both;
+  margin-top: -20px;
+  padding: 45px 15px 57px 15px;
+  box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
+  border-radius: 0 0 20px 20px;
+  position: relative;
+}
+
+.zhiwei > section > section:last-child button {
+  background: #3589fc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.zhiwei section section h2 p img {
+  width: 26px;
+  vertical-align: top;
+  margin: 7px 0 0 4px;
+  float: left;
+}
+
+.zhiwei section section h2 p span {
+  float: left;
+  font-size: 20px;
+  color: #eee;
+  padding-right: 4px;
+}
+
+.zhiwei section ul {
+  width: 100%;
+  text-align: center;
+}
+
+.zhiwei section ul li {
+  display: inline-block;
+  color:#3589fc;
+  text-align: center;
+  padding-left: 12px;
+  margin-bottom: 15px;
+}
+
+.zhiwei section ul li:first-child {
+  padding-left: 0;
+}
+
+.zhiwei section ul li p:first-child {
   border-bottom: 1px solid #3589fc;
   padding-bottom: 7px;
   margin-bottom: 3px;
   font-weight: bolder;
 }
 
-main section ul li p:last-child {
+.zhiwei section ul li p:last-child {
   font-size: 14px;
   color: rgba(53, 137, 252, 0.9);
 }
 
-main section:first-child ul li p:last-child {
-  font-size: 14px;
-  color: #e53698;
-}
-
-main section:first-child ul li {
-  display: inline-block;
-  color:#e53698;
-  text-align: center;
-}
-
-main section:first-child ul li p:first-child {
-  border-bottom: 1px solid #3589fc;
-  padding: 0 4px 7px;
-  margin-bottom: 3px;
-}
-
-main section:first-child ul li p:first-child {
-  border-bottom: 1px solid #e53698;
-  padding: 0 4px 7px;
-  margin-bottom: 3px;
-}
-
-main section:first-child ul li:nth-child(1) p:first-child {
-  font-size: 24px;
-  margin-top: 22px;
-}
-
-main section:first-child ul li:nth-child(2) p:first-child {
-  font-size: 28px;
-  margin-top: 17px;
-}
-
-main section:first-child ul li:nth-child(3) p:first-child {
-  font-size: 32px;
-  margin-top: 12px;
-}
-
-main section:first-child ul li:nth-child(4) p:first-child {
-  font-size: 36px;
+.zhiwei section ul li:nth-child(1) p:first-child {
+  font-size: 20px;
   margin-top: 5px;
 }
 
-main section:first-child ul li:nth-child(5) p:first-child {
-  font-size: 40px;
+.zhiwei section ul li:nth-child(2) p:first-child {
+  font-size: 22px;
+  margin-top: 4px;
+}
+
+.zhiwei section ul li:nth-child(3) p:first-child {
+  font-size: 24px;
+  margin-top: 2px;
+}
+
+.zhiwei section ul li:nth-child(4) p:first-child {
+  font-size: 26px;
+  margin-top: 1px;
+}
+
+.zhiwei section ul li:nth-child(5) p:first-child {
+  font-size: 28px;
 }
 
 .average-value {
@@ -370,12 +398,12 @@ main section:first-child ul li:nth-child(5) p:first-child {
   padding-left: 15px;
 }
 
-main section section .average-value span {
+.zhiwei section section .average-value span {
   -webkit-text-stroke: 2px #fff;
   font-size: 38px;
 }
 
-main section section .average-value span em {
+.zhiwei section section .average-value span em {
   -webkit-text-stroke: 0 #fff;
   font-size: 18px;
 }
@@ -385,6 +413,17 @@ main section section .average-value span em {
   height: 300px;
   padding-right: 10px;
   box-sizing: border-box;
+}
+
+#profession {
+  position: fixed;
+  z-index: 3;
+  width: calc(100% - 80px);
+  top: 140px;
+}
+
+.zhiwei {
+  margin-top: 470px;
 }
 
 /*回到顶部样式*/
