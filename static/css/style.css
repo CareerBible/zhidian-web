@@ -207,7 +207,7 @@ main > section > section:last-child {
   display: inline-block;
   clear: both;
   margin-top: -20px;
-  padding: 45px 0 57px 15px;
+  padding: 45px 15px 57px 15px;
   box-sizing: border-box;
   box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
   border-radius: 0 0 20px 20px;
@@ -268,18 +268,27 @@ main section:first-child section span em {
   -webkit-text-stroke: 0 #fff;
 }
 
+main section ul {
+  width: 100%;
+  text-align: center;
+}
+
 main section ul li {
-  float: left;
+  display: inline-block;
   color:#3589fc;
   text-align: center;
-  padding: 0 6px;
+  padding-left: 12px;
+}
+
+main section ul li:first-child {
+  padding-left: 0;
 }
 
 main > section:first-child > section:last-child {
   background: #fff;
   width: calc(100% - 40px);
   margin-left: 20px;
-  padding: 45px 0 25px 15px;
+  padding: 45px 15px 25px 15px;
   box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
   border-radius: 0 0 20px 20px;
   box-sizing: border-box;
@@ -293,54 +302,36 @@ main section:first-child ul {
 
 main section ul li p:first-child {
   border-bottom: 1px solid #3589fc;
-  padding: 0 5px 7px;
+  padding-bottom: 7px;
   margin-bottom: 3px;
+  font-weight: bolder;
 }
 
 main section ul li p:last-child {
   font-size: 14px;
+  color: rgba(53, 137, 252, 0.9);
+}
+
+main section:first-child ul li p:last-child {
+  font-size: 14px;
+  color: #e53698;
 }
 
 main section:first-child ul li {
-  float: left;
+  display: inline-block;
   color:#e53698;
   text-align: center;
-  padding: 0 6px;
 }
 
 main section:first-child ul li p:first-child {
   border-bottom: 1px solid #3589fc;
-  padding: 0 9px 7px;
+  padding: 0 4px 7px;
   margin-bottom: 3px;
-}
-
-main section ul li:nth-child(1) p:first-child {
-  font-size: 22px;
-  margin-top: 5px;
-}
-
-main section ul li:nth-child(2) p:first-child {
-  font-size: 23px;
-  margin-top: 4px;
-}
-
-main section ul li:nth-child(3) p:first-child {
-  font-size: 24px;
-  margin-top: 2px;
-}
-
-main section ul li:nth-child(4) p:first-child {
-  font-size: 25px;
-  margin-top: 1px;
-}
-
-main section ul li:nth-child(5) p:first-child {
-  font-size: 26px;
 }
 
 main section:first-child ul li p:first-child {
   border-bottom: 1px solid #e53698;
-  padding: 0 9px 7px;
+  padding: 0 4px 7px;
   margin-bottom: 3px;
 }
 
