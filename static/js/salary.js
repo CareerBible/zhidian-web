@@ -260,8 +260,6 @@ var vm = new Vue({
             var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
 
-            this.setFixed();
-
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
@@ -345,22 +343,6 @@ var vm = new Vue({
                 this.chartOption.legend.data = [];
                 this.chartOption.series = []
                 this.showChart = false;
-          }
-        },
-        setFixed: function(){//固定图表
-            if(!this.showChart){return;}
-            var scrollTop = this.Dom.scrollTop;
-            var profession = document.querySelector('#profession');
-          if(scrollTop > 120){
-              profession.style.position = 'fixed'
-              profession.style.top = '0'
-              profession.style.width = 'calc(100% - 80px)'
-              profession.style.zIndex = '3'
-              profession.querySelector('section').style.marginTop = '0'
-          } else {
-              profession.style.position = 'static'
-              profession.querySelector('section').style.marginTop = '40px'
-              profession.style.width = '100%'
           }
         },
         backTop: function(){  //回到顶部
