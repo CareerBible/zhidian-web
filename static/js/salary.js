@@ -8,6 +8,7 @@
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
     cityList:[],
+    search: 0,
     professList:[
       {
         id: '',
@@ -122,7 +123,7 @@ var vm = new Vue({
             this.showCity = false;
             this.districtId = '';
             this.area = '全国';
-            this.getProfession(this.jobCode, true, this.searchTxt);
+            this.getProfession(this.jobCode, false, this.searchTxt);
             return;
           }
           item.show = true;
@@ -174,6 +175,21 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
+
+            
+            if(onOff){
+              this.search+=1;
+              if(this.search <= 1){
+                var time = null;
+                time = setTimeout(function(){
+                    that.showMask = true;
+                    that.showPop = true;
+                }, 10000);
+              }else{
+                that.showMask = true;
+                that.showPop = true;
+              }
+            }
             
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
@@ -195,15 +211,8 @@ var vm = new Vue({
                     }
                 }
             });
-            
+           
             this.getJodData(true, true);
-            if(onOff){
-                var time = null;
-                time = setTimeout(function(){
-                    that.showMask = true;
-                    that.showPop = true;
-                }, 10000);
-            }
         },
         getJodData: function(isSearch, init){ //获取岗位数据
             var url = this.domain + '/api/statistical/listPage';

@@ -20,7 +20,7 @@
             <section>
               <input type="text" placeholder="填专业，搜对口职位薪酬" v-model="searchTxt" @input="getSearchTxt">
               <ul v-show="showSearch">
-                <li v-for="item in professList" @click="getProfession(item.code, true, item.name)">{{item.name}}</li>
+                <li v-for="item in professList" @click="getProfession(item.code, item.name)">{{item.name}}</li>
               </ul>
             </section>
         </header>
