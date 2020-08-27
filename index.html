@@ -32,8 +32,8 @@
             <section>
               <ul>
                 <li v-for="item in professionSalaryList">
-                  <p>{{item.disciplineavgsalaryworkingyears.toFixed(1)}}k</p>
-                  <p>{{item.workingyears}}</p>
+                  <p>{{item.avgSalary.toFixed(1)}}k</p>
+                  <p>{{item.workAge}}</p>
                 </li>
               </ul>
               <div id="chart" v-show="showChart"></div>
@@ -57,9 +57,9 @@
             </section>
             <section>
               <ul>
-                <li v-for="obj in item.listPositionAvgSalaryScope">
-                  <p>{{obj.positionavgsalarymin.toFixed(1)}}k-{{obj.positionavgsalarymax.toFixed(1)}}k</p>
-                  <p>{{obj.workingyears}}</p>
+                <li v-for="obj in item.jobSalary">
+                  <p>{{obj.minSalary}}k-{{obj.maxSalary}}k</p>
+                  <p>{{obj.workAge}}</p>
                 </li>
               </ul>
               <button @click="compareOrCancel(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>

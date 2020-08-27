@@ -31,7 +31,27 @@
     professionAvg: 0,
     container: null,// 绑定能被监听滚动的元素
     domHeight: 0,// 内容可视区的高度
-    professionSalaryList: [],
+    professionSalaryList: [
+      {
+        workAge: '1年以下',
+        avgSalary: 1
+      },
+      {
+        workAge: '1-3年',
+        avgSalary: 1
+      },{
+        workAge: '3-5年',
+        avgSalary: 1
+      },
+      {
+        workAge: '5-10年',
+        avgSalary: 1
+      },
+      {
+        workAge: '10年以上',
+        avgSalary: 1
+      }
+    ],
     jobList: [],
     totalPage: 0,  //总页数
     Dom: '',
@@ -207,7 +227,7 @@ var vm = new Vue({
                       that.showNoData = false;
                     }
                     for(var i = 0; i < arr.length; i++){
-                      that.professionSalaryList[i] = arr[i];
+                      that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears;
                     }
                 }
             });
@@ -243,7 +263,30 @@ var vm = new Vue({
                         }
                         for(var i = 0; i < arr.length; i++){
                             that.$set(arr[i], 'compareBtn', true);
+                            arr[i].jobSalary = [{minSalary:0,maxSalary:1,workAge:"1年以下"},{minSalary:0,maxSalary:1,workAge:"1-3年"},{minSalary:0,maxSalary:1,workAge:"3-5年"},{minSalary:0,maxSalary:1,workAge:"5-10年"},{minSalary:0,maxSalary:1,workAge:"10年以上"}];
+                            var list = arr[i].listPositionAvgSalaryScope;
+                            for(var j = 0; j < list.length; j++){
+                              var curAge = list[j].workingyears;
+                              switch(true){
+                                case curAge=='1年以下':
+                                    that.addNumData(arr[i], 0, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                                  break;
+                                case curAge=='1-3年':
+                                    that.addNumData(arr[i], 1, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                                  break;
+                                case curAge=='3-5年':
+                                    that.addNumData(arr[i], 2, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                                  break;
+                                case curAge=='5-10年':
+                                    that.addNumData(arr[i], 3, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                                  break;
+                                case curAge=='10年以上':
+                                    that.addNumData(arr[i], 4, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                                  break;
+                              }
+                            }
                             that.jobList.push(arr[i]);
+                            that.getWholeData()
                         }
                     }
                 }else {
@@ -252,7 +295,22 @@ var vm = new Vue({
                 }
             });
         },
-        turnPage: function(){ 
+        addNumData: function(obj,index,min,max){//对比塞数据
+          obj.jobSalary[index].minSalary = parseFloat(min).toFixed(1);
+          obj.jobSalary[index].maxSalary = parseFloat(max).toFixed(1);
+        },
+        getWholeData: function(){ //拼接得到完整职业数据
+          for(var i = 0; i < this.jobList.length; i++){
+            var arr = this.jobList[i].jobSalary;
+            for(var j = 0; j < arr.length; j++){
+              if(j != 0 && arr[j].minSalary == 0 && arr[j].maxSalary == 1){
+                this.jobList[i].jobSalary[j].minSalary = arr[j-1].minSalary;
+                this.jobList[i].jobSalary[j].maxSalary = arr[j-1].maxSalary;
+              }
+            }
+          }
+        },
+        turnPage: function(){ //再加载一页
           if(this.page == this.totalPage){ //没有剩余页数
             this.showLogin = false;
             return;
@@ -293,10 +351,10 @@ var vm = new Vue({
           }
         },
         addRecord: function(item){ //添加图表数据
-            var avg = item.listPositionAvgSalaryScope,arr = this.chartOption.series;
+            var avg = item.jobSalary,arr = this.chartOption.series;
             this.dataArr = [];
             for(var i = 0; i < avg.length; i++){
-              var num = parseFloat((avg[i].positionavgsalarymax + avg[i].positionavgsalarymin)/2).toFixed(1);
+              var num = parseFloat((parseFloat(avg[i].minSalary) + parseFloat(avg[i].maxSalary))/2).toFixed(1);
               this.dataArr.push(num);
             }
             this.chartOption.legend.data.push(item.name);  //职业名称
@@ -322,7 +380,7 @@ var vm = new Vue({
         addProfessionAvg: function(){   //对比图添加行业平均数据
             var arr = this.professionSalaryList, salaryLi = [];
             for(var i = 0; i < arr.length; i++){
-                salaryLi.push(arr[i].disciplineavgsalaryworkingyears);
+                salaryLi.push(arr[i].avgSalary);
             }
             this.chartOption.legend.data.push('行业平均');
             this.chartOption.series.push({
