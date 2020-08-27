@@ -20,7 +20,6 @@
     showNoData: false,   //显示“没有数据”
     showProvince: false,  //显示省
     showCity: false,  //显示市
-    showBackBtn: false, //显示TOP按钮
     showMask: false,
     showPop: false,
     showSuccess: false,
@@ -227,12 +226,14 @@ var vm = new Vue({
             var domScrollH = this.Dom.scrollHeight;
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
+            var toTop = document.querySelector('.top');
+
             this.setFixed();
-            
+
             if(domScrollTop > 600){
-                this.showBackBtn = true
-            }else {
-                this.showBackBtn = false
+              toTop.style.display = 'block';
+            }else{
+              toTop.style.display = 'none';
             }
             
             if(domScrollTop == scrollArea){
@@ -333,15 +334,13 @@ var vm = new Vue({
           }
         },
         backTop: function(){  //回到顶部
-          var time = null,that = this;
-          console.log(3333333333);
+          var time = null , that = this;
+          var scrollTop = this.Dom.scrollTop;
           time = setInterval(function(){
-            var scrollTop = that.Dom.scrollTop;
-            console.log(scrollTop);
-            if(scrollTop === 0){
+            if(scrollTop <= 0){
               clearInterval(time);
             }
-            that.Dom.scrollTop = scrollTop - 100;
+            that.Dom.scrollTop -= 100;
           }, 16);
         },
         closePop: function(){   //未支付关闭弹窗
