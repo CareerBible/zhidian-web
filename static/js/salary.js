@@ -27,31 +27,10 @@
     jobCode: '010101',
     page: 1,  //页码
     limit: '5', //每页显示多少条数据
-    professionAvg: 8000,
+    professionAvg: 0,
     container: null,// 绑定能被监听滚动的元素
     domHeight: 0,// 内容可视区的高度
-    professionSalaryList: [
-      {
-        years: '1年以下',
-        salary: '2.5'
-      },
-      {
-        years: '1-3年',
-        salary: '4.5'
-      },
-      {
-        years: '3-5年',
-        salary: '8.5'
-      },
-      {
-        years: '5-10年',
-        salary: '10'
-      },
-      {
-        years: '10年以上',
-        salary: '15'
-      }
-    ],
+    professionSalaryList: [],
     jobList: [],
     totalPage: 0,  //总页数
     Dom: '',
@@ -59,7 +38,7 @@
     note: '',
     salaryChart: null,
     dataArr:[],
-    profession: document.querySelector('#profession'),
+    profession: 1,
     chartOption: {
       color: ['#516b91','#59c4e6','#edafda','#93b7e3','#a5e7f0'],
       tooltip: {
@@ -104,7 +83,6 @@ var vm = new Vue({
     el: "#salaryAnalysis",    //挂载元素
     data: data,
     mounted: function(){
-        // this.login();
         this.salaryChart = echarts.init(document.getElementById('chart')); 
         this.$nextTick(function() {  
           this.clientH = document.documentElement.clientHeight;
@@ -114,7 +92,8 @@ var vm = new Vue({
           //axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
-        this.getProfession('010101', false);
+        window.document.title = '哲学';
+        this.getProfession('010101', false, '哲学');
     },
     methods: {  //  放方法函数
         getAreaOption: function(){  //获取地区选项
@@ -144,6 +123,7 @@ var vm = new Vue({
           this.showCity = false;
           this.districtId = item.id;
           this.area = item.name;
+          this.getProfession(this.jobCode, true, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
@@ -165,7 +145,7 @@ var vm = new Vue({
                 });
             }
         },
-        getProfession: function(code, onOff){ //选择专业获取行业数据
+        getProfession: function(code, onOff, name){ //选择专业获取行业数据
             this.searchTxt = '';
             this.jobCode = code;
             var url = this.domain + '/api/statistical/listDiscipline';
@@ -178,23 +158,17 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
-            
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
+                    window.document.title = name;              
                     that.showSearch = false;
+                    that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                    var newArr = [];
-                    for (var i = 0; i <= arr.length;i++) {
-                      newArr.push(arr.pop());
-                    }
-                    newArr.push(arr[0]);
-                    for(var i = 0; i < newArr.length; i++){
-                      that.professionSalaryList[i].years = newArr[i].workingyears;
-                      that.professionSalaryList[i].salary = newArr[i].disciplineavgsalaryworkingyears.toFixed(1);
-                    }
+                    that.professionSalaryList = arr;
                 }
             });
+            
             this.getJodData(true);
             if(onOff){
                 var time = null;
@@ -254,11 +228,13 @@ var vm = new Vue({
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
             this.setFixed();
-            if(this.Dom.scrollTop > 600){
+            
+            if(domScrollTop > 600){
                 this.showBackBtn = true
             }else {
                 this.showBackBtn = false
             }
+            
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
@@ -342,23 +318,26 @@ var vm = new Vue({
         },
         setFixed: function(){//固定图表
             if(!this.showChart){return;}
-          var scrollTop = this.Dom.scrollTop;
+            var scrollTop = this.Dom.scrollTop;
+            var profession = document.querySelector('#profession');
           if(scrollTop > 120){
-              this.profession.style.position = 'fixed'
-              this.profession.style.top = '0'
-              this.profession.style.width = 'calc(100% - 80px)'
-              this.profession.style.zIndex = '3'
-              this.profession.querySelector('section').style.marginTop = '0'
+              profession.style.position = 'fixed'
+              profession.style.top = '0'
+              profession.style.width = 'calc(100% - 80px)'
+              profession.style.zIndex = '3'
+              profession.querySelector('section').style.marginTop = '0'
           } else {
-                this.profession.style.position = 'static'
-                this.profession.querySelector('section').style.marginTop = '40px'
-                this.profession.style.width = '100%'
+              profession.style.position = 'static'
+              profession.querySelector('section').style.marginTop = '40px'
+              profession.style.width = '100%'
           }
         },
         backTop: function(){  //回到顶部
           var time = null,that = this;
+          console.log(3333333333);
           time = setInterval(function(){
             var scrollTop = that.Dom.scrollTop;
+            console.log(scrollTop);
             if(scrollTop === 0){
               clearInterval(time);
             }
@@ -368,16 +347,18 @@ var vm = new Vue({
         closePop: function(){   //未支付关闭弹窗
             this.showMask = false;
             this.showPop = false;
+            var profession = document.querySelector('#profession');
             //初始"哲学"数据
-            this.getProfession('010101', false);  //回到哲学数据  
+            this.getProfession('010101', false, '哲学'); 
             if(this.showChart){//图表关闭
                 this.chartOption.legend.data = [];
                 this.chartOption.series = []
                 this.showChart = false; 
             }
-            this.profession.style.position = 'static';
-            this.profession.querySelector('section').style.marginTop = '40px'
-            this.profession.style.width = '100%'
+            //行业平均样式恢复
+            profession.style.position = 'static';
+            profession.querySelector('section').style.marginTop = '40px'
+            profession.style.width = '100%'
         }
     },
     watch: {

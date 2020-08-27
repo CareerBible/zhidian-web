@@ -55,16 +55,18 @@ window.onload = function(){
             var resData = JSON.parse(res);
             if(resData.code == 200){
               skipUrl = resData.data.url;
-              // window.location.href = skipUrl + 'index.html';
+              window.location.href = skipUrl + 'index.html';
             }
         })
       }
     }
-    isLogin();
+    // isLogin();
+
+    // function 
 
     //得到code再获取用户信息
-    function getUserInfo(){
-      var obj = GetRequest(),
+    function getUserInfo(str){
+      var obj = GetRequest(str),
           Code = obj['code'],
           url = 'https://zhidian.dookbook.info/api/wechat/getAuthorizeCodeUrl';
       ajax('get', url,{

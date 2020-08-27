@@ -20,7 +20,7 @@
             <section>
               <input type="text" placeholder="填专业，搜对口职位薪酬" v-model="searchTxt" @input="getSearchTxt">
               <ul v-show="showSearch">
-                <li v-for="item in professList" @click="getProfession(item.code, true)">{{item.name}}</li>
+                <li v-for="item in professList" @click="getProfession(item.code, true, item.name)">{{item.name}}</li>
               </ul>
             </section>
         </header>
@@ -32,8 +32,8 @@
             <section>
               <ul v-show="!showChart">
                 <li v-for="item in professionSalaryList">
-                  <p>{{item.salary}}k</p>
-                  <p>{{item.years}}</p>
+                  <p>{{item.disciplineavgsalaryworkingyears.toFixed(1)}}k</p>
+                  <p>{{item.workingyears}}</p>
                 </li>
               </ul>
               <div id="chart" v-show="showChart"></div>
@@ -65,8 +65,10 @@
             </section>
           </section>
 
-          <!---底部--->
+          <!---top按钮--->
           <button class="top" v-show="showBackBtn" @click="backTop"><img src="/static/img/TOP.svg" alt=""></button>
+
+          <!---底部--->
           <p class="bottom" v-show="showLogin"><img src="/static//img/load.svg" alt=""> 加载中...</p>
           <p class="bottom" v-show="!showLogin">—  不止诗与远方  —</p>
           <section class="loading" v-show="showLoading">
