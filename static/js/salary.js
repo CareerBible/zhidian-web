@@ -109,6 +109,7 @@ var vm = new Vue({
         this.$nextTick(function() {  
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
+          
           //this.userId = window.localStorage.getItem('uid');
           //axios.defaults.headers.common["uid"] = this.userId;
         })
@@ -258,7 +259,6 @@ var vm = new Vue({
             }else {
                 this.showBackBtn = false
             }
-            console.log(this.Dom.scrollTop, this.showBackBtn);
             if(domScrollTop == scrollArea){
                 this.turnPage();
             }else {
