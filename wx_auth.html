@@ -46,10 +46,11 @@ function getWxUserInfo(code, redirect_url) {
 
 const redirect_url = '/'
 var code = getQueryVariable('code')
+console.log(code);
 if(!code) {
-  alert('code required')
+  alert('code required');
 } else {
-  getWxUserInfo(code, redirect_url)
+  getWxUserInfo(code, 'index.html');
 }
 </script>
 </body>
