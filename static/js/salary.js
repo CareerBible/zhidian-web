@@ -162,7 +162,6 @@ var vm = new Vue({
           this.districtId = item.id;
           this.area = item.name;
           window.document.title = this.titleName;
-          console.log(this.titleName,document.title);
           this.getProfession(this.jobCode, false, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
@@ -441,6 +440,7 @@ var vm = new Vue({
             this.showSuccess = false;
             //初始"哲学"数据
             this.getProfession('010101', false, '哲学'); 
+            this.titleName = '哲学';
             if(this.showChart){//图表关闭
                 this.chartOption.legend.data = [];
                 this.chartOption.series = []
