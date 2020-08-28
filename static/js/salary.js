@@ -110,8 +110,8 @@ var vm = new Vue({
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
-          //this.userId = window.localStorage.getItem('uid');
-          //axios.defaults.headers.common["uid"] = this.userId;
+          this.userId = window.localStorage.getItem('uid');
+          axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
         
