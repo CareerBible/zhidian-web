@@ -117,11 +117,9 @@ var vm = new Vue({
           }else{
             this.userId = window.localStorage.getItem('uid');
             axios.defaults.headers.common["uid"] = this.userId;
+            this.getProfession('010101', false, '哲学');//初始"哲学"数据
           }
         })
-        //初始"哲学"数据
-        
-        this.getProfession('010101', false, '哲学');
     },
     methods: {  //  放方法函数
         getAreaOption: function(){  //获取地区选项
