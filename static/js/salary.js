@@ -352,6 +352,14 @@ var vm = new Vue({
             item.compareBtn = true;
           }
         },
+        addHeight: function(){  //增加margin-top
+          var position = document.querySelector(".zhiwei");
+          position.style.marginTop = '770px';
+        },
+        removeHeight: function(){//删除margin-top
+          var position = document.querySelector(".zhiwei");
+          position.style.marginTop = '470px';
+        },
         addRecord: function(item){ //添加图表数据
             var avg = item.jobSalary,arr = this.chartOption.series;
             this.dataArr = [];
@@ -363,6 +371,7 @@ var vm = new Vue({
             if(arr.length == 0){
                 this.addProfessionAvg();    //添加行业平均薪资
                 this.addFn(item, this.dataArr);
+                this.addHeight();
                 this.showChart = true;
                 return;
             }
@@ -408,9 +417,10 @@ var vm = new Vue({
               type: 'line'
           }
           if(this.chartOption.legend.data.length == 1){
-                this.chartOption.legend.data = [];
-                this.chartOption.series = []
-                this.showChart = false;
+              this.chartOption.legend.data = [];
+              this.chartOption.series = []
+              this.showChart = false;
+              this.removeHeight();
           }
         },
         backTop: function(){  //回到顶部
