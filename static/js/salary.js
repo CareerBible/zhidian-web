@@ -106,7 +106,7 @@ var vm = new Vue({
     mounted: function(){
         const that = this;
         this.$nextTick(function() { 
-          that.getPageHeight();
+          that.iosOrAndroid();
           that.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
           // that.userId = '56ed7379da47434292deeb8d472ebb0c';
@@ -121,21 +121,14 @@ var vm = new Vue({
         this.salaryChart = echarts.init(document.getElementById('chart')); 
     },
     methods: {  //  放方法函数
-        // iosOrAndroid: function(){ //判断是安卓还是ios
-        //   var u = navigator.userAgent;
-        //   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-        //   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-        //   if(isAndroid){
-        //     // this.clientH = document.documentElement.scrollHeight;
-        //   }else if(isiOS){
-        //     this.clientH = document.documentElement.clientHeight;
-        //   }
-        // },
-        getPageHeight: function() {  
-          if(document.body.clientHeight && document.documentElement.clientHeight) {    
-            this.clientH = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;            
-          } else {    
-            this.clientH = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;        
+        iosOrAndroid: function(){ //判断是安卓还是ios
+          var u = navigator.userAgent;
+          var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+          var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+          if(isAndroid){
+            this.clientH = document.documentElement.clientHeight-100;
+          }else if(isiOS){
+            this.clientH = document.documentElement.clientHeight;
           }
         },
         getAreaOption: function(){  //获取地区选项
@@ -454,7 +447,7 @@ var vm = new Vue({
             if(that.Dom.scrollTop === 0){
               clearInterval(time);
             }else{
-              that.Dom.scrollTop -= 100;
+              that.Dom.scrollTop -= 500;
             }
           }, 16);
         },
