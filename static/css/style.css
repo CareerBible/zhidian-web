@@ -118,6 +118,9 @@ header > div {
   background: url('/static/img/down.svg') no-repeat 85px;
   background-size: 30px;
   color: #333;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
 }
 
 .province {
