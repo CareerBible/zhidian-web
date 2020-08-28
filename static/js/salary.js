@@ -378,7 +378,7 @@ var vm = new Vue({
         },
         addHeight: function(){  //增加margin-top
           var position = document.querySelector(".zhiwei");
-          position.style.marginTop = '770px';
+          position.style.marginTop = '836px';
         },
         removeHeight: function(){//删除margin-top
           var position = document.querySelector(".zhiwei");
