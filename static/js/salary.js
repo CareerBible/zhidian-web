@@ -461,7 +461,7 @@ var vm = new Vue({
               "nonceStr": data.nonceStr,
               "package": data.packageStr,
               "signType": data.signType,
-              "paySign": data.paySign //微信签名 
+              "paySign": data.paySign 
           },function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
                   that.showMask = true;
@@ -478,7 +478,7 @@ var vm = new Vue({
                   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
               }
           } else {
-              onBridgeReady();
+              that.payForToWx();
           }
         },
         closeSuccessPop: function(){  //关闭支付成功
