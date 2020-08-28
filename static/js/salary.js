@@ -440,6 +440,7 @@ var vm = new Vue({
         },
         payFor: function(){ //点击支付
             var url = this.domain + '/api/pay/initPay';
+            const that = this;
             var data = {
               userId: this.userId,
               tradeType: 'JSAPI'
