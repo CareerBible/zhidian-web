@@ -165,6 +165,10 @@ var vm = new Vue({
           this.districtId = item.id;
           this.area = item.name;
           window.document.title = this.titleName;
+          this.chartOption.legend.data = [];
+          this.chartOption.series = []
+          this.showChart = false;
+          this.removeHeight();
           this.getProfession(this.jobCode, false, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
