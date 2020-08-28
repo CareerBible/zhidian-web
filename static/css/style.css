@@ -312,7 +312,8 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 5px 10px;
+  width: 100px;
+  height: 46px;
   text-align: center;
   font-size: 20px;
   position: absolute;
