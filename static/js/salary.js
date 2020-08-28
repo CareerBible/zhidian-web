@@ -109,10 +109,10 @@ var vm = new Vue({
           that.iosOrAndroid();
           that.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
-          that.userId = '56ed7379da47434292deeb8d472ebb0c';
-          // that.userId = window.localStorage.getItem('uid');
+          // that.userId = '56ed7379da47434292deeb8d472ebb0c';
+          that.userId = window.localStorage.getItem('uid');
           if(!that.userId){
-            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = that.userId;
             that.getProfession('010101', false, '哲学');//初始"哲学"数据
