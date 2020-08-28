@@ -57,10 +57,7 @@
             </section>
             <section>
               <ul>
-                <li v-for="obj in item.jobSalary">
-                  <p>{{obj.minSalary}}k-{{obj.maxSalary}}k</p>
-                  <p>{{obj.workAge}}</p>
-                </li>
+                <li v-for="obj in item.jobSalary"><img src="/static/img/icon-07.svg" alt="">{{obj.workAge}}<span>{{obj.minSalary}}k-{{obj.maxSalary}}k</span></li>
               </ul>
               <button @click="compareOrCancel(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
             </section>

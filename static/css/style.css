@@ -344,55 +344,36 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 
 .zhiwei section ul {
   width: 100%;
-  text-align: center;
+  box-sizing: border-box;
+  padding-left: 5px;
 }
 
 .zhiwei section ul li {
-  display: inline-block;
+  float: left;
+  font-size: 18px;
+  color: #999;
+  width: 50%;
+}
+
+.zhiwei section ul li:last-child {
+  width: 100%;
+}
+
+.zhiwei section ul li span {
   color:#3589fc;
-  text-align: center;
-  padding-left: 12px;
-  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 20px;
+  padding-left: 5px;
+}
+
+.zhiwei section ul li img {
+  width: 45px;
+  vertical-align: middle;
+  padding-right: 5px;
 }
 
 .zhiwei section ul li:first-child {
   padding-left: 0;
-}
-
-.zhiwei section ul li p:first-child {
-  border-bottom: 1px solid #3589fc;
-  padding-bottom: 7px;
-  margin-bottom: 3px;
-  font-weight: bolder;
-}
-
-.zhiwei section ul li p:last-child {
-  font-size: 14px;
-  color: rgba(53, 137, 252, 0.9);
-}
-
-.zhiwei section ul li:nth-child(1) p:first-child {
-  font-size: 20px;
-  margin-top: 5px;
-}
-
-.zhiwei section ul li:nth-child(2) p:first-child {
-  font-size: 22px;
-  margin-top: 4px;
-}
-
-.zhiwei section ul li:nth-child(3) p:first-child {
-  font-size: 24px;
-  margin-top: 2px;
-}
-
-.zhiwei section ul li:nth-child(4) p:first-child {
-  font-size: 26px;
-  margin-top: 1px;
-}
-
-.zhiwei section ul li:nth-child(5) p:first-child {
-  font-size: 28px;
 }
 
 .average-value {
