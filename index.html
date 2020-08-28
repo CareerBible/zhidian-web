@@ -18,7 +18,7 @@
               <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
             </ul>
             <section>
-              <input type="text" placeholder="填专业，搜对口职位薪酬" v-model="searchTxt" @input="getSearchTxt">
+              <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="getSearchTxt">
               <ul v-show="showSearch">
                 <li v-for="item in professList" @click="getProfession(item.code,true, item.name)">{{item.name}}</li>
               </ul>
@@ -28,7 +28,7 @@
         <main>
           <!---行业--->
           <section id="profession" v-show="!showNoData">
-            <section><h1>对口职位平均薪酬</h1><span><em>¥</em>{{professionAvg}}</span></section>
+            <section><h1>对口职业平均薪酬</h1><span><em>¥</em>{{professionAvg}}</span></section>
             <section>
               <ul>
                 <li v-for="item in professionSalaryList">
@@ -37,6 +37,7 @@
                 </li>
               </ul>
               <div id="chart" v-show="showChart"></div>
+              <button class="one-key" v-show="showChart">一键取消</button>
             </section>
           </section>
 
