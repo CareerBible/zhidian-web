@@ -111,8 +111,13 @@ var vm = new Vue({
           this.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
-          this.userId = window.localStorage.getItem('uid');
-          axios.defaults.headers.common["uid"] = this.userId;
+          if(!this.userId){
+            window.location.href = "wx_auth.html";
+            return;
+          }else{
+            this.userId = window.localStorage.getItem('uid');
+            axios.defaults.headers.common["uid"] = this.userId;
+          }
         })
         //初始"哲学"数据
         
