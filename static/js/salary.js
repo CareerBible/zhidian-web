@@ -482,8 +482,8 @@ var vm = new Vue({
           }
         },
         closeSuccessPop: function(){  //关闭支付成功
-          this.showMask = true;
-          this.showSuccess = true;
+          this.showMask = false;
+          this.showSuccess = false;
         }
     },
     watch: {
