@@ -224,13 +224,12 @@ var vm = new Vue({
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
                     if(resData.data.disciplineAvgSalary === 0) {
                       that.showNoData = true; 
-                      that.professionSalaryList=[]; 
                       return;
                     }else{
                       that.showNoData = false;
                     }
                     for(var i = 0; i < arr.length; i++){
-                      that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears;
+                      that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears.toFixed(1);
                     }
                 }
             });
