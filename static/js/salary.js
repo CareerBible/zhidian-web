@@ -104,10 +104,9 @@ var vm = new Vue({
     el: "#salaryAnalysis",    //挂载元素
     data: data,
     mounted: function(){
-        this.salaryChart = echarts.init(document.getElementById('chart')); 
         const that = this;
-        this.$nextTick(function() {  
-          that.clientH = document.documentElement.clientHeight;
+        this.$nextTick(function() { 
+          that.getPageHeight();
           that.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
           // that.userId = '56ed7379da47434292deeb8d472ebb0c';
@@ -119,8 +118,26 @@ var vm = new Vue({
             that.getProfession('010101', false, '哲学');//初始"哲学"数据
           }
         })
+        this.salaryChart = echarts.init(document.getElementById('chart')); 
     },
     methods: {  //  放方法函数
+        // iosOrAndroid: function(){ //判断是安卓还是ios
+        //   var u = navigator.userAgent;
+        //   var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+        //   var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+        //   if(isAndroid){
+        //     // this.clientH = document.documentElement.scrollHeight;
+        //   }else if(isiOS){
+        //     this.clientH = document.documentElement.clientHeight;
+        //   }
+        // },
+        getPageHeight: function() {  
+          if(document.body.clientHeight && document.documentElement.clientHeight) {    
+            this.clientH = (document.body.clientHeight < document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;            
+          } else {    
+            this.clientH = (document.body.clientHeight > document.documentElement.clientHeight) ? document.body.clientHeight : document.documentElement.clientHeight;        
+          }
+        },
         getAreaOption: function(){  //获取地区选项
             var url = this.domain + '/api/district/list';
             const that = this;
