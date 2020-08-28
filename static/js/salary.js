@@ -149,6 +149,9 @@ var vm = new Vue({
             this.getProfession(this.jobCode, false, this.searchTxt);
             return;
           }
+          for(var i = 0; i<this.areaList.length; i++){
+            this.$set(this.areaList[i], 'show', false);
+          }
           item.show = true;
           this.showCity = item.show;
           this.cityList = item.listChild;
