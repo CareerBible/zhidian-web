@@ -132,7 +132,8 @@ var vm = new Vue({
                     
                     that.areaList.unshift({
                       name: '全国',
-                      listChild: []
+                      listChild: [],
+                      id: 0
                     });
                     for(var i = 0; i<that.areaList.length; i++){
                       that.$set(that.areaList[i], 'show', false);
@@ -141,6 +142,7 @@ var vm = new Vue({
             });
         },
         selecteProvince: function(item){ //选中省
+          if(item.id==0){ this.clearChart();}
           if(item.listChild.length==0){
             this.showProvince = false;
             this.showCity = false;
@@ -165,11 +167,14 @@ var vm = new Vue({
           this.districtId = item.id;
           this.area = item.name;
           window.document.title = this.titleName;
+          this.clearChart();
+          this.getProfession(this.jobCode, false, this.searchTxt);
+        },
+        clearChart: function(){ //清空图表数据并关闭
           this.chartOption.legend.data = [];
           this.chartOption.series = []
           this.showChart = false;
           this.removeHeight();
-          this.getProfession(this.jobCode, false, this.searchTxt);
         },
         getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
@@ -423,10 +428,7 @@ var vm = new Vue({
               type: 'line'
           }
           if(this.chartOption.legend.data.length == 1){
-              this.chartOption.legend.data = [];
-              this.chartOption.series = []
-              this.showChart = false;
-              this.removeHeight();
+              this.clearChart();
           }
         },
         backTop: function(){  //回到顶部
