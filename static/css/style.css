@@ -129,7 +129,7 @@ header > div {
   border-radius: 10px;
   text-align: center;
   padding: 10px 0;
-  height: 320px;
+  height: 365px;
   overflow-y: auto;
 }
 
@@ -137,7 +137,7 @@ header > div {
   width: 120px;
   color: #666;
   font-size: 22px;
-  line-height: 42px;
+  line-height: 52px;
 }
 
 .province li.active {
@@ -156,7 +156,7 @@ header > div {
   overflow-y: auto;
   width: 120px;
   padding: 10px 0;
-  height: 320px;
+  height: 365px;
   overflow-y: auto;
 }
 
@@ -164,7 +164,7 @@ header > div {
   width: 120px;
   color: #666;
   font-size: 22px;
-  line-height: 42px;
+  line-height: 52px;
 }
 
 .city li.active {
