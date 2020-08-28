@@ -88,7 +88,7 @@
           <p>八月限定价 一元无限查</p>
           <p><span>1元</span>/月</p>
           <p><del>原价：9.9元/月</del></p>
-          <button>立即开通</button>
+          <button @click="payFor">立即开通</button>
           <span class="xian"></span>
           <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closePop">
         </div>
@@ -99,7 +99,7 @@
           <p>长按添加客服微信</p>
           <p>快速解决您的使用问题</p>
           <span class="xian"></span>
-          <img src="/static/img/shut-down.svg" alt="" class="shut-down">
+          <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closeSuccessPop">
         </div>
     </div>
     <script src="/static/js/vue.js"></script>

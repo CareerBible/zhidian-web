@@ -110,8 +110,9 @@ var vm = new Vue({
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
-          this.userId = window.localStorage.getItem('uid');
-          axios.defaults.headers.common["uid"] = this.userId;
+          this.userId = '56ed7379da47434292deeb8d472ebb0c';
+          // this.userId = window.localStorage.getItem('uid');
+          // axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
         
@@ -423,10 +424,10 @@ var vm = new Vue({
             }
           }, 16);
         },
-        closePop: function(){   //未支付关闭弹窗
+        closePop: function(){   //关闭支付弹窗
             this.showMask = false;
             this.showPop = false;
-            var profession = document.querySelector('#profession');
+            this.showPop = false;
             //初始"哲学"数据
             this.getProfession('010101', false, '哲学'); 
             if(this.showChart){//图表关闭
@@ -434,6 +435,52 @@ var vm = new Vue({
                 this.chartOption.series = []
                 this.showChart = false; 
             }
+        },
+        payFor: function(){ //点击支付
+            var url = this.domain + '/api/pay/initPay';
+            var data = {
+              userId: this.userId,
+              tradeType: 'JSAPI'
+            }
+            axios.post(url,data).then(function(res) {
+                var resData = res.data;
+                if(resData.code === 200){
+                  var payForData = resData.data;
+                  that.payForToWx(payForData);
+                }
+            })
+        },
+        payForToWx: function(data){//微信支付
+          const that = this;
+          WeixinJSBridge.invoke('getBrandWCPayRequest', {
+              "appId": data.appId,
+              "timeStamp": data.timeStamp,
+              "nonceStr": data.nonceStr,
+              "package": data.packageStr,
+              "signType": data.signType,
+              "paySign": data.paySign //微信签名 
+          },function(res) {
+              if (res.err_msg == "get_brand_wcpay_request:ok") {
+                  that.showMask = true;
+                  that.showSuccess = true;
+              }else {
+                  that.closePop();
+              }
+          });
+          if (typeof WeixinJSBridge == "undefined") {
+              if (document.addEventListener) {
+                  document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+              } else if (document.attachEvent) {
+                  document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+                  document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+              }
+          } else {
+              onBridgeReady();
+          }
+        },
+        closeSuccessPop: function(){  //关闭支付成功
+          this.showMask = true;
+          this.showSuccess = true;
         }
     },
     watch: {
