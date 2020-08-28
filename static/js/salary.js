@@ -110,9 +110,9 @@ var vm = new Vue({
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
-          this.userId = '56ed7379da47434292deeb8d472ebb0c';
-          // this.userId = window.localStorage.getItem('uid');
-          // axios.defaults.headers.common["uid"] = this.userId;
+          // this.userId = '56ed7379da47434292deeb8d472ebb0c';
+          this.userId = window.localStorage.getItem('uid');
+          axios.defaults.headers.common["uid"] = this.userId;
         })
         //初始"哲学"数据
         
@@ -427,7 +427,7 @@ var vm = new Vue({
         closePop: function(){   //关闭支付弹窗
             this.showMask = false;
             this.showPop = false;
-            this.showPop = false;
+            this.showSuccess = false;
             //初始"哲学"数据
             this.getProfession('010101', false, '哲学'); 
             if(this.showChart){//图表关闭
