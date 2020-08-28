@@ -82,25 +82,49 @@
           </section>
         </main>
 
-        <div class="mask" v-if="showMask"></div>
+        <div class="mask"></div>
 
-        <div class="pop-ups" v-if="showPop">
-          <p>八月限定价 一元无限查</p>
-          <p><span>1元</span>/月</p>
-          <p><del>原价：9.9元/月</del></p>
-          <button>立即开通</button>
+        <!--支付-立即开通弹窗-->
+        <div class="pop-box">
+          <div class="pop-ups">
+            <p>8月限定<span>体验价</span></p>
+            <p><span>1元</span>/月</p>
+            <p><del>原价：9.9元/月</del></p>
+            <p><span></span><em>高薪职业，从职典开始</em><span></span></p>
+            <ul>
+              <li>
+                <p><img src="/static/img/icon-03.svg" alt=""></p>
+                <p>查对口职业</p>
+              </li>
+              <li>
+                <p><img src="/static/img/icon-04.svg" alt=""></p>
+                <p>查职业薪资</p>
+              </li>
+              <li>
+                <p><img src="/static/img/icon-05.svg" alt=""></p>
+                <p>看职业对比</p>
+              </li>
+            </ul>
+            <button>立即开通</button>
+            <p class="logo"><img src="/static/img/logo.png" alt="">职典</p>
+          </div>
           <span class="xian"></span>
           <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closePop">
         </div>
 
-        <div class="success" v-if="showSuccess">
-          <p>支付成功</p>
-          <p><img src="/static/img/erweima_03.jpg" alt=""></p>
-          <p>长按添加客服微信</p>
-          <p>快速解决您的使用问题</p>
+        <!--支付-支付成功弹窗-->
+        <div class="success-box">
+          <div class="success">
+            <p>支付成功</p>
+            <p><img src="/static/img/er-code.jpeg" alt=""></p>
+            <p>长按添加客服微信</p>
+            <p>快速解决您的使用问题</p>
+            <p class="logo"><img src="/static/img/logo.png" alt="">职典</p>
+          </div>
           <span class="xian"></span>
-          <img src="/static/img/shut-down.svg" alt="" class="shut-down">
+          <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closePop">
         </div>
+        
     </div>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
