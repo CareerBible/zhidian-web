@@ -109,6 +109,7 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.iosOrAndroid();
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
+          this.clientH = document.documentElement.clientHeight;
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
           if(!this.userId){
@@ -367,11 +368,17 @@ var vm = new Vue({
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
-            if(domScrollTop == scrollArea){
-                this.turnPage();
+            var u = navigator.userAgent;
+            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+            if(isAndroid && domScrollTop == (scrollArea-15)){
+              this.turnPage();
+            }else if(isiOS && domScrollTop == scrollArea){
+              this.turnPage();
             }else {
-                this.showLogin = false;
+              this.showLogin = false;
             }
+            
             if(domScrollTop < 600){
               toTop.style.display = 'none';
             }else{
