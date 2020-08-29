@@ -253,7 +253,6 @@ var vm = new Vue({
                   if(resData.data.disciplineAvgSalary === 0) {
                     that.showNoData = true; 
                     that.showTxt = false;
-                    return;
                   }else{
                     that.showNoData = false;
                   }
@@ -289,7 +288,7 @@ var vm = new Vue({
                         that.showNoData = true;
                         that.jobList = [];
                         that.note = "暂无数据";
-                        return;
+                        that.showTxt = false;
                     }else{
                         that.showNoData = false;
                         if(isSearch){   //是否搜索来的
