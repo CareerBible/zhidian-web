@@ -128,7 +128,7 @@ var vm = new Vue({
           if(isAndroid){
             this.clientH = document.documentElement.clientHeight-10;
           }else if(isiOS){
-            this.clientH = document.documentElement.clientHeight;
+            this.clientH = document.documentElement.clientHeight-10;
           }
         },
         getAreaOption: function(){  //获取地区选项
@@ -468,7 +468,6 @@ var vm = new Vue({
             //初始"哲学"数据
             this.getProfession('010101', false, '哲学'); 
             this.titleName = '哲学';
-            document.activeElement.blur();
             if(this.showChart){//图表关闭
                 this.clearChart();
             }
