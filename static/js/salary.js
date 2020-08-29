@@ -7,6 +7,7 @@
     titleName: '哲学',
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
+    search: 0,
     cityList:[],
     professList:[
       {
@@ -128,7 +129,7 @@ var vm = new Vue({
           if(isAndroid){
             this.clientH = document.documentElement.clientHeight-10;
           }else if(isiOS){
-            this.clientH = document.documentElement.clientHeight-10;
+            this.clientH = document.documentElement.clientHeight;
           }
         },
         getAreaOption: function(){  //获取地区选项
@@ -228,9 +229,23 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
+            
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
+                    if(onOff){
+                      that.search+=1;
+                      if(that.search <= 1){ //用户第一次搜索成功，十秒后弹出支付窗口
+                        var time = null; 
+                        time = setTimeout(function(){
+                            that.showMask = true;
+                            that.showPop = true;
+                        }, 10000);
+                      }else{
+                        that.showMask = true;
+                        that.showPop = true;
+                      }
+                    }
                     that.showSearch = false;
                     that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
@@ -247,12 +262,8 @@ var vm = new Vue({
 
                     that.getJodData(true, true);
                 }else if(resData.code === 105){//未支付，非会员
-                  if(onOff){
-                    this.titleName = name;
-                    window.document.title = this.titleName;
                     that.showMask = true;
                     that.showPop = true;
-                  }
                 }
             });
         },
