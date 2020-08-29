@@ -129,7 +129,7 @@ var vm = new Vue({
           if(isAndroid){
             this.clientH = document.documentElement.clientHeight-10;
           }else if(isiOS){
-            this.clientH = document.documentElement.clientHeight-20;
+            this.clientH = document.documentElement.clientHeight;
           }
         },
         getAreaOption: function(){  //获取地区选项
