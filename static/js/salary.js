@@ -468,6 +468,7 @@ var vm = new Vue({
             //初始"哲学"数据
             this.getProfession('010101', false, '哲学'); 
             this.titleName = '哲学';
+            document.activeElement.blur();
             if(this.showChart){//图表关闭
                 this.clearChart();
             }
