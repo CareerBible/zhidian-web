@@ -109,16 +109,17 @@ var vm = new Vue({
           that.iosOrAndroid();
           that.Dom = document.getElementById('salaryAnalysis');
           window.document.title = that.titleName;
-          // that.userId = '56ed7379da47434292deeb8d472ebb0c';
-          that.userId = window.localStorage.getItem('uid');
+          that.userId = '56ed7379da47434292deeb8d472ebb0c';
+          // that.userId = window.localStorage.getItem('uid');
           if(!that.userId){
-            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = that.userId;
             that.getProfession('010101', false, '哲学');//初始"哲学"数据
+            this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
-        this.salaryChart = echarts.init(document.getElementById('chart')); 
+        
     },
     methods: {  //  放方法函数
         iosOrAndroid: function(){ //判断是安卓还是ios
@@ -126,7 +127,7 @@ var vm = new Vue({
           var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
           var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
           if(isAndroid){
-            this.clientH = document.documentElement.clientHeight-100;
+            this.clientH = document.documentElement.clientHeight-10;
           }else if(isiOS){
             this.clientH = document.documentElement.clientHeight;
           }
@@ -181,6 +182,9 @@ var vm = new Vue({
           this.getProfession(this.jobCode, false, this.searchTxt);
         },
         clearChart: function(){ //清空图表数据并关闭
+          for(var i = 0; i < this.jobList.length; i++){
+            this.$set(this.jobList[i], 'compareBtn',true);
+          }
           this.chartOption.legend.data = [];
           this.chartOption.series = []
           this.showChart = false;
@@ -452,7 +456,7 @@ var vm = new Vue({
             if(that.Dom.scrollTop === 0){
               clearInterval(time);
             }else{
-              that.Dom.scrollTop -= 500;
+              that.Dom.scrollTop -= 1300;
             }
           }, 16);
         },
