@@ -5,6 +5,7 @@
     <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
     <title>薪酬分析</title>
     <link rel="stylesheet" href="/static/css/style.css"/>
+    <script src="/static/js/load.js"></script>
 </head>
 <body>
     <div id="salaryAnalysis" @click="showProvince=false;showCity=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
@@ -69,7 +70,7 @@
 
           <!---底部--->
           <p class="bottom" v-show="showLogin"><img src="/static//img/load.svg" alt=""> 加载中...</p>
-          <p class="bottom" v-show="!showLogin && !showNoData">—  不止诗与远方  —</p>
+          <p class="bottom" v-show="showTxt">—  不止诗与远方  —</p>
           <section class="loading" v-show="showLoading">
             <img src="/static/img/loading.svg" alt="">
             <p>正在加载...</p>

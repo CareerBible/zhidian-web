@@ -18,6 +18,7 @@
     ],
     showChart: false,  //是否显示对比图表
     showLogin: false,   //显示“加载中”
+    showTxt: false, //显示“诗与远方”
     showLoading: false,   //显示“正在加载” 
     showNoData: false,   //显示“没有数据”
     showProvince: false,  //显示省
@@ -231,6 +232,7 @@ var vm = new Vue({
                     var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
                     if(resData.data.disciplineAvgSalary === 0) {
                       that.showNoData = true; 
+                      that.showTxt = false;
                       return;
                     }else{
                       that.showNoData = false;
@@ -246,7 +248,7 @@ var vm = new Vue({
                     window.document.title = this.titleName;
                     this.search+=1;
                     if(this.search <= 1){
-                      var time = null;
+                      var time = null; 
                       time = setTimeout(function(){
                           that.showMask = true;
                           that.showPop = true;
@@ -310,6 +312,7 @@ var vm = new Vue({
                                   break;
                               }
                             }
+                            that.showLogin = true;
                             that.jobList.push(arr[i]);
                             that.getWholeData()
                         }
@@ -338,6 +341,7 @@ var vm = new Vue({
         turnPage: function(){ //再加载一页
           if(this.page == this.totalPage){ //没有剩余页数
             this.showLogin = false;
+            this.showTxt = true;
             return;
           }else {
             this.showLogin = true;
