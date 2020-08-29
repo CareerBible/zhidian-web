@@ -19,7 +19,7 @@
               <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
             </ul>
             <section>
-              <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="SearchProfession">
+              <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="getSearchTxt">
               <ul v-show="showSearch">
                 <li v-for="item in professList" @click="getProfession(item.code,true, item.name)">{{item.name}}</li>
               </ul>
