@@ -531,6 +531,9 @@ var vm = new Vue({
           this.showMask = false;
           this.showSuccess = false;
           this.showPop = false;
+          //初始"哲学"数据
+          this.getProfession('010101', false, '哲学'); 
+          this.titleName = '哲学';
         }
     },
     watch: {
