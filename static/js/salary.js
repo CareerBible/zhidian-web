@@ -530,6 +530,7 @@ var vm = new Vue({
         closeSuccessPop: function(){  //关闭支付成功
           this.showMask = false;
           this.showSuccess = false;
+          this.showPop = false;
         }
     },
     watch: {
