@@ -162,7 +162,7 @@ var vm = new Vue({
             this.showCity = false;
             this.districtId = '';
             this.area = '全国';
-            this.getProfession(this.jobCode, false, this.searchTxt);
+            this.getProfession(this.jobCode, false, '');
             return;
           }
           for(var i = 0; i<this.areaList.length; i++){
@@ -182,7 +182,7 @@ var vm = new Vue({
           this.area = item.name;
           window.document.title = this.titleName;
           this.clearChart();
-          this.getProfession(this.jobCode, false, this.searchTxt);
+          this.getProfession(this.jobCode, false, '')
         },
         clearChart: debounce(function(){ //清空图表数据并关闭
           for(var i = 0; i < this.jobList.length; i++){
@@ -233,36 +233,38 @@ var vm = new Vue({
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                  that.titleName = name;
-                  window.document.title = that.titleName;   
-                    if(onOff){
-                      that.search+=1;
-                      if(that.search = 0){ //用户第一次搜索成功，十秒后弹出支付窗口
-                        var time = null; 
-                        time = setTimeout(function(){
-                            that.showMask = true;
-                            that.showPop = true;
-                        }, 10000);
-                      }
+                  if(name!=''){
+                    that.titleName = name;
+                    window.document.title = that.titleName; 
+                  }
+                  if(onOff){
+                    that.search+=1;
+                    if(that.search = 0){ //用户第一次搜索成功，十秒后弹出支付窗口
+                      var time = null; 
+                      time = setTimeout(function(){
+                          that.showMask = true;
+                          that.showPop = true;
+                      }, 10000);
                     }
-                    that.showSearch = false;
-                    that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
-                    var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                    if(resData.data.disciplineAvgSalary === 0) {
-                      that.showNoData = true; 
-                      that.showTxt = false;
-                      return;
-                    }else{
-                      that.showNoData = false;
-                    }
-                    for(var i = 0; i < arr.length; i++){
-                      that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears.toFixed(1);
-                    }
+                  }
+                  that.showSearch = false;
+                  that.professionAvg = (resData.data.disciplineAvgSalary * 1000);
+                  var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
+                  if(resData.data.disciplineAvgSalary === 0) {
+                    that.showNoData = true; 
+                    that.showTxt = false;
+                    return;
+                  }else{
+                    that.showNoData = false;
+                  }
+                  for(var i = 0; i < arr.length; i++){
+                    that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears.toFixed(1);
+                  }
 
-                    that.getJodData(true, true);
+                  that.getJodData(true, true);
                 }else if(resData.code === 105){//未支付，非会员
-                    that.showMask = true;
-                    that.showPop = true;
+                  that.showMask = true;
+                  that.showPop = true;
                 }
             });
         },
