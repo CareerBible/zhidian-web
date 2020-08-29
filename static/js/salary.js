@@ -8,7 +8,6 @@
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
     cityList:[],
-    search: 0,
     professList:[
       {
         id: '',
@@ -149,6 +148,9 @@ var vm = new Vue({
                     for(var i = 0; i<that.areaList.length; i++){
                       that.$set(that.areaList[i], 'show', false);
                     }
+                }else if(resData.code === 105){
+                  that.showMask = true;
+                  that.showPop = true;
                 }
             });
         },
@@ -206,6 +208,9 @@ var vm = new Vue({
                     if(resData.code === 200){
                         that.professList = resData.data.list;
                         that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
+                    }else if(resData.code === 105){
+                      that.showMask = true;
+                      that.showPop = true;
                     }
                 });
             }
@@ -245,17 +250,8 @@ var vm = new Vue({
                   if(onOff){
                     this.titleName = name;
                     window.document.title = this.titleName;
-                    this.search+=1;
-                    if(this.search <= 1){
-                      var time = null; 
-                      time = setTimeout(function(){
-                          that.showMask = true;
-                          that.showPop = true;
-                      }, 10000);
-                    }else{
-                      that.showMask = true;
-                      that.showPop = true;
-                    }
+                    that.showMask = true;
+                    that.showPop = true;
                   }
                 }
             });
@@ -316,7 +312,10 @@ var vm = new Vue({
                             that.getWholeData()
                         }
                     }
-                }else {
+                }else if(resData.code === 105){
+                  that.showMask = true;
+                  that.showPop = true;
+                } else{
                   that.showNoData = true;
                   that.note = "访问失败";
                 }
