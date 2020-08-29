@@ -235,15 +235,12 @@ var vm = new Vue({
                 if(resData.code === 200){
                     if(onOff){
                       that.search+=1;
-                      if(that.search <= 1){ //用户第一次搜索成功，十秒后弹出支付窗口
+                      if(that.search = 0){ //用户第一次搜索成功，十秒后弹出支付窗口
                         var time = null; 
                         time = setTimeout(function(){
                             that.showMask = true;
                             that.showPop = true;
                         }, 10000);
-                      }else{
-                        that.showMask = true;
-                        that.showPop = true;
                       }
                     }
                     that.showSearch = false;
