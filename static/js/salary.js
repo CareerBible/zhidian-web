@@ -105,22 +105,20 @@ var vm = new Vue({
     el: "#salaryAnalysis",    //挂载元素
     data: data,
     mounted: function(){
-        const that = this;
         this.$nextTick(function() { 
-          that.iosOrAndroid();
-          that.Dom = document.getElementById('salaryAnalysis');
-          window.document.title = that.titleName;
-          that.userId = '56ed7379da47434292deeb8d472ebb0c';
+          this.iosOrAndroid();
+          this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
+          window.document.title = this.titleName; //初始页面title
+          this.userId = '56ed7379da47434292deeb8d472ebb0c';
           // that.userId = window.localStorage.getItem('uid');
-          if(!that.userId){
+          if(!this.userId){
             // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
-            axios.defaults.headers.common["uid"] = that.userId;
-            that.getProfession('010101', false, '哲学');//初始"哲学"数据
+            axios.defaults.headers.common["uid"] = this.userId;
+            this.getProfession('010101', false, '哲学');//初始"哲学"数据
             this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
-        
     },
     methods: {  //  放方法函数
         iosOrAndroid: function(){ //判断是安卓还是ios
@@ -191,7 +189,7 @@ var vm = new Vue({
           this.showChart = false;
           this.removeHeight();
         },
-        getSearchTxt: function(){ //按照专业名称搜索文字获取专业列表
+        getSearchTxt: debounce(function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
             if(!reg.test(this.searchTxt)){    //非中文
                return;
@@ -210,7 +208,7 @@ var vm = new Vue({
                     }
                 });
             }
-        },
+        },50),
         getProfession: function(code, onOff, name){ //选择专业获取行业数据
             this.searchTxt = '';
             this.jobCode = code;
@@ -349,7 +347,7 @@ var vm = new Vue({
             setTimeout(this.getJodData(false, false),500);
           }
         },
-        viewmore: function() {  //加载更多
+        viewmore: throttle(function() {  //加载更多
             var domH = this.clientH;
             var domScrollH = this.Dom.scrollHeight;
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
@@ -370,8 +368,8 @@ var vm = new Vue({
             } else {
               document.querySelector('#profession').className = ''
             }
-        },
-        compareOrCancel: function(item){  //对比/取消按钮
+        },50),
+        CompareOrNot: debounce(function(item){  //对比/取消按钮
           if(item.compareBtn){ //加对比
             if(this.chartOption.legend.data.length == 6){
                 alert('最多只能对比五个职位');
@@ -383,7 +381,7 @@ var vm = new Vue({
             this.removeRecord(item);
             item.compareBtn = true;
           }
-        },
+        },50),
         addHeight: function(){  //增加margin-top
           var position = document.querySelector(".zhiwei");
           position.style.marginTop = '836px';
@@ -452,7 +450,7 @@ var vm = new Vue({
               this.clearChart();
           }
         },
-        backTop: function(){  //回到顶部
+        backTop: throttle(function(){  //回到顶部
           var time = null , that = this;
           var scrollTop = that.Dom.scrollTop;
          
@@ -463,7 +461,7 @@ var vm = new Vue({
               that.Dom.scrollTop -= 1300;
             }
           }, 16);
-        },
+        },50),
         closePop: function(){   //关闭支付弹窗
             this.showMask = false;
             this.showPop = false;

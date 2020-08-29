@@ -5,7 +5,7 @@
     <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
     <title>薪酬分析</title>
     <link rel="stylesheet" href="/static/css/style.css"/>
-    <script src="/static/js/load.js"></script>
+    <script src="/static/js/common.js"></script>
 </head>
 <body>
     <div id="salaryAnalysis" @click="showProvince=false;showCity=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
@@ -19,7 +19,7 @@
               <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
             </ul>
             <section>
-              <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="getSearchTxt">
+              <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="SearchProfession">
               <ul v-show="showSearch">
                 <li v-for="item in professList" @click="getProfession(item.code,true, item.name)">{{item.name}}</li>
               </ul>
@@ -61,7 +61,7 @@
               <ul>
                 <li v-for="obj in item.jobSalary"><img src="/static/img/icon-07.svg" alt="">{{obj.workAge}}<span>{{obj.minSalary}}k-{{obj.maxSalary}}k</span></li>
               </ul>
-              <button @click="compareOrCancel(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
+              <button @click="CompareOrNot(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
             </section>
           </section>
           </div>
