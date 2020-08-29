@@ -253,6 +253,8 @@ var vm = new Vue({
                   if(resData.data.disciplineAvgSalary === 0) {
                     that.showNoData = true; 
                     that.showTxt = false;
+                    that.jobList = [];
+                    return;
                   }else{
                     that.showNoData = false;
                   }
