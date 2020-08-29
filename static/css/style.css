@@ -460,7 +460,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   text-align: center;
   font-size: 18px;
   color: #666;
-  padding: 20px 0 0 0;
+  padding: 20px 0 0 20px;
 }
 
 .bottom img {
