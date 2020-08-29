@@ -438,7 +438,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 /*回到顶部样式*/
 .top {
   position: fixed;
-  bottom: 20%;
+  bottom: 10%;
   right: 0;
   z-index: 3;
   width: 96px;

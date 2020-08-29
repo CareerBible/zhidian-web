@@ -17,7 +17,7 @@
       }
     ],
     showChart: false,  //是否显示对比图表
-    showLogin: false,   //显示“加载中”
+    showLogin: true,   //显示“加载中”
     showTxt: false, //显示“诗与远方”
     showLoading: false,   //显示“正在加载” 
     showNoData: false,   //显示“没有数据”
@@ -61,6 +61,7 @@
     salaryChart: null,
     dataArr:[],
     profession: 1,
+    num: 0,
     chartOption: {
       color: ['#516b91','#59c4e6','#edafda','#93b7e3','#a5e7f0'],
       tooltip: {
@@ -180,15 +181,15 @@ var vm = new Vue({
           this.clearChart();
           this.getProfession(this.jobCode, false, this.searchTxt);
         },
-        clearChart: function(){ //清空图表数据并关闭
+        clearChart: debounce(function(){ //清空图表数据并关闭
           for(var i = 0; i < this.jobList.length; i++){
             this.$set(this.jobList[i], 'compareBtn',true);
           }
           this.chartOption.legend.data = [];
-          this.chartOption.series = []
+          this.chartOption.series = [];
           this.showChart = false;
           this.removeHeight();
-        },
+        },50),
         getSearchTxt: debounce(function(){ //按照专业名称搜索文字获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
             if(!reg.test(this.searchTxt)){    //非中文
@@ -416,7 +417,6 @@ var vm = new Vue({
               }
             }
             this.addFn(item, this.dataArr);
-            
         },
         addProfessionAvg: function(){   //对比图添加行业平均数据
             var arr = this.professionSalaryList, salaryLi = [];
@@ -470,9 +470,7 @@ var vm = new Vue({
             this.getProfession('010101', false, '哲学'); 
             this.titleName = '哲学';
             if(this.showChart){//图表关闭
-                this.chartOption.legend.data = [];
-                this.chartOption.series = []
-                this.showChart = false; 
+                this.clearChart();
             }
         },
         payFor: function(){ //点击支付
@@ -526,11 +524,12 @@ var vm = new Vue({
     watch: {
       'chartOption': {
         handler: function(newVal, oldVal) {
+          this.num++;
           if (this.salaryChart) {
             if (newVal) {
-              this.salaryChart.setOption(newVal);
+              this.salaryChart.setOption(newVal,true);
             } else {
-              this.salaryChart.setOption(oldVal);
+              this.salaryChart.setOption(oldVal,true);
             }
           } else {
             this.init();
