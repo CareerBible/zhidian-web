@@ -229,14 +229,14 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
-            
+            if(name!=''){
+              that.titleName = name;
+              window.document.title = that.titleName; 
+            }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                  if(name!=''){
-                    that.titleName = name;
-                    window.document.title = that.titleName; 
-                  }
+                  
                   if(onOff){
                     that.search+=1;
                     if(that.search = 0){ //用户第一次搜索成功，十秒后弹出支付窗口
