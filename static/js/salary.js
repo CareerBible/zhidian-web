@@ -28,7 +28,7 @@
     showPop: false,
     showSuccess: false,
     jobCode: '010101',
-    page: 1,  //页码
+    page: 0,  //页码
     limit: '5', //每页显示多少条数据
     professionAvg: 0,
     container: null,// 绑定能被监听滚动的元素
@@ -226,7 +226,7 @@ var vm = new Vue({
             }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
-                that.isVip = res.headers.isVip;
+                that.isVip = res.headers.isVip; //是否为会员
                 if(resData.code === 200){
                   if(onOff && !that.isVip){ //onOff为true:搜索来的; isVip为false:非会员
                     that.search+=1;
@@ -264,7 +264,7 @@ var vm = new Vue({
         getJodData: function(isSearch, init){ //获取岗位数据 
             var url = this.domain + '/api/statistical/listPage';
             const that = this;
-            if(init){this.page=1;}
+            if(init){this.page=0;}
             var params = {
               disciplineCode: this.jobCode,
               limit: this.limit,
@@ -276,7 +276,7 @@ var vm = new Vue({
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
-                    that.totalPage = parseInt(resData.data.totaCount/that.limit);//总页数
+                    that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
                     var arr = resData.data.listPositionAvgSalary;
                     if(arr.length == 0){//职业平均薪资数组为空则显示暂无数据
                         that.showNoData = true;
@@ -361,6 +361,7 @@ var vm = new Vue({
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
+            this.turnPage();
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.turnPage();
             }else if(isiOS && domScrollTop == scrollArea){
