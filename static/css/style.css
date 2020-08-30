@@ -229,7 +229,7 @@ main > section:first-child > section:last-child {
 }
 
 main > section:first-child ul {
-  display: inline-block;
+  text-align: center;
   clear: both;
   padding-bottom: 20px;
 }
@@ -241,15 +241,13 @@ main > section:first-child ul li {
   padding-left: 12px;
 }
 
+main > section:first-child ul li:first-child {
+  padding-left: 0 !important;
+}
+
 main > section:first-child ul li p:last-child {
   font-size: 14px;
   color: #e53698;
-}
-
-main > section:first-child ul li p:first-child {
-  border-bottom: 1px solid #3589fc;
-  padding: 0 4px 7px;
-  margin-bottom: 3px;
 }
 
 main > section:first-child ul li p:first-child {
@@ -401,8 +399,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 #chart {
   width: 500px;
   height: 300px;
-  padding-right: 10px;
-  box-sizing: border-box;
+  margin: 0 auto;
 }
 
 #profession {
@@ -421,6 +418,22 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   top: 103px !important;
   width: 100% !important;
   left: 0;
+}
+
+.box-profession ul li {
+  padding-left: 15px !important;
+}
+
+.box-profession ul li p:first-child {
+  padding: 0 9px 7px !important;
+}
+
+.box-profession div {
+  width: 560px !important;
+}
+
+.box-profession div canvas {
+  width: 560px !important;
 }
 
 .one-key {
