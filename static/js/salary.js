@@ -298,7 +298,7 @@ var vm = new Vue({
                         }
                         for(var i = 0; i < arr.length; i++){
                             that.$set(arr[i], 'compareBtn', true);//每一个职位添加对比/取消属性
-                            arr[i].jobSalary = [{minSalary:0,maxSalary:1,workAge:"1年以下"},{minSalary:0,maxSalary:1,workAge:"1-3年"},{minSalary:0,maxSalary:1,workAge:"3-5年"},{minSalary:0,maxSalary:1,workAge:"5-10年"},{minSalary:0,maxSalary:1,workAge:"10年以上"}];
+                            arr[i].jobSalary = [{minSalary:'none',maxSalary:'none',workAge:"1年以下"},{minSalary:'none',maxSalary:'none',workAge:"1-3年"},{minSalary:'none',maxSalary:'none',workAge:"3-5年"},{minSalary:'none',maxSalary:'none',workAge:"5-10年"},{minSalary:'none',maxSalary:'none',workAge:"10年以上"}];
                             var list = arr[i].listPositionAvgSalaryScope;
                             for(var j = 0; j < list.length; j++){
                               var curAge = list[j].workingyears;
@@ -321,7 +321,6 @@ var vm = new Vue({
                               }
                             }
                             that.jobList.push(arr[i]);
-                            that.getWholeData();
                         }
                     }
                 }else if(resData.code === 105){
@@ -336,17 +335,6 @@ var vm = new Vue({
         addNumData: function(obj,index,min,max){//对比塞数据
           obj.jobSalary[index].minSalary = parseFloat(min).toFixed(1);
           obj.jobSalary[index].maxSalary = parseFloat(max).toFixed(1);
-        },
-        getWholeData: function(){ //拼接得到完整职业数据
-          for(var i = 0; i < this.jobList.length; i++){
-            var arr = this.jobList[i].jobSalary;
-            for(var j = 0; j < arr.length; j++){
-              if(j != 0 && arr[j].minSalary == 0 && arr[j].maxSalary == 1){
-                this.jobList[i].jobSalary[j].minSalary = arr[j-1].minSalary;
-                this.jobList[i].jobSalary[j].maxSalary = arr[j-1].maxSalary;
-              }
-            }
-          }
         },
         turnPage: function(){ //再加载一页
           if(this.page == this.totalPage){ //最后一页
@@ -416,7 +404,12 @@ var vm = new Vue({
             var avg = item.jobSalary,arr = this.chartOption.series;//avg为职业薪资数组， arr为图表存数据的数组
             this.dataArr = [];  //用于存储职业薪资平均值
             for(var i = 0; i < avg.length; i++){
-              var num = parseFloat((parseFloat(avg[i].minSalary) + parseFloat(avg[i].maxSalary))/2).toFixed(1);//计算平均值
+              if(avg[i].minSalary!='none'){
+                var num = parseFloat((parseFloat(avg[i].minSalary) + parseFloat(avg[i].maxSalary))/2).toFixed(1);//计算平均值
+              }else{
+                var num = 0;
+              }
+              
               this.dataArr.push(num);
             }
             this.chartOption.legend.data.push(item.name);  //职业名称
