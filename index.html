@@ -8,7 +8,7 @@
     <script src="/static/js/common.js"></script>
 </head>
 <body>
-    <div id="salaryAnalysis" @click="showProvince=false;showCity=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
+    <div id="salaryAnalysis" @click="showProvince=false;showCity=false;showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
         <!---头部--->
         <header>
             <div @click.stop="getAreaOption($event)">{{area}}</div>
@@ -21,7 +21,7 @@
             <section>
               <input type="text" placeholder="填专业，搜对口职业薪酬" v-model="searchTxt" @input="getSearchTxt">
               <ul v-show="showSearch">
-                <li v-for="item in professList" @click="getProfession(item.code,true, item.name)">{{item.name}}</li>
+                <li v-for="item in professList" @click.stop="getProfession(item.code,true, item.name)">{{item.name}}</li>
               </ul>
             </section>
         </header>

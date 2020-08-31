@@ -403,10 +403,8 @@ var vm = new Vue({
               }else{
                 var num = 0;
               }
-              
               this.dataArr.push(num);
             }
-            this.chartOption.legend.data.push(item.name);  //职业名称
             if(arr.length == 0){//如果图表数据数组为空
                 this.addProfessionAvg();    //添加行业平均薪资
             }
@@ -419,17 +417,18 @@ var vm = new Vue({
             for(var i = 0; i < arr.length; i++){
                 salaryLi.push(arr[i].avgSalary);
             }
-            this.chartOption.legend.data.push('专业平均');
-            this.chartOption.series.push({
+            this.chartOption.legend.data[0] = '专业平均';
+            this.chartOption.series[0] = {
                 name: '专业平均',
                 data: salaryLi,
                 type: 'line',
                 lineStyle: {
                   width: 4
                 }
-            });
+            };
         },
         addFn: function(item,arr){//添加职业薪资数据
+          this.chartOption.legend.data.push(item.name);
           this.chartOption.series.push({
             name: item.name,
             data: arr,
@@ -443,11 +442,6 @@ var vm = new Vue({
           var arr = this.chartOption.legend.data,
               index = arr.indexOf(item.name);//找到要删除的数据的下标
           this.chartOption.legend.data.splice(index, 1);//去掉图表对应名称
-          this.chartOption.series[index] = {  //清空图表中对应数据
-              name: '',
-              data: [],
-              type: 'line'
-          }
           this.chartOption.series.splice(index, 1);
           if(this.chartOption.legend.data.length == 1){ //如果数据只剩下行业平均则清空图表
               this.clearChart();
