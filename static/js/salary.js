@@ -155,7 +155,10 @@ var vm = new Vue({
             });
         },
         selecteProvince: function(item){ //选中省
-          if(item.id==0){ this.clearChart();}
+          if(item.id==0){ //选中“全国”
+            this.clearChart();
+            this.getProfession(this.jobCode, false, '');
+          }
           if(item.listChild.length==0){
             this.showProvince = false;
             this.showCity = false;
@@ -357,7 +360,7 @@ var vm = new Vue({
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-            // this.turnPage();//浏览器测试时打开
+            this.turnPage();//浏览器测试时打开
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.showLogin = true;
               this.turnPage();
