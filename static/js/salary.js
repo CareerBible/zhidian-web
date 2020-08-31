@@ -36,22 +36,22 @@
     professionSalaryList: [
       {
         workAge: '1年以下',
-        avgSalary: 1
+        avgSalary: ''
       },
       {
         workAge: '1-3年',
-        avgSalary: 1
+        avgSalary: ''
       },{
         workAge: '3-5年',
-        avgSalary: 1
+        avgSalary: ''
       },
       {
         workAge: '5-10年',
-        avgSalary: 1
+        avgSalary: ''
       },
       {
         workAge: '10年以上',
-        avgSalary: 1
+        avgSalary: ''
       }
     ],
     jobList: [],
@@ -155,15 +155,13 @@ var vm = new Vue({
             });
         },
         selecteProvince: function(item){ //选中省
-          if(item.id==0){ //选中“全国”
-            this.clearChart();
-            this.getProfession(this.jobCode, false, '');
-          }
-          if(item.listChild.length==0){
+          if(item.listChild.length==0){//选中“全国”
             this.showProvince = false;
             this.showCity = false;
             this.districtId = '';
             this.area = '全国';
+            this.clearChart();
+            this.page = 0;
             this.getProfession(this.jobCode, false, '');
             return;
           }
@@ -178,12 +176,13 @@ var vm = new Vue({
           }
         },
         selectCity: function(item){//选中市
-          this.showProvince = false;
-          this.showCity = false;
-          this.districtId = item.id;
-          this.area = item.name;
+          this.showProvince = false;//关闭省列表
+          this.showCity = false;//关闭市列表
+          this.districtId = item.id;//获取城市id
+          this.area = item.name;//获取城市名称
           window.document.title = this.titleName;
           this.clearChart();
+          this.page = 0;
           this.getProfession(this.jobCode, false, '')
         },
         clearChart: debounce(function(){ //清空图表数据并关闭
@@ -261,8 +260,9 @@ var vm = new Vue({
                   }else{
                     that.showNoData = false;
                   }
+                  if(arr.length == 6){arr.pop();}//如果行业平均薪资超过五条，则删除最后一条“经验不限”
                   for(var i = 0; i < arr.length; i++){//年限区间内行业平均水平数组
-                    that.professionSalaryList[i].avgSalary = arr[i].disciplineavgsalaryworkingyears.toFixed(1);
+                    that.professionSalaryList[i].avgSalary = Number(arr[i].disciplineavgsalaryworkingyears).toFixed(1);
                   }
 
                   that.getJodData(true, true);//获取行业相关职业数据
@@ -360,7 +360,7 @@ var vm = new Vue({
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-            this.turnPage();//浏览器测试时打开
+            // this.turnPage();//浏览器测试时打开
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.showLogin = true;
               this.turnPage();
