@@ -8,7 +8,6 @@
     titleName: '哲学',
     districtId: 0,//获取被选中的值，默认选中是0（全国）
     areaList: [],
-    search: 0,
     cityList:[],
     professList:[
       {
@@ -236,17 +235,14 @@ var vm = new Vue({
             }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
-                that.isVip = res.headers.isVip; //是否为会员
+                that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
-                  if(onOff && !that.isVip){ //onOff为true:搜索来的; isVip为false:非会员
-                    that.search+=1;
-                    if(that.search == 0){ //第一次搜索成功，十秒后弹出支付窗口
-                      var time = null; 
-                      time = setTimeout(function(){
-                          that.showMask = true;
-                          that.showPop = true;
-                      }, 10000);
-                    }
+                  if(onOff && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
+                    var time = null; 
+                    time = setTimeout(function(){
+                        that.showMask = true;
+                        that.showPop = true;
+                    }, 10000);
                   }
                   that.showSearch = false;//关闭专业列表
                   that.professionAvg = (resData.data.disciplineAvgSalary * 1000);//行业平均值
