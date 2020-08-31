@@ -474,6 +474,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   font-size: 18px;
   color: #666;
   padding: 20px 0;
+  margin-bottom: 20px;
 }
 
 .bottom img {
