@@ -273,7 +273,6 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
-            this.showLogin = true;
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
@@ -364,8 +363,10 @@ var vm = new Vue({
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
             // this.turnPage();//浏览器测试时打开
             if(isAndroid && domScrollTop == (scrollArea-15)){
+              this.showLogin = true;
               this.turnPage();
             }else if(isiOS && domScrollTop == scrollArea){
+              this.showLogin = true;
               this.turnPage();
             }else {
               this.showLogin = false;
