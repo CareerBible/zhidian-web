@@ -428,14 +428,6 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   padding: 0 9px 7px !important;
 }
 
-.box-profession div {
-  width: 560px !important;
-}
-
-.box-profession div canvas {
-  width: 560px !important;
-}
-
 .one-key {
   width: 120px;
   height: 50px;
