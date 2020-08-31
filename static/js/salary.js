@@ -110,10 +110,10 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           this.clientH = document.documentElement.clientHeight;
-          this.userId = '56ed7379da47434292deeb8d472ebb0c';
-          // this.userId = window.localStorage.getItem('uid');
+          // this.userId = '56ed7379da47434292deeb8d472ebb0c';
+          this.userId = window.localStorage.getItem('uid');
           if(!this.userId){
-            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
             window.document.title = this.titleName; //初始页面title
@@ -362,6 +362,7 @@ var vm = new Vue({
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
             // this.turnPage();//浏览器测试时打开
+            this.showLogin = true;
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.showLogin = true;
               this.turnPage();
