@@ -63,7 +63,7 @@
     dataArr:[],
     profession: 1,
     chartOption: {
-      color: ['#516b91','#59c4e6','#edafda','#93b7e3','#a5e7f0','#cbb0e3'],
+      color: ['#e53698','#f5e8c8','#3589fc','#22c3aa','#e6b600','#516b91'],
       tooltip: {
           trigger: 'axis'
       },
@@ -83,7 +83,7 @@
           data: ['1年以下', '1-3年', '3-5年', '5-10年', '10年以上'],
           axisLine:{
             lineStyle:{
-                color:'#888',
+                color:'#aaa',
                 width: 3,
             }
           },
@@ -98,7 +98,7 @@
           },
           axisLine:{
             lineStyle:{
-                color:'#888',
+                color:'#aaa',
                 width: 3
             }
           },
@@ -437,7 +437,9 @@ var vm = new Vue({
                 name: '专业平均',
                 data: salaryLi,
                 type: 'line',
-                lineStyle: {width: 3}
+                lineStyle: {
+                  width: 4
+                }
             });
         },
         addFn: function(item,arr){//添加职业薪资数据
@@ -445,7 +447,9 @@ var vm = new Vue({
             name: item.name,
             data: arr,
             type: 'line',
-            lineStyle: {width: 3}
+            lineStyle: {
+              width: 4
+            }
           });
         },
         removeRecord: function(item){ //删除对应数据
