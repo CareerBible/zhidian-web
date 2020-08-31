@@ -363,9 +363,9 @@ var vm = new Vue({
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
             // this.turnPage();//浏览器测试时打开
             this.showLogin = true;
-            if(isAndroid && domScrollTop == (scrollArea-15)){
+            if(isAndroid && domScrollTop == (scrollArea-30)){
               this.turnPage();
-            }else if(isiOS && domScrollTop == scrollArea){
+            }else if(isiOS && domScrollTop == scrollArea-15){
               this.turnPage();
             }else {
               this.showLogin = false;
