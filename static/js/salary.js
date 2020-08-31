@@ -361,7 +361,7 @@ var vm = new Vue({
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-            this.turnPage();
+            // this.turnPage();浏览器测试时打开
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.turnPage();
             }else if(isiOS && domScrollTop == scrollArea){
