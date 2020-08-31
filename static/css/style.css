@@ -221,11 +221,12 @@ main > section:first-child > section:last-child {
   background: #fff;
   width: calc(100% - 40px);
   margin-left: 20px;
-  padding: 25px 15px;
+  padding: 20px 15px 15px;
   box-shadow: 0 0 10px rgba(204, 204, 204, 0.4);
   border-radius: 0 0 20px 20px;
   box-sizing: border-box;
   display: inline-block;
+  position: relative;
 }
 
 main > section:first-child ul {
@@ -238,11 +239,11 @@ main > section:first-child ul li {
   display: inline-block;
   color:#e53698;
   text-align: center;
-  padding-left: 12px;
+  padding-left: 15px;
 }
 
 main > section:first-child ul li:first-child {
-  padding-left: 0 !important;
+  padding-left: 0;
 }
 
 main > section:first-child ul li p:last-child {
@@ -252,7 +253,7 @@ main > section:first-child ul li p:last-child {
 
 main > section:first-child ul li p:first-child {
   border-bottom: 1px solid #e53698;
-  padding: 0 4px 7px;
+  padding: 0 9px 7px;
   margin-bottom: 3px;
 }
 
@@ -291,7 +292,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   box-sizing: border-box;
   position: relative;
   z-index: 2;
-  margin-top: 40px;
+  margin-top: 30px;
   overflow: hidden;
 }
 
@@ -393,7 +394,9 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 
 .zhiwei section section .average-value span em {
   -webkit-text-stroke: 0 #fff;
-  font-size: 18px;
+  font-size: 24px;
+  padding: 0 5px 5px 0;
+  font-weight: bold;
 }
 
 #chart {
@@ -405,41 +408,26 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 #profession {
   position: fixed;
   z-index: 3;
-  width: calc(100% - 80px);
-  top: 140px;
+  width: 100%;
+  top: 103px;
+  left: 0;
 }
 
 .zhiwei {
-  margin: 470px 0 45px;
+  margin: 420px 0 45px;
   position: static;
   z-index: 1;
   background: #f8faff;
 }
 
-/* 这是滑动条的时候加的样式 */
-.box-profession {
-  top: 103px !important;
-  width: 100% !important;
-  left: 0;
-}
-
-.box-profession ul li {
-  padding-left: 15px !important;
-}
-
-.box-profession ul li p:first-child {
-  padding: 0 9px 7px !important;
-}
-
 .one-key {
-  width: 120px;
-  height: 50px;
+  width: 110px;
+  height: 45px;
   background: #e53698;
   color: #fff;
   border: none;
-  font-size: 22px;
+  font-size: 18px;
   border-radius: 5px;
-  margin-top: 20px;
   float: right;
 }
 
