@@ -62,7 +62,6 @@
     salaryChart: null,
     dataArr:[],
     profession: 1,
-    num: 0,
     chartOption: {
       color: ['#516b91','#59c4e6','#edafda','#93b7e3','#a5e7f0'],
       tooltip: {
@@ -110,10 +109,10 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           this.clientH = document.documentElement.clientHeight;
-          this.userId = '56ed7379da47434292deeb8d472ebb0c';
-          // this.userId = window.localStorage.getItem('uid');
+          // this.userId = '56ed7379da47434292deeb8d472ebb0c';
+          this.userId = window.localStorage.getItem('uid');
           if(!this.userId){
-            // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+            window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
             window.document.title = this.titleName; //初始页面title
@@ -384,7 +383,6 @@ var vm = new Vue({
             }
         },50),
         CompareOrNot: debounce(function(item){  //对比/取消按钮
-          console.log(222222)
           if(item.compareBtn){ //加对比
             if(this.chartOption.legend.data.length == 6){
                 alert('最多只能对比五个职位');
@@ -406,31 +404,19 @@ var vm = new Vue({
           position.style.marginTop = '470px';
         },
         addRecord: function(item){ //添加图表数据
-            var avg = item.jobSalary,arr = this.chartOption.series;
-            this.dataArr = [];
+            var avg = item.jobSalary,arr = this.chartOption.series;//avg为职业薪资数组， arr为图表存数据的数组
+            this.dataArr = [];  //用于存储职业薪资平均值
             for(var i = 0; i < avg.length; i++){
-              var num = parseFloat((parseFloat(avg[i].minSalary) + parseFloat(avg[i].maxSalary))/2).toFixed(1);
+              var num = parseFloat((parseFloat(avg[i].minSalary) + parseFloat(avg[i].maxSalary))/2).toFixed(1);//计算平均值
               this.dataArr.push(num);
             }
             this.chartOption.legend.data.push(item.name);  //职业名称
-            if(arr.length == 0){
+            if(arr.length == 0){//如果图表数据数组为空
                 this.addProfessionAvg();    //添加行业平均薪资
-                this.addFn(item, this.dataArr);
-                this.addHeight();
-                this.showChart = true;
-                return;
             }
-            for(var i = 0; i < arr.length; i++){ //薪资数据
-              if(arr[i].name == ''){
-                this.chartOption.series[i] = {
-                  name: item.name,
-                  data: this.dataArr,
-                  type: 'line'
-                }
-                return;
-              }
-            }
-            this.addFn(item, this.dataArr);
+            this.addFn(item, this.dataArr); //添加职业薪资数据
+            this.addHeight(); //职业列表样式
+            this.showChart = true;//显示图表
         },
         addProfessionAvg: function(){   //对比图添加行业平均数据
             var arr = this.professionSalaryList, salaryLi = [];
@@ -444,7 +430,7 @@ var vm = new Vue({
                 type: 'line'
             });
         },
-        addFn: function(item,arr){
+        addFn: function(item,arr){//添加职业薪资数据
           this.chartOption.series.push({
             name: item.name,
             data: arr,
@@ -453,14 +439,15 @@ var vm = new Vue({
         },
         removeRecord: function(item){ //删除对应数据
           var arr = this.chartOption.legend.data,
-              index = arr.indexOf(item.name);
+              index = arr.indexOf(item.name);//找到要删除的数据的下标
           this.chartOption.legend.data.splice(index, 1);//去掉图表对应名称
-          this.chartOption.series[index] = {
+          this.chartOption.series[index] = {  //清空图表中对应数据
               name: '',
               data: [],
               type: 'line'
           }
-          if(this.chartOption.legend.data.length == 1){
+          this.chartOption.series.splice(index, 1);
+          if(this.chartOption.legend.data.length == 1){ //如果数据只剩下行业平均则清空图表
               this.clearChart();
           }
         },
@@ -543,7 +530,6 @@ var vm = new Vue({
     watch: {
       'chartOption': {
         handler: function(newVal, oldVal) {
-          this.num++;
           if (this.salaryChart) {
             if (newVal) {
               this.salaryChart.setOption(newVal,true);
