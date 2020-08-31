@@ -68,7 +68,8 @@
           trigger: 'axis'
       },
       legend: {
-          data: []
+          data: [],
+          textStyle:{fontSize: 16}
       },
       grid: {
           left: '3%',
@@ -82,9 +83,13 @@
           data: ['1年以下', '1-3年', '3-5年', '5-10年', '10年以上'],
           axisLine:{
             lineStyle:{
-                color:'#888'
+                color:'#888',
+                width: 3,
             }
-          } 
+          },
+          nameTextStyle: {
+            fontSize: 20
+          }
       },
       yAxis: {
           type: 'value',
@@ -93,9 +98,13 @@
           },
           axisLine:{
             lineStyle:{
-                color:'#888'
+                color:'#888',
+                width: 3
             }
-          } 
+          },
+          nameTextStyle: {
+            fontSize: 20
+          }
       },
       series: []
     }
@@ -361,7 +370,6 @@ var vm = new Vue({
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
             // this.turnPage();//浏览器测试时打开
-            this.showLogin = true;
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.showLogin = true;
               this.turnPage();
@@ -428,14 +436,16 @@ var vm = new Vue({
             this.chartOption.series.push({
                 name: '专业平均',
                 data: salaryLi,
-                type: 'line'
+                type: 'line',
+                lineStyle: {width: 3}
             });
         },
         addFn: function(item,arr){//添加职业薪资数据
           this.chartOption.series.push({
             name: item.name,
             data: arr,
-            type: 'line'
+            type: 'line',
+            lineStyle: {width: 3}
           });
         },
         removeRecord: function(item){ //删除对应数据
