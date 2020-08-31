@@ -29,7 +29,7 @@
         <main>
           <!---行业--->
           <section id="profession" v-show="!showNoData">
-            <section><h1>对口职业平均薪酬</h1><span><em>¥</em>{{professionAvg}}</span></section>
+            <section><h1>对口职业平均薪酬</h1><span><em>¥</em>{{parseInt(professionAvg)}}</span></section>
             <section>
               <ul>
                 <li v-for="item in professionSalaryList">
