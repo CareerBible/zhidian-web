@@ -230,7 +230,7 @@ var vm = new Vue({
                 if(resData.code === 200){
                   if(onOff && !that.isVip){ //onOff为true:搜索来的; isVip为false:非会员
                     that.search+=1;
-                    if(that.search = 0){ //第一次搜索成功，十秒后弹出支付窗口
+                    if(that.search == 0){ //第一次搜索成功，十秒后弹出支付窗口
                       var time = null; 
                       time = setTimeout(function(){
                           that.showMask = true;
@@ -273,6 +273,7 @@ var vm = new Vue({
             if(this.districtId != 0){
                params.districtId = this.districtId; 
             }
+            this.showLogin = true;
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
@@ -312,9 +313,8 @@ var vm = new Vue({
                                   break;
                               }
                             }
-                            that.showLogin = true;
                             that.jobList.push(arr[i]);
-                            that.getWholeData()
+                            that.getWholeData();
                         }
                     }
                 }else if(resData.code === 105){
@@ -342,12 +342,13 @@ var vm = new Vue({
           }
         },
         turnPage: function(){ //再加载一页
-          if(this.page == this.totalPage){ //没有剩余页数
+          if(this.page == this.totalPage){ //最后一页
             this.showLogin = false;
             this.showTxt = true;
             return;
           }else {
             this.showLogin = true;
+            this.showTxt = false;
             this.page++;
             setTimeout(this.getJodData(false, false),500);
           }
@@ -361,7 +362,7 @@ var vm = new Vue({
             var u = navigator.userAgent;
             var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
             var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-            // this.turnPage();浏览器测试时打开
+            // this.turnPage();//浏览器测试时打开
             if(isAndroid && domScrollTop == (scrollArea-15)){
               this.turnPage();
             }else if(isiOS && domScrollTop == scrollArea){
@@ -393,7 +394,7 @@ var vm = new Vue({
             this.removeRecord(item);
             item.compareBtn = true;
           }
-        },50),
+        },200),
         addHeight: function(){  //增加margin-top
           var position = document.querySelector(".zhiwei");
           position.style.marginTop = '836px';
