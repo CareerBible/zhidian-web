@@ -410,7 +410,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 }
 
 .zhiwei {
-  margin: 470px 0 20px;
+  margin: 470px 0 45px;
   position: static;
   z-index: 1;
   background: #f8faff;
@@ -469,7 +469,7 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   font-size: 18px;
   color: #666;
   position: absolute;
-  bottom: 20px;
+  bottom: 35px;
   left: 0;
   z-index: -1;
 }
