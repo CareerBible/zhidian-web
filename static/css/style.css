@@ -410,7 +410,10 @@ main > section:first-child ul li:nth-child(5) p:first-child {
 }
 
 .zhiwei {
-  margin-top: 470px;
+  margin: 470px 0 20px;
+  position: static;
+  z-index: 1;
+  background: #f8faff;
 }
 
 /* 这是滑动条的时候加的样式 */
@@ -465,7 +468,10 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   text-align: center;
   font-size: 18px;
   color: #666;
-  padding: 20px 0;
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  z-index: -1;
 }
 
 .bottom img {
