@@ -29,9 +29,9 @@
         <main>
           <!---行业--->
           <section id="profession" v-show="!showNoData">
-            <section><h1>对口职业平均薪酬</h1><span><em>¥</em>{{parseInt(professionAvg)}}</span></section>
+            <section v-show="!showChart"><h1>对口职业平均薪酬</h1><span><em>¥</em>{{parseInt(professionAvg)}}</span></section>
             <section>
-              <ul>
+              <ul v-show="!showChart">
                 <li v-for="item in professionSalaryList">
                   <p>{{item.avgSalary}}k</p>
                   <p>{{item.workAge}}</p>

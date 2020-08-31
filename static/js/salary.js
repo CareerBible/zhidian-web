@@ -376,11 +376,6 @@ var vm = new Vue({
             }else{
               toTop.style.display = 'block';
             }
-            if(domScrollTop > 20){
-              document.querySelector('#profession').className = 'box-profession'
-            } else {
-              document.querySelector('#profession').className = ''
-            }
         },50),
         CompareOrNot: debounce(function(item){  //对比/取消按钮
           if(item.compareBtn){ //加对比
@@ -397,11 +392,11 @@ var vm = new Vue({
         },200),
         addHeight: function(){  //增加margin-top
           var position = document.querySelector(".zhiwei");
-          position.style.marginTop = '836px';
+          position.style.marginTop = '520px';
         },
         removeHeight: function(){//删除margin-top
           var position = document.querySelector(".zhiwei");
-          position.style.marginTop = '470px';
+          position.style.marginTop = '420px';
         },
         addRecord: function(item){ //添加图表数据
             var avg = item.jobSalary,arr = this.chartOption.series;//avg为职业薪资数组， arr为图表存数据的数组
