@@ -25,6 +25,7 @@
     showCity: false,  //显示市
     showMask: false,
     showPop: false,
+    onOff: false, //是否搜索来的
     showSuccess: false,
     jobCode: '010101',
     page: 0,  //页码
@@ -148,6 +149,7 @@ var vm = new Vue({
                       that.$set(that.areaList[i], 'show', false);
                     }
                 }else if(resData.code === 105){
+                  if(that.showPop){return;}
                   that.showMask = true;
                   that.showPop = true;
                 }
@@ -211,6 +213,7 @@ var vm = new Vue({
                         that.professList = resData.data.list;
                         that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
                     }else if(resData.code === 105){
+                      if(that.showPop){return;}
                       that.showMask = true;
                       that.showPop = true;
                     }
@@ -219,6 +222,7 @@ var vm = new Vue({
         },50),
         getProfession: function(code, onOff, name){ //选择专业获取行业数据
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
+            this.onOff = onOff;
             this.searchTxt = '';//搜索完成情况搜索框内容
             this.jobCode = code;//职业code获取
             var url = this.domain + '/api/statistical/listDiscipline';
@@ -237,20 +241,13 @@ var vm = new Vue({
             }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
-                that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
-                  if(onOff && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
-                    var time = null; 
-                    time = setTimeout(function(){
-                        that.showMask = true;
-                        that.showPop = true;
-                    }, 10000);
-                  }
                   that.showSearch = false;//关闭专业列表
                   that.professionAvg = (resData.data.disciplineAvgSalary * 1000);//行业平均值
                   var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
                   if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
                     that.showNoData = true; 
+                    that.note = "暂无数据";
                     that.showTxt = false;
                     that.showLogin = false;
                     that.jobList = [];
@@ -265,6 +262,7 @@ var vm = new Vue({
 
                   that.getJodData(true, true);//获取行业相关职业数据
                 }else if(resData.code === 105){//未支付，非会员
+                  if(that.showPop){return;}
                   that.showMask = true;
                   that.showPop = true;
                 }
@@ -284,6 +282,7 @@ var vm = new Vue({
             }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
+                that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
                     that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
                     var arr = resData.data.listPositionAvgSalary;
@@ -297,34 +296,18 @@ var vm = new Vue({
                         if(isSearch){   //是否搜索来的
                             that.jobList = [];
                         }
-                        for(var i = 0; i < arr.length; i++){
-                            that.$set(arr[i], 'compareBtn', true);//每一个职位添加对比/取消属性
-                            arr[i].jobSalary = [{minSalary:'none',maxSalary:'none',workAge:"1年以下"},{minSalary:'none',maxSalary:'none',workAge:"1-3年"},{minSalary:'none',maxSalary:'none',workAge:"3-5年"},{minSalary:'none',maxSalary:'none',workAge:"5-10年"},{minSalary:'none',maxSalary:'none',workAge:"10年以上"}];
-                            var list = arr[i].listPositionAvgSalaryScope;
-                            for(var j = 0; j < list.length; j++){
-                              var curAge = list[j].workingyears;
-                              switch(true){
-                                case curAge=='1年以下':
-                                    that.addNumData(arr[i], 0, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
-                                  break;
-                                case curAge=='1-3年':
-                                    that.addNumData(arr[i], 1, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
-                                  break;
-                                case curAge=='3-5年':
-                                    that.addNumData(arr[i], 2, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
-                                  break;
-                                case curAge=='5-10年':
-                                    that.addNumData(arr[i], 3, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
-                                  break;
-                                case curAge=='10年以上':
-                                    that.addNumData(arr[i], 4, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
-                                  break;
-                              }
-                            }
-                            that.jobList.push(arr[i]);
-                        }
+                        that.modifyData(arr);
+                        
+                    }
+                    if(that.onOff && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
+                      var time = null; 
+                      time = setTimeout(function(){
+                          that.showMask = true;
+                          that.showPop = true;
+                      }, 10000);
                     }
                 }else if(resData.code === 105){
+                  if(that.showPop){return;}
                   that.showMask = true;
                   that.showPop = true;
                 } else{
@@ -332,6 +315,34 @@ var vm = new Vue({
                   that.note = "访问失败";
                 }
             });
+        },
+        modifyData: function(arr){//调整数据
+          for(var i = 0; i < arr.length; i++){
+            this.$set(arr[i], 'compareBtn', true);//每一个职位添加对比/取消属性
+            arr[i].jobSalary = [{minSalary:'none',maxSalary:'none',workAge:"1年以下"},{minSalary:'none',maxSalary:'none',workAge:"1-3年"},{minSalary:'none',maxSalary:'none',workAge:"3-5年"},{minSalary:'none',maxSalary:'none',workAge:"5-10年"},{minSalary:'none',maxSalary:'none',workAge:"10年以上"}];
+            var list = arr[i].listPositionAvgSalaryScope;
+            for(var j = 0; j < list.length; j++){
+              var curAge = list[j].workingyears;
+              switch(true){
+                case curAge=='1年以下':
+                  this.addNumData(arr[i], 0, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  break;
+                case curAge=='1-3年':
+                  this.addNumData(arr[i], 1, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  break;
+                case curAge=='3-5年':
+                  this.addNumData(arr[i], 2, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  break;
+                case curAge=='5-10年':
+                  this.addNumData(arr[i], 3, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  break;
+                case curAge=='10年以上':
+                  this.addNumData(arr[i], 4, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  break;
+              }
+            }
+            this.jobList.push(arr[i]);
+        }
         },
         addNumData: function(obj,index,min,max){//对比塞数据
           obj.jobSalary[index].minSalary = parseFloat(min).toFixed(1);
@@ -482,6 +493,7 @@ var vm = new Vue({
                 var resData = res.data;
                 if(resData.code === 200){
                   var payForData = resData.data;
+                  console.log(payForData);
                   that.payForToWx(payForData);
                 }
             })
