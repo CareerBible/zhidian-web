@@ -30,6 +30,7 @@
     page: 0,  //页码
     limit: '5', //每页显示多少条数据
     professionAvg: 0,
+    clientH:'',
     container: null,// 绑定能被监听滚动的元素
     domHeight: 0,// 内容可视区的高度
     professionSalaryList: [
@@ -56,7 +57,6 @@
     jobList: [],
     totalPage: 0,  //总页数
     Dom: '',
-    clientH: '',
     note: '',
     salaryChart: null,
     dataArr:[],
@@ -115,8 +115,8 @@ var vm = new Vue({
     data: data,
     mounted: function(){
         this.$nextTick(function() { 
-          this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           this.clientH = document.documentElement.clientHeight;
+          this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
           if(!this.userId){
@@ -355,11 +355,18 @@ var vm = new Vue({
 	          var domScrollTop = Math.ceil(this.Dom.scrollTop);
 	          var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
-            console.log(domScrollTop , scrollArea);
-            if(domScrollTop == scrollArea){
+            //划到底部刷新
+            if(domScrollTop == scrollArea){ 
               this.turnPage();
             }
-            
+
+            //安卓手机默认直接刷新翻页
+            var u = navigator.userAgent;
+            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+              this.turnPage();
+            }
+
+            //置顶按钮设置
             if(domScrollTop < 600){
               toTop.style.display = 'none';
             }else{
