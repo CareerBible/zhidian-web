@@ -346,27 +346,18 @@ var vm = new Vue({
             this.showLogin = true;
             this.showTxt = false;
             this.page++;
-            setTimeout(this.getJodData(false, false),500);
+            this.getJodData(false, false);
           }
         },
         viewmore: throttle(function() {  //加载更多
             var domH = this.clientH;
-            var domScrollH = this.Dom.scrollHeight;
-            var domScrollTop = Math.ceil(this.Dom.scrollTop);
-            var scrollArea = parseInt(domScrollH - domH);
+	          var domScrollH = this.Dom.scrollHeight;
+	          var domScrollTop = Math.ceil(this.Dom.scrollTop);
+	          var scrollArea = parseInt(domScrollH - domH);
             var toTop = document.querySelector('.top');
-            var u = navigator.userAgent;
-            var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
-            var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端 
-            // this.turnPage();//浏览器测试时打开
-            if(isAndroid && domScrollTop == (scrollArea-30)){
-              this.showLogin = true;
+            console.log(domScrollTop , scrollArea);
+            if(domScrollTop == scrollArea){
               this.turnPage();
-            }else if(isiOS && domScrollTop == scrollArea){
-              this.showLogin = true;
-              this.turnPage();
-            }else {
-              this.showLogin = false;
             }
             
             if(domScrollTop < 600){
