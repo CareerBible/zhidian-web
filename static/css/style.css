@@ -141,6 +141,10 @@ header > div {
   color: #666;
   font-size: 22px;
   line-height: 52px;
+  height: 52px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .province li.active {
