@@ -527,12 +527,14 @@ var vm = new Vue({
         getOrder: function(orderCode){ //查询订单
           var url = this.domain + '/api/orderQuery/order';
           const that = this;
-          var params = {outTradeNo: orderCode};
+          var params = {"outTradeNo": orderCode};
           axios.get(url,{params: params}).then(function(res) {
             var resData = res.data;
             if(resData.code === 200){
+              alert('拿到后台反馈了');
               var isVip = resData.data.isVip;
               if(isVip){
+                alert('可以显示支付成功了');
                 that.showMask = true;
                 that.showSuccess = true;
               }
@@ -543,9 +545,6 @@ var vm = new Vue({
           this.showMask = false;
           this.showSuccess = false;
           this.showPop = false;
-          //初始"哲学"数据
-          this.getProfession('010101', false, '哲学'); 
-          this.titleName = '哲学';
         }
     },
     watch: {
