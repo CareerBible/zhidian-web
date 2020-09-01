@@ -198,6 +198,7 @@ var vm = new Vue({
             if(!reg.test(this.searchTxt)){    //非中文
                return;
             }
+            this.clearChart();//关闭图表
             var url = this.domain + '/api/discipline/list';
             const that = this;
             if(this.searchTxt){
@@ -217,6 +218,7 @@ var vm = new Vue({
             }
         },50),
         getProfession: function(code, onOff, name){ //选择专业获取行业数据
+            if(onOff){this.page=0;}//如果是搜索来的，页码初始化
             this.searchTxt = '';//搜索完成情况搜索框内容
             this.jobCode = code;//职业code获取
             var url = this.domain + '/api/statistical/listDiscipline';
