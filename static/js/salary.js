@@ -493,7 +493,6 @@ var vm = new Vue({
                 var resData = res.data;
                 if(resData.code === 200){
                   var payForData = resData.data;
-                  console.log(payForData);
                   that.payForToWx(payForData);
                 }
             })
@@ -509,8 +508,7 @@ var vm = new Vue({
               "paySign": data.paySign 
           },function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  that.showMask = true;
-                  that.showSuccess = true;
+                  that.getOrder(data.outTradeNo);//支付成功后查询订单
               }else {
                   that.closePop();
               }
@@ -525,6 +523,21 @@ var vm = new Vue({
           } else {
               that.payForToWx();
           }
+        },
+        getOrder: function(orderCode){ //查询订单
+          var url = this.domain + '/api/orderQuery/order';
+          const that = this;
+          var params = {outTradeNo: orderCode};
+          axios.get(url,{params: params}).then(function(res) {
+            var resData = res.data;
+            if(resData.code === 200){
+              var isVip = resData.data.isVip;
+              if(isVip){
+                that.showMask = true;
+                that.showSuccess = true;
+              }
+            }
+          })
         },
         closeSuccessPop: function(){  //关闭支付成功
           this.showMask = false;
