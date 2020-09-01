@@ -508,7 +508,8 @@ var vm = new Vue({
               "paySign": data.paySign 
           },function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  alert('刚刚支付成功');
+                  that.showMask = false;
+                  that.showPop = false;
                   that.getOrder(data.outTradeNo);//支付成功后查询订单
               }else {
                   that.closePop();
@@ -526,18 +527,14 @@ var vm = new Vue({
           }
         },
         getOrder: function(orderCode){ //查询订单
-          alert('来到查询订单了');
           var url = this.domain + '/api/orderQuery/order';
           const that = this;
           var params = {"outTradeNo": orderCode};
           axios.get(url,{params: params}).then(function(res) {
-            alert(res.data.code);
             var resData = res.data;
             if(resData.code === 200){
-              alert('拿到后台反馈了');
               var isVip = resData.data.isVip;
               if(isVip){
-                alert('可以显示支付成功了');
                 that.showMask = true;
                 that.showSuccess = true;
               }
