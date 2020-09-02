@@ -506,8 +506,9 @@ var vm = new Vue({
               "paySign": data.paySign 
           },function(res) {
               if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  that.showMask = false;
                   that.showPop = false;
+                  that.showMask = true;
+                  that.showSuccess = true;//支付成功弹窗弹出
                   that.getOrder(data.outTradeNo);//支付成功后查询订单
               }else {
                   that.closePop();
@@ -533,8 +534,8 @@ var vm = new Vue({
             if(resData.code === 200){
               var isVip = resData.data.isVip;
               if(isVip){
-                that.showMask = true;
-                that.showSuccess = true;
+                // that.showMask = true;
+                // that.showSuccess = true;
               }
             }
           })
