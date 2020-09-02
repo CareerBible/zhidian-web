@@ -45,7 +45,10 @@
                     password: this.password
                 }
                 axios.post(url,{params:params}).then(function(res) {
-                    
+                    var resData = res.data;
+                    if(resData.code === 200){
+                        
+                    }
                 })
             }
         }  

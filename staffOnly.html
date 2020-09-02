@@ -16,7 +16,7 @@
             <section><span>{{staffCode}}</span><button @click="loginOut">退出</button></section>
           </header>
           <main>
-            <h2>数据总揽</h2>
+            <h2>数据总览</h2>
             <table cellspacing="0" cellpadding="0">
               <thead>
                 <tr>
@@ -98,7 +98,10 @@
                     
                 }
                 axios.get(url,{params:params}).then(function(res) {
-                    
+                    var resData = res.data;
+                    if(resData.code === 200){
+                        
+                    }
                 })
             },
             loginOut: function(){   //登出
@@ -108,7 +111,10 @@
                     
                 }
                 axios.post(url,{params:params}).then(function(res) {
-                    
+                    var resData = res.data;
+                    if(resData.code === 200){
+                        
+                    }
                 })
             }
         }  
