@@ -6,66 +6,113 @@
     <title>职典数据管理后台</title>
     <link rel="stylesheet" href="/static/css/common.css"/>
     <link rel="stylesheet" href="/static/css/staff.css"/>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/axios.js"></script>
 </head>
-<body class="staff">
-
-    <header>
-        <section><img src="/static/img/logo.png" alt="">职典</section>
-        <section><span>001</span><button>退出</button></section>
-      </header>
-      <main>
-        <h2>数据总揽</h2>
-        <table cellspacing="0" cellpadding="0">
-          <thead>
-            <tr>
-              <th>访问人数</th>
-              <th>付费人数</th>
-              <th>占比</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>10000</td>
-              <td>10</td>
-              <td>1%</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2>付费概况</h2>
-        <table cellspacing="0" cellpadding="0">
-          <thead>
-            <tr>
-              <th>搜索人数</th>
-              <th>未付费人数</th>
-              <th>占比</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>432</td>
-              <td>412</td>
-              <td>90%</td>
-            </tr>
-          </tbody>
-        </table>
-        <h2>行为概况</h2>
-        <table cellspacing="0" cellpadding="0">
-          <thead>
-            <tr>
-              <th>切换城市</th>
-              <th>点击对比</th>
-              <th>分享链接</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>190</td>
-              <td>444</td>
-              <td>324</td>
-            </tr>
-          </tbody>
-        </table>
-      </main>
-
+<body>
+    <div id="staff">
+        <header>
+            <section><img src="/static/img/logo.png" alt="">职典</section>
+            <section><span>{{staffCode}}</span><button @click="loginOut">退出</button></section>
+          </header>
+          <main>
+            <h2>数据总揽</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>访问人数</th>
+                  <th>付费人数</th>
+                  <th>占比</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{visitorNum}}</td>
+                  <td>{{payForNum}}</td>
+                  <td>{{(payForNum/visitorNum)*100}}%</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>付费概况</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>搜索人数</th>
+                  <th>未付费人数</th>
+                  <th>占比</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{searchNum}}</td>
+                  <td>{{notPayNum}}</td>
+                  <td>{{(notPayNum/searchNum)*100}}%</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>行为概况</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>切换城市</th>
+                  <th>点击对比</th>
+                  <th>分享链接</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{switchCityNum}}</td>
+                  <td>{{clickCompare}}</td>
+                  <td>{{shareLink}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+    </div>
+    <script>
+        var vm = new Vue({
+        el: "#staff",    //挂载元素
+        data: {
+            domain:'https://zhidian.dookbook.info',
+            staffId: 0,    //员工id
+            staffCode: 0,  //员工编号
+            visitorNum: 0,  //访问人数
+            payForNum:0,   //付费人数
+            searchNum:0,    //搜索人数
+            notPayNum:0,    //未付费人数
+            switchCityNum: 0,   //切换城市
+            clickCompare: 0,    //点击对比
+            shareLink: 0    //分享链接
+        },
+        mounted: function(){
+            this.$nextTick(function() { 
+                this.staffId = window.localStorage.getItem('uid');
+            })
+            this.getData();
+        },
+        methods: {
+            getData: function(){    //获取数据
+                var url = this.domain + '/api/district/list';
+                const that = this;
+                var params = {
+                    
+                }
+                axios.get(url,{params:params}).then(function(res) {
+                    
+                })
+            },
+            loginOut: function(){   //登出
+                var url = this.domain + '/api/district/list';
+                const that = this;
+                var params = {
+                    
+                }
+                axios.post(url,{params:params}).then(function(res) {
+                    
+                })
+            }
+        }  
+    })
+    </script>
 </body>
 </html>
