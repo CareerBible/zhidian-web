@@ -419,7 +419,12 @@ var vm = new Vue({
             }
             this.addFn(item, this.dataArr); //添加职业薪资数据
             this.addHeight(); //职业列表样式
+            this.takeNote();
             this.showChart = true;//显示图表
+        },
+        takeNote: function(){  //后端记录对比数据
+          var url = this.domain + '/api/compared/clickCompared';
+          axios.get(url,data).then(function(res) {});
         },
         addProfessionAvg: function(){   //对比图添加行业平均数据
             var arr = this.professionSalaryList, salaryLi = [];
