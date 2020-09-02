@@ -228,9 +228,7 @@ var vm = new Vue({
             var url = this.domain + '/api/statistical/listDiscipline';
             const that = this;
             var params = {
-              disciplineCode: this.jobCode,
-              limit: this.limit,
-              page: this.page
+              disciplineCode: this.jobCode
             };
             if(this.districtId != 0){//判断是否存地区id
                params.districtId = this.districtId; 
