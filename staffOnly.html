@@ -29,7 +29,7 @@
                 <tr>
                   <td>{{visitorNum}}</td>
                   <td>{{payForNum}}</td>
-                  <td>{{(payForNum/visitorNum)*100}}%</td>
+                  <td>{{parseFloat(payForNum/visitorNum).toFixed(4)*100}}%</td>
                 </tr>
               </tbody>
             </table>
@@ -46,7 +46,7 @@
                 <tr>
                   <td>{{searchNum}}</td>
                   <td>{{notPayNum}}</td>
-                  <td>{{(notPayNum/searchNum)*100}}%</td>
+                  <td>{{parseFloat(searchNum/notPayNum).toFixed(4)*100}}%</td>
                 </tr>
               </tbody>
             </table>
@@ -75,47 +75,42 @@
         data: {
             domain:'https://zhidian.dookbook.info',
             staffId: 0,    //员工id
-            staffCode: 0,  //员工编号
+            staffCode: "001",  //员工编号
             visitorNum: 0,  //访问人数
             payForNum:0,   //付费人数
             searchNum:0,    //搜索人数
             notPayNum:0,    //未付费人数
             switchCityNum: 0,   //切换城市
             clickCompare: 0,    //点击对比
-            shareLink: 0    //分享链接
+            shareLink: '暂无数据'    //分享链接
         },
         mounted: function(){
             this.$nextTick(function() { 
                 this.staffId = window.localStorage.getItem('uid');
+                axios.defaults.headers.common["uid"] = this.staffId;
+                this.getData();
             })
-            this.getData();
         },
         methods: {
             getData: function(){    //获取数据
-                var url = this.domain + '/api/district/list';
+                var url = this.domain + '/api/backgroundStatistics/statistics';
                 const that = this;
-                var params = {
-                    
-                }
-                axios.get(url,{params:params}).then(function(res) {
+                axios.get(url).then(function(res) {
                     var resData = res.data;
                     if(resData.code === 200){
-                        
+                        var data = resData.data;
+                        that.visitorNum = data.count;
+                        that.searchNum = data.searchCount;
+                        that.payForNum = data.paid;
+                        that.notPayNum = data.unpaid;
+                        that.switchCityNum = data.areaCount;
+                        that.clickCompare = data.countCompared;
+                        // that.shareLink = data.shareLink;
                     }
                 })
             },
             loginOut: function(){   //登出
-                var url = this.domain + '/api/district/list';
-                const that = this;
-                var params = {
-                    
-                }
-                axios.post(url,{params:params}).then(function(res) {
-                    var resData = res.data;
-                    if(resData.code === 200){
-                        
-                    }
-                })
+                WeixinJSBridge.call('closeWindow');
             }
         }  
     })

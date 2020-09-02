@@ -18,7 +18,7 @@
         <section>
             <p><input type="text" value="" v-model="username" placeholder="请输入账号"></p>
             <p><input type="password" value="" v-model="password" placeholder="请输入密码"></p>
-            <span v-show="showNote">您账号或密码输入错误，请重新输入</span>
+            <span v-text="noteInfo"></span>
         </section>
         <button type="submit" @click="login">登 录</button>
     </div>
@@ -31,23 +31,28 @@
             domain:'https://zhidian.dookbook.info',
             username: '',
             password: '',
-            showNote: false
-        },
-        mounted: function(){
-            
+            noteInfo: ''
         },
         methods: {
-            login: function(){
-                var url = this.domain + '/api/district/list';
-                const that = this;
+            login: function(){//登录
+                if(!this.username){
+                    this.noteInfo = '用户名不能为空';
+                    return;
+                }else if(!this.password){
+                    this.noteInfo = '密码不能为空';
+                    return;
+                }
+                var url = this.domain + '/api/user/login';
                 var params = {
-                    username: this.username,
+                    loginName: this.username,
                     password: this.password
                 }
-                axios.post(url,{params:params}).then(function(res) {
+                axios.post(url,params).then(function(res) {
                     var resData = res.data;
-                    if(resData.code === 200){
-                        
+                    if(resData.code === 200){//您账号或密码输入错误，请重新输入
+                        var uid = resData.data.uid
+                        window.localStorage.setItem('uid' , uid);
+                        window.location.href = '/staffOnly.html';
                     }
                 })
             }
