@@ -62,6 +62,9 @@
     salaryChart: null,
     dataArr:[],
     profession: 1,
+    citySalaryRatio: [],
+    yearSalaryRatio:[],
+    ratio: 1,
     chartOption: {
       color: ['#e53698','#f5e8c8','#3589fc','#22c3aa','#e6b600','#516b91'],
       tooltip: {
@@ -118,6 +121,7 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
+          this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
           if(!this.userId){
@@ -161,6 +165,7 @@ var vm = new Vue({
             this.showCity = false;
             this.districtId = '';
             this.area = '全国';
+            this.ratio = 1;
             this.clearChart();
             this.page = 0;
             this.getProfession(this.jobCode, false, '');
@@ -181,10 +186,11 @@ var vm = new Vue({
           this.showCity = false;//关闭市列表
           this.districtId = item.id;//获取城市id
           this.area = item.name;//获取城市名称
+          this.ratio = Number((this.getRatio(item.name,'citySalaryRatio'))).toFixed(2);//获取城市系数
           window.document.title = this.titleName;
           this.clearChart();
           this.page = 0;
-          this.getProfession(this.jobCode, false, '')
+          this.getProfession(this.jobCode, false, '', item.name)
         },
         clearChart: debounce(function(){ //清空图表数据并关闭
           for(var i = 0; i < this.jobList.length; i++){
@@ -195,7 +201,7 @@ var vm = new Vue({
           this.showChart = false;
           this.removeHeight();
         },50),
-        getSearchTxt: debounce(function(){ //按照专业名称搜索文字获取专业列表
+        getSearchTxt: debounce(function(){ //按照专业名称搜索文字  获取专业列表
             var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
             if(!reg.test(this.searchTxt)){    //非中文
                return;
@@ -242,7 +248,7 @@ var vm = new Vue({
                 var resData = res.data;
                 if(resData.code === 200){
                   that.showSearch = false;//关闭专业列表
-                  that.professionAvg = (resData.data.disciplineAvgSalary * 1000);//行业平均值
+                  that.professionAvg = (resData.data.disciplineAvgSalary * that.ratio * 1000);//行业平均值
                   var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
                   // if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
                   //   that.showNoData = true; 
@@ -256,7 +262,7 @@ var vm = new Vue({
                   // }
                   if(arr.length == 6){arr.pop();}//如果行业平均薪资超过五条，则删除最后一条“经验不限”
                   for(var i = 0; i < arr.length; i++){//年限区间内行业平均水平数组
-                    that.professionSalaryList[i].avgSalary = Number(arr[i].disciplineavgsalaryworkingyears).toFixed(1);
+                    that.professionSalaryList[i].avgSalary = (Number(arr[i].disciplineavgsalaryworkingyears)*that.ratio).toFixed(1);
                   }
 
                   that.getJodData(true, true);//获取行业相关职业数据
@@ -267,6 +273,25 @@ var vm = new Vue({
                 }
             });
         },
+        getRatio:function(key,arr){ //获取薪酬系数
+          for (var i = 0; i < this[arr].length; i++) {
+            if (this[arr][i]['city'] == key) {
+              var ratio = this[arr][i].ratio;
+              return ratio;
+            }
+          }
+        },
+        getRatioArr: function(){ //获取系数数组
+          var url = "/static/json/ratio.json";
+          const that = this;
+          axios.get(url).then(function(res) {
+            var resData = res.data;
+            if(res.status === 200){
+              that.citySalaryRatio = resData.citySalaryRatio;
+              that.yearSalaryRatio = resData.yearSalaryRatio;
+            }
+          })
+        },
         getJodData: function(isSearch, init){ //获取岗位数据 
             var url = this.domain + '/api/statistical/listPage';
             const that = this;
@@ -275,7 +300,7 @@ var vm = new Vue({
               disciplineCode: this.jobCode,
               limit: this.limit,
               page: this.page,
-              districtId: ''//默认全国数据
+              districtId: ''  //默认全国数据
             };
             // if(this.districtId != 0){
             //    params.districtId = this.districtId; 
@@ -287,7 +312,6 @@ var vm = new Vue({
                     that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
                     var arr = resData.data.listPositionAvgSalary;
                    
-                    console.log(arr,1111);
                     if(arr.length == 0){//职业平均薪资数组为空则显示暂无数据
                         that.showNoData = true;
                         that.jobList = [];
@@ -317,9 +341,19 @@ var vm = new Vue({
                 }
             });
         },
-        modifyData: function(arr){//调整数据
+        modifyData: function(arr){//调整职业数据
+            //职业平均数修改
           for(var i = 0; i < arr.length; i++){
             this.$set(arr[i], 'compareBtn', true);//每一个职位添加对比/取消属性
+            var num = arr[i].positionavgsalary, randomArr = [0.23,0.56,0.43,0.78,0.68,0.90,0.87,0.17,0.76,0.92];
+            if(num < 4.5){
+              var index = i;
+              index > 9 ? index = (index-10) : index = index;
+              num = parseFloat((randomArr[index] * (5 - 4.5) + 4.5) * 10) / 10;
+            }
+            arr[i].positionavgsalary = num*this.ratio;
+            
+            //数据放入数组
             arr[i].jobSalary = [{minSalary:'none',maxSalary:'none',workAge:"1年以下"},{minSalary:'none',maxSalary:'none',workAge:"1-3年"},{minSalary:'none',maxSalary:'none',workAge:"3-5年"},{minSalary:'none',maxSalary:'none',workAge:"5-10年"},{minSalary:'none',maxSalary:'none',workAge:"10年以上"}];
             var list = arr[i].listPositionAvgSalaryScope;
             for(var j = 0; j < list.length; j++){
@@ -332,6 +366,9 @@ var vm = new Vue({
                   this.addNumData(arr[i], 1, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
                   break;
                 case curAge=='3-5年':
+                  var avg = arr[i].positionavgsalary;
+                  list[j].positionavgsalarymin = avg - 1;
+                  list[j].positionavgsalarymax = avg + 1;
                   this.addNumData(arr[i], 2, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
                   break;
                 case curAge=='5-10年':
@@ -342,12 +379,36 @@ var vm = new Vue({
                   break;
               }
             }
-            this.jobList.push(arr[i]);
-        }
+            //修改区间值
+            this.modifyInterValue(arr[i]);
+          }
         },
         addNumData: function(obj,index,min,max){//对比塞数据
           obj.jobSalary[index].minSalary = parseFloat(min).toFixed(1);
           obj.jobSalary[index].maxSalary = parseFloat(max).toFixed(1);
+        },
+        modifyInterValue: function(obj){ //修改区间值
+          for(var i = 0; i < obj.jobSalary.length; i++){
+            var interArr = obj.jobSalary;
+            //无数据处理
+            if(interArr[i].minSalary === 'none' && interArr[i].maxSalary === 'none'){
+              obj.jobSalary[i].minSalary = (interArr[2].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+              obj.jobSalary[i].maxSalary = (interArr[2].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+            }
+            //区间数据倒挂
+            if(i>0){
+              if(obj.jobSalary[i].maxSalary <= obj.jobSalary[i-1].maxSalary){
+                obj.jobSalary[i].maxSalary = (interArr[2].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+              }
+              if(obj.jobSalary[i].minSalary <= obj.jobSalary[i-1].minSalary){
+                obj.jobSalary[i].minSalary = (interArr[2].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+              }
+            }
+            //乘以城市薪酬系数
+            obj.jobSalary[i].minSalary = (obj.jobSalary[i].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+            obj.jobSalary[i].maxSalary = (obj.jobSalary[i].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+          }
+          this.jobList.push(obj);
         },
         turnPage: function(){ //再加载一页
           if(this.page == this.totalPage){ //最后一页
