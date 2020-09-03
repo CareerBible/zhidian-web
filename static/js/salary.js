@@ -121,6 +121,8 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
+          var referreId = this.getQueryVariable('referreId');//获取推广id
+          if(referreId){window.localStorage.setItem('referreId',referreId)}
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
@@ -135,6 +137,15 @@ var vm = new Vue({
         })
     },
     methods: {  //  放方法函数
+        getQueryVariable: function(param){
+          var query = window.location.search.substring(1)
+          var vars = query.split('&')
+          for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=')
+            if (pair[0] === param) { return pair[1] }
+          }
+          return false
+        },
         getAreaOption: function(){  //获取地区选项
             var url = this.domain + '/api/district/list';
             const that = this;
