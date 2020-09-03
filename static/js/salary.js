@@ -227,12 +227,13 @@ var vm = new Vue({
             this.jobCode = code;//职业code获取
             var url = this.domain + '/api/statistical/listDiscipline';
             const that = this;
-            var params = {
-              disciplineCode: this.jobCode
+            var params = {  //默认全国数据
+              disciplineCode: this.jobCode,
+              districtId: ''
             };
-            if(this.districtId != 0){//判断是否存地区id
-               params.districtId = this.districtId; 
-            }
+            // if(this.districtId != 0){//判断是否存地区id
+            //    params.districtId = this.districtId; 
+            // }
             if(name!=''){//判断title
               that.titleName = name;
               window.document.title = that.titleName; 
@@ -243,16 +244,16 @@ var vm = new Vue({
                   that.showSearch = false;//关闭专业列表
                   that.professionAvg = (resData.data.disciplineAvgSalary * 1000);//行业平均值
                   var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                  if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
-                    that.showNoData = true; 
-                    that.note = "暂无数据";
-                    that.showTxt = false;
-                    that.showLogin = false;
-                    that.jobList = [];
-                    return;
-                  }else{
-                    that.showNoData = false;
-                  }
+                  // if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
+                  //   that.showNoData = true; 
+                  //   that.note = "暂无数据";
+                  //   that.showTxt = false;
+                  //   that.showLogin = false;
+                  //   that.jobList = [];
+                  //   return;
+                  // }else{
+                  //   that.showNoData = false;
+                  // }
                   if(arr.length == 6){arr.pop();}//如果行业平均薪资超过五条，则删除最后一条“经验不限”
                   for(var i = 0; i < arr.length; i++){//年限区间内行业平均水平数组
                     that.professionSalaryList[i].avgSalary = Number(arr[i].disciplineavgsalaryworkingyears).toFixed(1);
@@ -273,17 +274,20 @@ var vm = new Vue({
             var params = {
               disciplineCode: this.jobCode,
               limit: this.limit,
-              page: this.page
+              page: this.page,
+              districtId: ''//默认全国数据
             };
-            if(this.districtId != 0){
-               params.districtId = this.districtId; 
-            }
+            // if(this.districtId != 0){
+            //    params.districtId = this.districtId; 
+            // }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
                     that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
                     var arr = resData.data.listPositionAvgSalary;
+                   
+                    console.log(arr,1111);
                     if(arr.length == 0){//职业平均薪资数组为空则显示暂无数据
                         that.showNoData = true;
                         that.jobList = [];
@@ -295,7 +299,6 @@ var vm = new Vue({
                             that.jobList = [];
                         }
                         that.modifyData(arr);
-                        
                     }
                     if(that.onOff && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
                       var time = null; 
