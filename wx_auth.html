@@ -50,8 +50,9 @@ var referreId = getQueryVariable('referreId');
 if(!code) {
   alert('code required');
 } else {
-  if(!referreId){ referreId = ''; }
-  getWxUserInfo(code, referreId, 'index.html');
+  var str = '';
+  !referreId ? str = '' : str = referreId;
+  getWxUserInfo(code, str, 'index.html');
 }
 </script>
 </body>
