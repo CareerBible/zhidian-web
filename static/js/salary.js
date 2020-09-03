@@ -352,63 +352,68 @@ var vm = new Vue({
               num = parseFloat((randomArr[index] * (5 - 4.5) + 4.5) * 10) / 10;
             }
             arr[i].positionavgsalary = num*this.ratio;
-            
+            var avg = arr[i].positionavgsalary;
+                       
             //数据放入数组
-            arr[i].jobSalary = [{minSalary:'none',maxSalary:'none',workAge:"1年以下"},{minSalary:'none',maxSalary:'none',workAge:"1-3年"},{minSalary:'none',maxSalary:'none',workAge:"3-5年"},{minSalary:'none',maxSalary:'none',workAge:"5-10年"},{minSalary:'none',maxSalary:'none',workAge:"10年以上"}];
+            arr[i].jobSalary = [{minSalary:0,maxSalary:0,workAge:"1年以下"},{minSalary:0,maxSalary:0,workAge:"1-3年"},{minSalary:0,maxSalary:0,workAge:"3-5年"},{minSalary:0,maxSalary:0,workAge:"5-10年"},{minSalary:0,maxSalary:0,workAge:"10年以上"}];
             var list = arr[i].listPositionAvgSalaryScope;
             for(var j = 0; j < list.length; j++){
               var curAge = list[j].workingyears;
               switch(true){
                 case curAge=='1年以下':
-                  this.addNumData(arr[i], 0, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  arr[i].jobSalary[0].minSalary = parseFloat(list[j].positionavgsalarymin).toFixed(1);
+                  arr[i].jobSalary[0].maxSalary = parseFloat(list[j].positionavgsalarymax).toFixed(1);
                   break;
                 case curAge=='1-3年':
-                  this.addNumData(arr[i], 1, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  arr[i].jobSalary[1].minSalary = parseFloat(list[j].positionavgsalarymin).toFixed(1);
+                  arr[i].jobSalary[1].maxSalary = parseFloat(list[j].positionavgsalarymax).toFixed(1);
                   break;
                 case curAge=='3-5年':
-                  var avg = arr[i].positionavgsalary;
-                  list[j].positionavgsalarymin = avg - 1;
-                  list[j].positionavgsalarymax = avg + 1;
-                  this.addNumData(arr[i], 2, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  arr[i].jobSalary[2].minSalary = parseFloat(list[j].positionavgsalarymin).toFixed(1);
+                  arr[i].jobSalary[2].maxSalary = parseFloat(list[j].positionavgsalarymax).toFixed(1);
                   break;
                 case curAge=='5-10年':
-                  this.addNumData(arr[i], 3, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  arr[i].jobSalary[3].minSalary = parseFloat(list[j].positionavgsalarymin).toFixed(1);
+                  arr[i].jobSalary[3].maxSalary = parseFloat(list[j].positionavgsalarymax).toFixed(1);
                   break;
                 case curAge=='10年以上':
-                  this.addNumData(arr[i], 4, list[j].positionavgsalarymin,list[j].positionavgsalarymax);
+                  arr[i].jobSalary[4].minSalary = parseFloat(list[j].positionavgsalarymin).toFixed(1);
+                  arr[i].jobSalary[4].maxSalary = parseFloat(list[j].positionavgsalarymax).toFixed(1);
                   break;
               }
             }
-            //修改区间值
-            this.modifyInterValue(arr[i]);
-          }
-        },
-        addNumData: function(obj,index,min,max){//对比塞数据
-          obj.jobSalary[index].minSalary = parseFloat(min).toFixed(1);
-          obj.jobSalary[index].maxSalary = parseFloat(max).toFixed(1);
-        },
-        modifyInterValue: function(obj){ //修改区间值
-          for(var i = 0; i < obj.jobSalary.length; i++){
-            var interArr = obj.jobSalary;
-            //无数据处理
-            if(interArr[i].minSalary === 'none' && interArr[i].maxSalary === 'none'){
-              obj.jobSalary[i].minSalary = (interArr[2].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
-              obj.jobSalary[i].maxSalary = (interArr[2].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+            if(arr[i].jobSalary[2].minSalary == 0 && arr[i].jobSalary[2].maxSalary == 0){ //3-5年数据不存的情况
+              arr[i].jobSalary[2].minSalary = parseFloat(avg-1).toFixed(1);
+              arr[i].jobSalary[2].maxSalary = parseFloat(avg+1).toFixed(1);
             }
-            //区间数据倒挂
-            if(i>0){
-              if(obj.jobSalary[i].maxSalary <= obj.jobSalary[i-1].maxSalary){
-                obj.jobSalary[i].maxSalary = (interArr[2].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
-              }
-              if(obj.jobSalary[i].minSalary <= obj.jobSalary[i-1].minSalary){
-                obj.jobSalary[i].minSalary = (interArr[2].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
-              }
-            }
-            //乘以城市薪酬系数
-            obj.jobSalary[i].minSalary = (obj.jobSalary[i].minSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
-            obj.jobSalary[i].maxSalary = (obj.jobSalary[i].maxSalary * this.yearSalaryRatio[i].ratio).toFixed(1);
+            this.jobList.push(arr[i]);
           }
-          this.jobList.push(obj);
+          this.modifySalaryData();
+        },
+        modifySalaryData: function(){
+          var arr = this.jobList;
+          for(var i = 0; i < arr.length; i++){
+            for(var k = 0; k < arr[i].jobSalary.length; k++){
+              var interArr = arr[i].jobSalary;
+              //无数据处理
+              if(interArr[k].minSalary === 0 && interArr[k].maxSalary === 0){
+                interArr[k].minSalary = parseFloat(interArr[2].minSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+                interArr[k].maxSalary = parseFloat(interArr[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+              }
+              //区间数据倒挂
+              if(k>0){
+                if(arr[i].jobSalary[k].maxSalary <= arr[i].jobSalary[k-1].maxSalary){
+                  this.jobList[i].jobSalary[k].maxSalary = parseFloat(interArr[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+                }
+                if(arr[i].jobSalary[k].minSalary <= arr[i].jobSalary[k-1].minSalary){
+                  this.jobList[i].jobSalary[k].minSalary = parseFloat(interArr[2].minSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+                }
+              }
+              //乘以城市薪酬系数
+              this.jobList[i].jobSalary[k].minSalary = parseFloat(arr[i].jobSalary[2].minSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+              this.jobList[i].jobSalary[k].maxSalary = parseFloat(arr[i].jobSalary[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+            }
+          }
         },
         turnPage: function(){ //再加载一页
           if(this.page == this.totalPage){ //最后一页
