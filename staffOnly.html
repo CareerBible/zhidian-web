@@ -86,7 +86,7 @@
         },
         mounted: function(){
             this.$nextTick(function() { 
-                this.staffId = window.localStorage.getItem('uid');
+                this.staffId = window.localStorage.getItem('id');
                 axios.defaults.headers.common["uid"] = this.staffId;
                 this.getData();
             })

@@ -51,7 +51,7 @@
                     var resData = res.data;
                     if(resData.code === 200){//您账号或密码输入错误，请重新输入
                         var uid = resData.data.uid
-                        window.localStorage.setItem('uid' , uid);
+                        window.localStorage.setItem('id' , uid);
                         window.location.href = '/staffOnly.html';
                     }
                 })
