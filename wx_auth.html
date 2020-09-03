@@ -25,9 +25,9 @@
 /**
  * 获取微信用户信息
  */
-function getWxUserInfo(code, redirect_url) {
+function getWxUserInfo(code, referreId, redirect_url) {
   var xhr = new XMLHttpRequest()
-  xhr.open('GET', '/api/wechat/getUserInfo?code='+code)
+  xhr.open('GET', '/api/wechat/getUserInfo?code='+code + '&referreId=' + referreId);
   xhr.send()
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
@@ -45,12 +45,13 @@ function getWxUserInfo(code, redirect_url) {
 }
 
 const redirect_url = '/'
-var code = getQueryVariable('code')
-console.log(code);
+var code = getQueryVariable('code');
+var referreId = getQueryVariable('referreId');
 if(!code) {
   alert('code required');
 } else {
-  getWxUserInfo(code, 'index.html');
+  if(!referreId){ referreId = ''; }
+  getWxUserInfo(code, referreId, 'index.html');
 }
 </script>
 </body>
