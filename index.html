@@ -129,6 +129,20 @@
     </div>
     <script>
       window.onload = function(){
+
+        wx.config({
+            debug: false,
+            appId: '{$signPackage["appId"]}',
+            timestamp: '{$signPackage["timestamp"]}',
+            nonceStr: '{$signPackage["nonceStr"]}',
+            signature: '{$signPackage["signature"]}',
+            jsApiList: [
+	            //我只调用了两个分享接口,分别是朋友圈和个人,大家有其它需要可以去文档中查找接口
+				      'updateAppMessageShareData',
+				      'updateTimelineShareData'
+			      ]
+        });
+
         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
           var shareData = {
             title: '职典-查职业，查薪酬', // 分享标题
@@ -136,19 +150,12 @@
             link: 'https://zhidian.dookbook.info/index.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
             imgUrl: 'https://zhidian.dookbook.info/static/img/linkLogo.jpg', // 分享图标
           }
+          wx.updateAppMessageShareData(shareData,);
+          wx.updateTimelineShareData(shareData);
+        });
 
-          wx.onMenuShareAppMessage({ 
-            title: '职典-查职业，查薪酬', // 分享标题
-            desc: '找一份稳定体面、且有前途、高薪酬，还能被亲朋好友羡慕的工作', // 分享描述
-            link: '', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: '', // 分享图标
-            success: function () {
-              console.log('设置成功');
-            }
-          })
-          // wx.updateAppMessageShareData(shareData,);
-          // wx.updateTimelineShareData(shareData);
-          // wx.onMenuShareWeibo(shareData);
+        wx.error(function (res) {
+          //alert(res.errMsg);//错误提示
         });
       }
     </script>
