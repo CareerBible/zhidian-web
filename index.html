@@ -6,7 +6,7 @@
     <title>薪酬分析</title>
     <link rel="stylesheet" href="/static/css/common.css"/>
     <link rel="stylesheet" href="/static/css/style.css"/>
-    <script src="/static/js/jweixin-1.2.0.js"></script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
     <script src="/static/js/common.js"></script>
 </head>
 <body>
@@ -155,7 +155,7 @@
                     link: 'https://zhidian.dookbook.info/index.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
                     imgUrl: 'https://zhidian.dookbook.info/static/img/linkLogo.jpg', // 分享图标
                   }
-                  wx.updateAppMessageShareData(shareData,);
+                  wx.updateAppMessageShareData(shareData);
                   wx.updateTimelineShareData(shareData);
                 });
 
