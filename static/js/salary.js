@@ -122,7 +122,7 @@ var vm = new Vue({
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           var referreId = this.getQueryVariable('referreId');//获取推广id
-          if(referreId){window.localStorage.setItem('referreId',referreId)}
+          if(referreId){window.sessionStorage.setItem('referreId',referreId)}
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
