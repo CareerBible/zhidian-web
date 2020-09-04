@@ -261,16 +261,16 @@ var vm = new Vue({
                   that.showSearch = false;//关闭专业列表
                   that.professionAvg = (resData.data.disciplineAvgSalary * that.ratio * 1000);//行业平均值
                   var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
-                  // if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
-                  //   that.showNoData = true; 
-                  //   that.note = "暂无数据";
-                  //   that.showTxt = false;
-                  //   that.showLogin = false;
-                  //   that.jobList = [];
-                  //   return;
-                  // }else{
-                  //   that.showNoData = false;
-                  // }
+                  if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
+                    that.showNoData = true; 
+                    that.note = "暂无数据";
+                    that.showTxt = false;
+                    that.showLogin = false;
+                    that.jobList = [];
+                    return;
+                  }else{
+                    that.showNoData = false;
+                  }
                   if(arr.length == 6){arr.pop();}//如果行业平均薪资超过五条，则删除最后一条“经验不限”
                   for(var i = 0; i < arr.length; i++){//年限区间内行业平均水平数组
                     that.professionSalaryList[i].avgSalary = (Number(arr[i].disciplineavgsalaryworkingyears)*that.ratio).toFixed(1);

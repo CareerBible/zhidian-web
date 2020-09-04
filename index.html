@@ -129,19 +129,33 @@
     </div>
     <script>
       window.onload = function(){
-
-        wx.config({
-            debug: false,
-            appId: '{$signPackage["appId"]}',
-            timestamp: '{$signPackage["timestamp"]}',
-            nonceStr: '{$signPackage["nonceStr"]}',
-            signature: '{$signPackage["signature"]}',
-            jsApiList: [
-	            //我只调用了两个分享接口,分别是朋友圈和个人,大家有其它需要可以去文档中查找接口
-				      'updateAppMessageShareData',
-				      'updateTimelineShareData'
-			      ]
-        });
+        shareLink();
+        function shareLink(){
+          var xhr = new XMLHttpRequest()
+          xhr.open('GET', 'https://zhidian.dookbook.info/api/wechat/share');
+          xhr.send()
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              var data = JSON.parse(xhr.responseText)
+              if(data.code == 200) {
+                var info = data.data;
+                wx.config({
+                  debug: false,
+                  appId: data.appId,
+                  timestamp: data.timestamp,
+                  nonceStr: data.nonceStr,
+                  signature: info.signature,
+                  jsApiList: [
+                    'updateAppMessageShareData',
+                    'updateTimelineShareData'
+                  ]
+              });
+              } else {
+                alert(data.msg)
+              }
+            }
+          }
+        }
 
         wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
           var shareData = {
