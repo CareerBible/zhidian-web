@@ -14,6 +14,18 @@ document.addEventListener('DOMContentLoaded', function(){//页面加载完成之
 })
 
 
+wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+  var shareData = {
+    title: '职典-查职业，查薪酬', // 分享标题
+    desc: '找一份稳定体面、且有前途、高薪酬，还能被亲朋好友羡慕的工作。', // 分享描述
+    link: 'https://zhidian.dookbook.info/index.html', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+    imgUrl: 'https://zhidian.dookbook.info/static/img/linkLogo.jpg', // 分享图标
+  }
+  wx.updateAppMessageShareData(shareData);
+  wx.updateTimelineShareData(shareData);
+  wx.onMenuShareWeibo(shareData);
+});
+
      /**
  * 函数防抖，debounce
  * 基本思路就是把多个信号合并为一个信号
