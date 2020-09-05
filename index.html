@@ -140,14 +140,14 @@
           }
           return false
         }
-        
+
         var referreId = getQueryVariable('referreId');
         var domain = 'https://zhidian.dookbook.info';
         shareLink();
         function shareLink(){
           var url = domain+'/api/wechat/share';
           var strWxCurUrl = '';
-          !referreId ? strWxCurUrl = domain+'/index.html?referreId='+ referreId : strWxCurUrl = domain + '/index.html';
+          referreId ? strWxCurUrl = domain+'/index.html?referreId='+ referreId : strWxCurUrl = domain + '/index.html';
           var params = {'url': strWxCurUrl};
 
           axios.get(url,{params:params}).then(function(res) {
