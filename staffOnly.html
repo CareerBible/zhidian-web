@@ -29,7 +29,7 @@
                 <tr>
                   <td>{{visitorNum}}</td>
                   <td>{{payForNum}}</td>
-                  <td>{{parseFloat(payForNum/visitorNum).toFixed(4)*100}}%</td>
+                  <td>{{(parseFloat(payForNum/visitorNum)*100).toFixed(2)}}%</td>
                 </tr>
               </tbody>
             </table>
@@ -46,7 +46,7 @@
                 <tr>
                   <td>{{searchNum}}</td>
                   <td>{{notPayNum}}</td>
-                  <td>{{parseFloat(searchNum/notPayNum).toFixed(4)*100}}%</td>
+                  <td>{{(parseFloat((searchNum-notPayNum)/searchNum)*100).toFixed(2)}}%</td>
                 </tr>
               </tbody>
             </table>
