@@ -123,6 +123,7 @@ var vm = new Vue({
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           var referreId = this.getQueryVariable('referreId');//获取推广id
           if(referreId){window.sessionStorage.setItem('referreId',referreId)}
+          this.shareLink(referreId);
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
@@ -137,6 +138,43 @@ var vm = new Vue({
         })
     },
     methods: {  //  放方法函数
+        shareLink: function(referreId){
+          var url = this.domain + '/api/wechat/share';
+          var strWxCurUrl = this.domain + '/index.html?referreId='+ referreId;
+          var params = {'url': strWxCurUrl}
+          axios.get(url,{params: params}).then(function(res) {
+            var resData = res.data;
+            if(resData.code === 200){
+              var info = resData.data;
+              wx.config({
+                debug: true,
+                appId: info.appId,
+                timestamp: info.timestamp,
+                nonceStr: info.nonceStr,
+                signature: info.signature,
+                jsapi_ticket: info.jsapi_ticket,
+                jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage']
+              });
+
+              wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
+                var shareData = {
+                  title: '职典-查职业，查薪酬', // 分享标题
+                  desc: '找一份稳定体面、且有前途、高薪酬，还能被亲朋好友羡慕的工作。', // 分享描述
+                  link: 'https://zhidian.dookbook.info/', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                  imgUrl: 'https://zhidian.dookbook.info/static/img/linkLogo.jpg', // 分享图标
+                }
+                wx.onMenuShareTimeline(shareData);
+                wx.onMenuShareAppMessage(shareData);
+              });
+
+              wx.error(function (res) {
+                alert(res.errMsg);//错误提示
+              });
+            } else {
+              alert(data.msg)
+            }
+          })
+        },
         getQueryVariable: function(param){
           var query = window.location.search.substring(1)
           var vars = query.split('&')

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
-    <title>职典</title>
+    <title>职典-查职业，查薪酬</title>
     <link rel="stylesheet" href="/static/css/common.css"/>
     <link rel="stylesheet" href="/static/css/style.css"/>
     <script src="/static/js/common.js"></script>
@@ -126,52 +126,7 @@
         </div>
         
     </div>
-    <script src="/static/js/jweixin-1.2.0.js"></script>
-    <script>
-      window.onload = function(){
-        shareLink();
-        function shareLink(){
-          var xhr = new XMLHttpRequest()
-          xhr.open('GET', 'https://zhidian.dookbook.info/api/wechat/share');
-          xhr.send({url: 'https://zhidian.dookbook.info/index.html'})
-          xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4) {
-              var data = JSON.parse(xhr.responseText)
-              if(data.code == 200) {
-                var info = data.data;
-                wx.config({
-                  debug: false,
-                  appId: info.appId,
-                  timestamp: info.timestamp,
-                  nonceStr: info.nonceStr,
-                  signature: info.signature,
-                  jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage']
-                });
-
-                wx.ready(function () {   //需在用户可能点击分享按钮前就先调用
-                  var shareData = {
-                    title: '职典-查职业，查薪酬', // 分享标题
-                    desc: '找一份稳定体面、且有前途、高薪酬，还能被亲朋好友羡慕的工作。', // 分享描述
-                    link: 'https://zhidian.dookbook.info/', // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-                    imgUrl: 'http://zhidian.dookbook.info/static/img/linkLogo.jpg', // 分享图标
-                  }
-                  wx.onMenuShareTimeline(shareData);
-                  wx.onMenuShareAppMessage(shareData);
-                });
-
-                wx.error(function (res) {
-                  //alert(res.errMsg);//错误提示
-                });
-              } else {
-                alert(data.msg)
-              }
-            }
-          }    
-        }
-
-        
-      }
-    </script>
+    <script src="http://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/echarts.min.js"></script>
