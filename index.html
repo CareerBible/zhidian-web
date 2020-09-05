@@ -138,7 +138,7 @@
             var pair = vars[i].split('=')
             if (pair[0] === param) { return pair[1] }
           }
-          return false
+          return '';
         }
 
         
@@ -148,8 +148,7 @@
           var url = domain+'/api/wechat/share';
           var strWxCurUrl = '';
           var referreId = getQueryVariable('referreId');
-          console.log(referreId);
-          referreId ? strWxCurUrl = domain + '/index.html' : strWxCurUrl = domain+'/index.html?referreId='+ referreId;
+          referreId == '' ? strWxCurUrl = domain + '/index.html' : strWxCurUrl = domain+'/index.html?referreId='+ referreId;
           var params = {'url': strWxCurUrl};
 
           axios.get(url,{params:params}).then(function(res) {
