@@ -156,7 +156,7 @@
             if(resData.code == 200){
               var info = resData.data;
               wx.config({
-                debug: true,
+                debug: false,
                 appId: info.appId,
                 timestamp: info.timestamp,
                 nonceStr: info.nonceStr,
@@ -177,7 +177,7 @@
               });
 
               wx.error(function (res) {
-                alert(res.errMsg);//错误提示
+                // alert(res.errMsg);//错误提示
               });
             }
           })
