@@ -126,7 +126,7 @@
         </div>
         
     </div>
-    <script src="http://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script>
@@ -138,7 +138,8 @@
           var url = domain+'/api/wechat/share';
           var strWxCurUrl = '';
           !referreId ? strWxCurUrl = domain+'/index.html?referreId='+ referreId : strWxCurUrl = domain + '/index.html';
-          var params = {'url': strWxCurUrl}
+          var params = {'url': strWxCurUrl};
+
           
           axios.get(url,{params:params}).then(function(res) {
             var resData = res.data;
