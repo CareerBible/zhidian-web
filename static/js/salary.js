@@ -413,16 +413,21 @@ var vm = new Vue({
               }
               //区间数据倒挂
               if(k>0){
-                if(arr[i].jobSalary[k].maxSalary <= arr[i].jobSalary[k-1].maxSalary){
+                if(parseFloat(arr[i].jobSalary[k].maxSalary) <= parseFloat(arr[i].jobSalary[k-1].maxSalary)){
                   this.jobList[i].jobSalary[k].maxSalary = parseFloat(interArr[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
                 }
-                if(arr[i].jobSalary[k].minSalary <= arr[i].jobSalary[k-1].minSalary){
+                if(parseFloat(arr[i].jobSalary[k].minSalary) <= parseFloat(arr[i].jobSalary[k-1].minSalary)){
                   this.jobList[i].jobSalary[k].minSalary = parseFloat(interArr[2].minSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
                 }
               }
               //乘以城市薪酬系数
               this.jobList[i].jobSalary[k].minSalary = parseFloat(arr[i].jobSalary[2].minSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
               this.jobList[i].jobSalary[k].maxSalary = parseFloat(arr[i].jobSalary[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
+              //区间值中的最大值小于最小值的情况
+              if(parseFloat(arr[i].jobSalary[k].minSalary) > parseFloat(arr[i].jobSalary[k].maxSalary)){
+                console.log(1111111)
+                this.jobList[i].jobSalary[k].maxSalary = parseFloat(arr[i].jobSalary[k].minSalary) + 1;
+              }
             }
           }
         },
