@@ -148,7 +148,8 @@
           var url = domain+'/api/wechat/share';
           var strWxCurUrl = '';
           var referreId = getQueryVariable('referreId');
-          !referreId ? strWxCurUrl = domain + '/index.html' : strWxCurUrl = domain+'/index.html?referreId='+ referreId;
+          console.log(referreId);
+          referreId ? strWxCurUrl = domain + '/index.html' : strWxCurUrl = domain+'/index.html?referreId='+ referreId;
           var params = {'url': strWxCurUrl};
 
           axios.get(url,{params:params}).then(function(res) {
