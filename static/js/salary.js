@@ -65,6 +65,7 @@
     citySalaryRatio: [],
     yearSalaryRatio:[],
     ratio: 1,
+    referreId: '',
     chartOption: {
       color: ['#e53698','#f5e8c8','#3589fc','#22c3aa','#e6b600','#516b91'],
       tooltip: {
@@ -121,9 +122,9 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
-          var referreId = this.getQueryVariable('referreId');//获取推广id
-          if(referreId){window.sessionStorage.setItem('referreId',referreId)}
-          this.shareLink(referreId);
+          this.referreId = this.getQueryVariable('referreId');//获取推广id
+          if(this.referreId){window.sessionStorage.setItem('referreId',referreId)}
+          this.shareLink();
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = window.localStorage.getItem('uid');
@@ -138,9 +139,10 @@ var vm = new Vue({
         })
     },
     methods: {  //  放方法函数
-        shareLink: function(referreId){
+        shareLink: function(){
           var url = this.domain + '/api/wechat/share';
-          var strWxCurUrl = this.domain + '/index.html?referreId='+ referreId;
+          var strWxCurUrl = '';
+          !this.referreId ? strWxCurUrl = this.domain + '/index.html?referreId='+ referreId : strWxCurUrl = this.domain + '/index.html';
           var params = {'url': strWxCurUrl}
           axios.get(url,{params: params}).then(function(res) {
             var resData = res.data;
