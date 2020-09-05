@@ -141,9 +141,9 @@
                 var info = data.data;
                 wx.config({
                   debug: false,
-                  appId: data.appId,
-                  timestamp: data.timestamp,
-                  nonceStr: data.nonceStr,
+                  appId: info.appId,
+                  timestamp: info.timestamp,
+                  nonceStr: info.nonceStr,
                   signature: info.signature,
                   jsApiList: ['onMenuShareTimeline','onMenuShareAppMessage']
                 });
