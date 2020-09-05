@@ -156,7 +156,7 @@
             if(resData.code == 200){
               var info = resData.data;
               wx.config({
-                debug: false,
+                debug: true,
                 appId: info.appId,
                 timestamp: info.timestamp,
                 nonceStr: info.nonceStr,
