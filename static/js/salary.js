@@ -142,7 +142,7 @@ var vm = new Vue({
         shareLink: function(){
           var url = this.domain + '/api/wechat/share';
           var strWxCurUrl = '';
-          !this.referreId ? strWxCurUrl = this.domain + '/index.html?referreId='+ referreId : strWxCurUrl = this.domain + '/index.html';
+          !this.referreId ? strWxCurUrl = this.domain + '/index.html?referreId='+ this.referreId : strWxCurUrl = this.domain + '/index.html';
           var params = {'url': strWxCurUrl}
           axios.get(url,{params: params}).then(function(res) {
             var resData = res.data;
