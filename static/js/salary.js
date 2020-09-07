@@ -27,7 +27,7 @@
     showPop: false,
     onOff: false, //是否搜索来的
     showSuccess: false,
-    jobCode: '010101',
+    jobId: '18',
     page: 0,  //页码
     limit: '5', //每页显示多少条数据
     professionAvg: 0,
@@ -132,7 +132,7 @@ var vm = new Vue({
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
             window.document.title = this.titleName; //初始页面title
-            this.getProfession('010101', false, '哲学');//初始"哲学"数据
+            this.getProfession('18', false, '哲学');//初始"哲学"数据
             this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
@@ -180,7 +180,7 @@ var vm = new Vue({
             this.ratio = 1;
             this.clearChart();
             this.page = 0;
-            this.getProfession(this.jobCode, false, '');
+            this.getProfession(this.jobId, false, '');
             return;
           }
           for(var i = 0; i<this.areaList.length; i++){
@@ -202,7 +202,7 @@ var vm = new Vue({
           window.document.title = this.titleName;
           this.clearChart();
           this.page = 0;
-          this.getProfession(this.jobCode, false, '', item.name)
+          this.getProfession(this.jobId, false, '', item.name)
         },
         clearChart: debounce(function(){ //清空图表数据并关闭
           for(var i = 0; i < this.jobList.length; i++){
@@ -238,15 +238,15 @@ var vm = new Vue({
                 });
             }
         },50),
-        getProfession: function(code, onOff, name){ //选择专业获取行业数据
+        getProfession: function(id, onOff, name){ //选择专业获取行业数据
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
             this.onOff = onOff;
             this.searchTxt = '';//搜索完成情况搜索框内容
-            this.jobCode = code;//职业code获取
+            this.jobId = id;//职业id获取
             var url = this.domain + '/api/statistical/listDiscipline';
             const that = this;
             var params = {  //默认全国数据
-              disciplineCode: this.jobCode,
+              disciplineId: this.jobId,
               districtId: ''
             };
             // if(this.districtId != 0){//判断是否存地区id
@@ -309,7 +309,7 @@ var vm = new Vue({
             const that = this;
             if(init){this.page=0;}
             var params = {
-              disciplineCode: this.jobCode,
+              disciplineId: this.jobId,
               limit: this.limit,
               page: this.page,
               districtId: ''  //默认全国数据
@@ -564,7 +564,7 @@ var vm = new Vue({
             this.showPop = false;
             this.showSuccess = false;
             //初始"哲学"数据
-            this.getProfession('010101', false, '哲学'); 
+            this.getProfession('18', false, '哲学'); 
             this.titleName = '哲学';
             document.activeElement.blur();
             if(this.showChart){//图表关闭
