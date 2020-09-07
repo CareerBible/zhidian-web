@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=640px, user-scalable=no">
+    <title>职典数据管理后台</title>
+    <link rel="stylesheet" href="/static/css/common.css"/>
+    <link rel="stylesheet" href="/static/css/staff.css"/>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/axios.js"></script>
+</head>
+<body>
+    <div id="staff">
+        <header>
+            <section><img src="/static/img/logo.png" alt="">职典</section>
+            <section><span>{{staffCode}}</span><button @click="loginOut">退出</button></section>
+          </header>
+          <main>
+            <h2>数据总览</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>访问人数</th>
+                  <th>付费人数</th>
+                  <th>占比</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{visitorNum}}</td>
+                  <td>{{payForNum}}</td>
+                  <td>{{(parseFloat(payForNum/visitorNum)*100).toFixed(2)}}%</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>付费概况</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>搜索人数</th>
+                  <th>未付费人数</th>
+                  <th>占比</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{searchNum}}</td>
+                  <td>{{notPayNum}}</td>
+                  <td>{{(parseFloat((searchNum-notPayNum)/searchNum)*100).toFixed(2)}}%</td>
+                </tr>
+              </tbody>
+            </table>
+            <h2>行为概况</h2>
+            <table cellspacing="0" cellpadding="0">
+              <thead>
+                <tr>
+                  <th>切换城市</th>
+                  <th>点击对比</th>
+                  <th>分享链接</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{switchCityNum}}</td>
+                  <td>{{clickCompare}}</td>
+                  <td>{{shareLink}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </main>
+    </div>
+    <script>
+        var vm = new Vue({
+        el: "#staff",    //挂载元素
+        data: {
+            domain:'https://zhidian.dookbook.info',
+            staffId: 0,    //员工id
+            staffCode: "001",  //员工编号
+            visitorNum: 0,  //访问人数
+            payForNum:0,   //付费人数
+            searchNum:0,    //搜索人数
+            notPayNum:0,    //未付费人数
+            switchCityNum: 0,   //切换城市
+            clickCompare: 0,    //点击对比
+            shareLink: '暂无数据'    //分享链接
+        },
+        mounted: function(){
+            this.$nextTick(function() { 
+                this.staffId = window.localStorage.getItem('id');
+                axios.defaults.headers.common["uid"] = this.staffId;
+                this.getData();
+            })
+        },
+        methods: {
+            getData: function(){    //获取数据
+                var url = this.domain + '/api/backgroundStatistics/statistics';
+                const that = this;
+                axios.get(url).then(function(res) {
+                    var resData = res.data;
+                    if(resData.code === 200){
+                        var data = resData.data;
+                        that.visitorNum = data.count;
+                        that.searchNum = data.searchCount;
+                        that.payForNum = data.paid;
+                        that.notPayNum = data.unpaid;
+                        that.switchCityNum = data.areaCount;
+                        that.clickCompare = data.countCompared;
+                        // that.shareLink = data.shareLink;
+                    }
+                })
+            },
+            loginOut: function(){   //登出
+                WeixinJSBridge.call('closeWindow');
+            }
+        }  
+    })
+    </script>
+</body>
+</html>
