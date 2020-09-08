@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="/static/css/style.css"/>
     <link rel="stylesheet" href="/static/css/pop.css">
     <script src="/static/js/common.js"></script>
+    <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script src="/static/js/vue.js"></script>
+    <script src="/static/js/axios.js"></script>
+    <script src="/static/js/paypop.js"></script>
+    <script src="/static/js/paySuccessPop.js"></script>
+    <script src="/static/js/toTop.js"></script>
 </head>
 <body>
     <div id="salaryAnalysis" @click="showProvince=false;showCity=false;showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
@@ -93,12 +99,7 @@
         <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess>  
         
     </div>
-    <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
-    <script src="/static/js/vue.js"></script>
-    <script src="/static/js/axios.js"></script>
-    <script src="/static/js/paypop.js"></script>
-    <script src="/static/js/paySuccessPop.js"></script>
-    <script src="/static/js/toTop.js"></script>
+    
     <script>
       window.onload = function(){
         var domain = 'https://zhidian.dookbook.info/';
