@@ -13,6 +13,33 @@ document.addEventListener('DOMContentLoaded', function(){//页面加载完成之
     loadingDiv.remove();
 })
 
+
+//全局域名
+function domain (){
+  return 'https://zhidian.dookbook.info'
+}
+
+//获取用户名
+function userId(){
+  var userId = window.localStorage.getItem('uid');
+  if(!userId){
+    return ''
+  }else {
+    return userId;
+  }
+}
+
+//获取url中参数
+function getQueryVariable(param){
+  var query = window.location.search.substring(1)
+  var vars = query.split('&')
+  for (var i = 0; i < vars.length; i++) {
+    var pair = vars[i].split('=')
+    if (pair[0] === param) { return pair[1] }
+  }
+  return false
+}
+
      /**
  * 函数防抖，debounce
  * 基本思路就是把多个信号合并为一个信号

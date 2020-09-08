@@ -1,6 +1,5 @@
  //数据
  let data = {
-    domain: 'https://zhidian.dookbook.info',  //域名
     isVip: false, //是否为会员
     showSearch: false,
     searchTxt: '', //搜索框文字
@@ -24,7 +23,7 @@
     showProvince: false,  //显示省
     showCity: false,  //显示市
     showMask: false,
-    showPop: false,
+    showPayPop: false,//显示支付弹窗
     onOff: false, //是否搜索来的
     showSuccess: false,
     jobId: '18',
@@ -122,11 +121,11 @@ var vm = new Vue({
         this.$nextTick(function() { 
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
-          this.referreId = this.getQueryVariable('referreId');//获取推广id
+          this.referreId = getQueryVariable('referreId');//获取推广id
           if(this.referreId){window.sessionStorage.setItem('referreId',this.referreId)}
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
-          this.userId = window.localStorage.getItem('uid');
+          this.userId = userId();
           if(!this.userId){
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
@@ -136,19 +135,11 @@ var vm = new Vue({
             this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
+        
     },
     methods: {  //  放方法函数
-        getQueryVariable: function(param){
-          var query = window.location.search.substring(1)
-          var vars = query.split('&')
-          for (var i = 0; i < vars.length; i++) {
-            var pair = vars[i].split('=')
-            if (pair[0] === param) { return pair[1] }
-          }
-          return false
-        },
         getAreaOption: function(){  //获取地区选项
-            var url = this.domain + '/api/district/list';
+            var url = domain() + '/api/district/list';
             const that = this;
             axios.get(url).then(function(res) {
                 var resData = res.data;
@@ -165,9 +156,9 @@ var vm = new Vue({
                       that.$set(that.areaList[i], 'show', false);
                     }
                 }else if(resData.code === 105){
-                  if(that.showPop){return;}
+                  if(that.showPayPop){return;}
                   that.showMask = true;
-                  that.showPop = true;
+                  that.showPayPop = true;
                 }
             });
         },
@@ -219,7 +210,7 @@ var vm = new Vue({
                return;
             }
             this.clearChart();//关闭图表
-            var url = this.domain + '/api/discipline/list';
+            var url = domain() + '/api/discipline/list';
             const that = this;
             if(this.searchTxt){
                 var params = {'search': this.searchTxt};
@@ -231,9 +222,9 @@ var vm = new Vue({
                         that.professList = resData.data.list;
                         that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
                     }else if(resData.code === 105){
-                      if(that.showPop){return;}
+                      if(that.showPayPop){return;}
                       that.showMask = true;
-                      that.showPop = true;
+                      that.showPayPop = true;
                     }
                 });
             }
@@ -243,7 +234,7 @@ var vm = new Vue({
             this.onOff = onOff;
             this.searchTxt = '';//搜索完成情况搜索框内容
             this.jobId = id;//职业id获取
-            var url = this.domain + '/api/statistical/listDiscipline';
+            var url = domain() + '/api/statistical/listDiscipline';
             const that = this;
             var params = {  //默认全国数据
               disciplineId: this.jobId,
@@ -279,9 +270,9 @@ var vm = new Vue({
 
                   that.getJodData(true, true);//获取行业相关职业数据
                 }else if(resData.code === 105){//未支付，非会员
-                  if(that.showPop){return;}
+                  if(that.showPayPop){return;}
                   that.showMask = true;
-                  that.showPop = true;
+                  that.showPayPop = true;
                 }
             });
         },
@@ -305,7 +296,7 @@ var vm = new Vue({
           })
         },
         getJodData: function(isSearch, init){ //获取岗位数据 
-            var url = this.domain + '/api/statistical/listPage';
+            var url = domain() + '/api/statistical/listPage';
             const that = this;
             if(init){this.page=0;}
             var params = {
@@ -340,13 +331,13 @@ var vm = new Vue({
                       var time = null; 
                       time = setTimeout(function(){
                           that.showMask = true;
-                          that.showPop = true;
+                          that.showPayPop = true;
                       }, 10000);
                     }
                 }else if(resData.code === 105){
-                  if(that.showPop){return;}
+                  if(that.showPayPop){return;}
                   that.showMask = true;
-                  that.showPop = true;
+                  that.showPayPop = true;
                 } else{
                   that.showNoData = true;
                   that.note = "访问失败";
@@ -509,7 +500,7 @@ var vm = new Vue({
             this.showChart = true;//显示图表
         },
         takeNote: function(){  //后端记录对比数据
-          var url = this.domain + '/api/compared/clickCompared';
+          var url = domain() + '/api/compared/clickCompared';
           axios.get(url,data).then(function(res) {});
         },
         addProfessionAvg: function(){   //对比图添加行业平均数据
@@ -559,10 +550,17 @@ var vm = new Vue({
             }
           }, 16);
         },50),
-        closePop: function(){   //关闭支付弹窗
-            this.showMask = false;
-            this.showPop = false;
-            this.showSuccess = false;
+        closeSuccessPop: function(){  //关闭支付成功
+          this.showMask = false;
+          this.showSuccess = false;
+          this.showPayPop = false;
+        },
+        closePayPop: function(msg){
+          this.showPayPop = false;
+          this.showMask = msg;
+        },
+        initData: function(bool){
+          if(bool){
             //初始"哲学"数据
             this.getProfession('18', false, '哲学'); 
             this.titleName = '哲学';
@@ -570,71 +568,10 @@ var vm = new Vue({
             if(this.showChart){//图表关闭
                 this.clearChart();
             }
-        },
-        payFor: function(){ //点击支付
-            var url = this.domain + '/api/pay/initPay';
-            const that = this;
-            var data = {
-              userId: this.userId,
-              tradeType: 'JSAPI'
-            }
-            axios.post(url,data).then(function(res) {
-                var resData = res.data;
-                if(resData.code === 200){
-                  var payForData = resData.data;
-                  that.payForToWx(payForData);
-                }
-            })
-        },
-        payForToWx: function(data){//微信支付
-          const that = this;
-          WeixinJSBridge.invoke('getBrandWCPayRequest', {
-              "appId": data.appId,
-              "timeStamp": data.timeStamp,
-              "nonceStr": data.nonceStr,
-              "package": data.packageStr,
-              "signType": data.signType,
-              "paySign": data.paySign 
-          },function(res) {
-              if (res.err_msg == "get_brand_wcpay_request:ok") {
-                  that.showPop = false;
-                  that.showMask = true;
-                  that.showSuccess = true;//支付成功弹窗弹出
-                  that.getOrder(data.outTradeNo);//支付成功后查询订单
-              }else {
-                  that.closePop();
-              }
-          });
-          if (typeof WeixinJSBridge == "undefined") {
-              if (document.addEventListener) {
-                  document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-              } else if (document.attachEvent) {
-                  document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-                  document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-              }
-          } else {
-              that.payForToWx();
+          }else {
+            this.showMask = true;
+            this.showSuccess = true;
           }
-        },
-        getOrder: function(orderCode){ //查询订单
-          var url = this.domain + '/api/orderQuery/order';
-          const that = this;
-          var params = {"outTradeNo": orderCode};
-          axios.get(url,{params: params}).then(function(res) {
-            var resData = res.data;
-            if(resData.code === 200){
-              var isVip = resData.data.isVip;
-              if(isVip){
-                // that.showMask = true;
-                // that.showSuccess = true;
-              }
-            }
-          })
-        },
-        closeSuccessPop: function(){  //关闭支付成功
-          this.showMask = false;
-          this.showSuccess = false;
-          this.showPop = false;
         }
     },
     watch: {
@@ -654,3 +591,6 @@ var vm = new Vue({
       }
     }
 })
+
+
+

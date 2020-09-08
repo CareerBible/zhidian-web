@@ -6,6 +6,7 @@
     <title>职典-查职业，查薪酬</title>
     <link rel="stylesheet" href="/static/css/common.css"/>
     <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="/static/css/pop.css">
     <script src="/static/js/common.js"></script>
 </head>
 <body>
@@ -85,32 +86,7 @@
         <div class="mask" v-if="showMask"></div>
 
         <!--支付-立即开通弹窗-->
-        <div class="pop-box"  v-if="showPop">
-          <div class="pop-ups">
-            <p>9月限定<span>体验价</span></p>
-            <p><span>1元</span>/月</p>
-            <p><del>原价：9.9元/月</del></p>
-            <p><span></span><em>高薪职业，从职典开始</em><span></span></p>
-            <ul>
-              <li>
-                <p><img src="/static/img/icon-03.svg" alt=""></p>
-                <p>查对口职业</p>
-              </li>
-              <li>
-                <p><img src="/static/img/icon-04.svg" alt=""></p>
-                <p>查职业薪资</p>
-              </li>
-              <li>
-                <p><img src="/static/img/icon-05.svg" alt=""></p>
-                <p>看职业对比</p>
-              </li>
-            </ul>
-            <button @click="payFor">立即开通</button>
-            <p class="logo"><img src="/static/img/logo.png" alt="">职典</p>
-          </div>
-          <span class="xian"></span>
-          <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closePop">
-        </div>
+        <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
 
         <!--支付-支付成功弹窗-->
         <div class="success-box" v-if="showSuccess">
@@ -129,6 +105,7 @@
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
+    <script src="/static/js/paypop.js"></script>
     <script>
       window.onload = function(){
         function getQueryVariable (param) {
@@ -184,8 +161,8 @@
         }
       }
     </script>
-    
     <script src="/static/js/echarts.min.js"></script>
     <script src="/static/js/salary.js"></script>
+    
 </body>
 </html>
