@@ -89,23 +89,14 @@
         <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
 
         <!--支付-支付成功弹窗-->
-        <div class="success-box" v-if="showSuccess">
-          <div class="success">
-            <p>支付成功</p>
-            <p><img src="/static/img/er-code.jpeg" alt=""></p>
-            <p>长按添加客服微信</p>
-            <p>快速解决您的使用问题</p>
-            <p class="logo"><img src="/static/img/logo.png" alt="">职典</p>
-          </div>
-          <span class="xian"></span>
-          <img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closeSuccessPop">
-        </div>
+        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess>  
         
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/paypop.js"></script>
+    <script src="/static/js/paySuccessPop.js"></script>
     <script>
       window.onload = function(){
         function getQueryVariable (param) {

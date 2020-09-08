@@ -135,7 +135,6 @@ var vm = new Vue({
             this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
-        
     },
     methods: {  //  放方法函数
         getAreaOption: function(){  //获取地区选项
@@ -550,14 +549,13 @@ var vm = new Vue({
             }
           }, 16);
         },50),
-        closeSuccessPop: function(){  //关闭支付成功
+        closeSuccess: function(msg){  //关闭支付成功
           this.showMask = false;
           this.showSuccess = false;
-          this.showPayPop = false;
         },
         closePayPop: function(msg){
           this.showPayPop = false;
-          this.showMask = msg;
+          this.showMask = false;
         },
         initData: function(bool){
           if(bool){
