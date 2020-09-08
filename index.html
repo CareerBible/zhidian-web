@@ -68,7 +68,7 @@
           </section>
           </div>
           <!---top按钮--->
-          <button class="top"  @click="backTop"><img src="/static/img/top.svg" alt=""></button>
+          <totop dom="salaryAnalysis" :show="showToTop"></totop>
           <button class="top switch" @click="goToCityList">切换<br />城市</button>
 
           <!---底部--->
@@ -98,6 +98,7 @@
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/paypop.js"></script>
     <script src="/static/js/paySuccessPop.js"></script>
+    <script src="/static/js/toTop.js"></script>
     <script>
       window.onload = function(){
         var domain = 'https://zhidian.dookbook.info/';

@@ -57,6 +57,7 @@
     jobList: [],
     totalPage: 0,  //总页数
     Dom: '',
+    showToTop: false,//显示置顶按钮
     note: '',
     salaryChart: null,
     dataArr:[],
@@ -130,7 +131,6 @@ var vm = new Vue({
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
-            console.log(this.userId)
             window.document.title = this.titleName; //初始页面title
             this.getProfession('18', false, '哲学');//初始"哲学"数据
             this.salaryChart = echarts.init(document.getElementById('chart')); 
@@ -440,7 +440,7 @@ var vm = new Vue({
 	          var domScrollH = this.Dom.scrollHeight;
 	          var domScrollTop = Math.ceil(this.Dom.scrollTop);
 	          var scrollArea = parseInt(domScrollH - domH);
-            var toTop = document.querySelector('.top');
+            
             //划到底部刷新
             if(domScrollTop == scrollArea){ 
               this.turnPage();
@@ -454,9 +454,9 @@ var vm = new Vue({
 
             //置顶按钮设置
             if(domScrollTop < 600){
-              toTop.style.display = 'none';
+              this.showToTop = false;
             }else{
-              toTop.style.display = 'block';
+              this.showToTop = true;
             }
         },50),
         CompareOrNot: debounce(function(item){  //对比/取消按钮
@@ -538,18 +538,6 @@ var vm = new Vue({
               this.clearChart();
           }
         },
-        backTop: throttle(function(){  //回到顶部
-          var time = null , that = this;
-          var scrollTop = that.Dom.scrollTop;
-         
-          time = setInterval(function(){
-            if(that.Dom.scrollTop === 0){
-              clearInterval(time);
-            }else{
-              that.Dom.scrollTop -= 1300;
-            }
-          }, 16);
-        },50),
         closeSuccess: function(msg){  //关闭支付成功
           this.showMask = false;
           this.showSuccess = false;
