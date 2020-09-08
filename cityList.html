@@ -6,6 +6,8 @@
     <title>职典-查职业，查薪酬</title>
     <link rel="stylesheet" href="/static/css/common.css"/>
     <link rel="stylesheet" href="/static/css/cityList.css"/>
+    <link rel="stylesheet" href="/static/css/pop.css">
+    <script src="/static/js/common.js"></script>
 </head>
 <body>
     <div id="cityList">
@@ -13,11 +15,9 @@
         <header>
             <button @click="backTo"> <img src="/static/img/back.svg" alt="">返回</button>
             <section>
-                <input type="text" placeholder="填专业，选就业高薪城市">
-                <ul>
-                    <li>专业列表</li>
-                    <li>专业列表</li>
-                    <li>专业列表</li>
+                <input type="text" placeholder="填专业，选就业高薪城市" v-model="searchTxt" @input="getSearchTxt">
+                <ul v-show="showSearch">
+                    <li v-for="item in professList" @click.stop="getProfession(item.id,true, item.name)">{{item.name}}</li>
                 </ul>
             </section>
         </header>
@@ -82,15 +82,101 @@
         </section>
 
         <!---top按钮--->
-        <button class="top"  @click="backTop"><img src="/static/img/top.svg" alt=""></button>
+        <totop dom="cityList" :show="showToTop"></totop>
+
+        <div class="mask" v-if="showMask"></div>
+
+        <!--支付-立即开通弹窗-->
+        <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
+
+        <!--支付-支付成功弹窗-->
+        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess> 
     </div>
 
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/paypop.js"></script>
     <script src="/static/js/paySuccessPop.js"></script>
+    <script src="/static/js/toTop.js"></script>
     <script>
-        
+        var data = {
+            showToTop: false,
+            professList:[
+                {
+                    id: '',
+                    name: '',
+                    code: ''
+                }
+            ],
+            userId: '',
+            showMask: false,
+            showPayPop: false,
+            showSuccess: false,
+            showSearch: false,
+            searchTxt: '',
+            titleName: '哲学'
+        }
+        var vm = new Vue({
+            el: "#cityList",    //挂载元素
+            data: data,
+            mounted: function(){
+                this.$nextTick(function() { 
+                    this.userId = '56ed7379da47434292deeb8d472ebb0c';
+                    // this.userId = userId();
+                    if(!this.userId){
+                        // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                    }else{
+                        axios.defaults.headers.common["uid"] = this.userId;
+                        window.document.title = this.titleName; //初始页面title
+                    }
+                })
+            },
+            methods: {
+                backTo: function(){
+                    window.history.back(-1);
+                },
+                closeSuccess: function(msg){  //关闭支付成功
+                    this.showMask = false;
+                    this.showSuccess = false;
+                },
+                closePayPop: function(msg){
+                    this.showPayPop = false;
+                    this.showMask = false;
+                },
+                initData: function(bool){
+                    if(bool){
+                        //初始"哲学"数据
+                        this.titleName = '哲学';
+                        document.activeElement.blur();
+                    }else {
+                        this.showMask = true;
+                        this.showSuccess = true;
+                    }
+                },
+                getSearchTxt: debounce(function(){ //按照专业名称搜索文字  获取专业列表
+                    var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
+                    if(!reg.test(this.searchTxt)){    //非中文
+                        return;
+                    }
+                    var url = domain() + '/api/discipline/list';
+                    const that = this;
+                    if(this.searchTxt){
+                        var params = {'search': this.searchTxt};
+                        axios.get(url,{params:params}).then(function(res) {
+                            var resData = res.data;
+                            if(resData.code === 200){
+                                that.professList = resData.data.list;
+                                that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
+                            }else if(resData.code === 105){
+                                if(that.showPayPop){return;}
+                                that.showMask = true;
+                                that.showPayPop = true;
+                            }
+                        });
+                    }
+                },50),
+            }
+        })
     </script>
     
 </body>
