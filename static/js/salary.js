@@ -122,7 +122,7 @@ var vm = new Vue({
           this.clientH = document.documentElement.clientHeight;
           this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
           this.referreId = getQueryVariable('referreId');//获取推广id
-          if(this.referreId){window.sessionStorage.setItem('referreId',this.referreId)}
+          if(this.referreId != ''){window.sessionStorage.setItem('referreId',this.referreId)}
           this.getRatioArr();
           // this.userId = '56ed7379da47434292deeb8d472ebb0c';
           this.userId = userId();
@@ -130,6 +130,7 @@ var vm = new Vue({
             window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
+            console.log(this.userId)
             window.document.title = this.titleName; //初始页面title
             this.getProfession('18', false, '哲学');//初始"哲学"数据
             this.salaryChart = echarts.init(document.getElementById('chart')); 
@@ -570,6 +571,9 @@ var vm = new Vue({
             this.showMask = true;
             this.showSuccess = true;
           }
+        },
+        goToCityList: function(){
+          window.location.href = '/cityList.html'
         }
     },
     watch: {

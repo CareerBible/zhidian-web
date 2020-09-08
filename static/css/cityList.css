@@ -217,3 +217,22 @@ header > section > ul {
     color: #333;
     vertical-align: middle;
 }
+
+/*回到顶部样式*/
+.top {
+    position: fixed;
+    bottom: 10%;
+    right: 0;
+    z-index: 3;
+    width: 96px;
+    height: 96px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(39, 38, 54, 0.2);
+    border: none;
+    border-radius: 96px;
+    display: none;
+  }
+  
+  .top img {
+    width: 75px;
+  }
