@@ -184,6 +184,7 @@
                     })
                 },
                 getCityList: function(isSearch){    //获取城市列表
+                    if(isSearch){this.page=0;}
                     var url = domain() + '/api/cityDiscipline/listPage', that = this;
                     var params = {
                         disciplineId: this.professionId,
