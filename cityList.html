@@ -31,7 +31,7 @@
                     <p>对口职位在聘数</p>
                 </section>
                 <section>
-                    <p><span>￥</span>{{avgSalary}}</p>
+                    <p><span>￥</span>{{parseInt(avgSalary*1000)}}</p>
                     <p>平均薪酬</p>
                 </section>
             </section>
@@ -54,7 +54,7 @@
                 <ul>
                     <li><span>房租收入比</span><em>{{(item.rentIncome*100).toFixed(1)}}%</em></li>
                     <li><span>月人均消费</span><em>{{parseInt(item.monthlyPerCapitaConsumption)}}元</em></li>
-                    <li><span>净流入人才数</span><em>+{{parseInt(item.netInflowOfTalents/1000)}}k</em></li>
+                    <li><span>净流入人才数</span><em>{{item.netInflowOfTalents < 0 ? parseInt(item.netInflowOfTalents/1000) : '+' + parseInt(item.netInflowOfTalents/1000)}}k</em></li>
                     <li><span>平均房价</span><em>{{item.averageHousePrice}}元/m²</em></li>
                 </ul>
             </div>
@@ -124,13 +124,13 @@
             el: "#cityList",    //挂载元素
             data: data,
             mounted: function(){
-                this.$nextTick(function() { 
+                this.$nextTick(function() {
                     this.clientH = document.documentElement.clientHeight;
                     this.Dom = document.getElementById('cityList');//获取页面DOM的id
-                    this.userId = '56ed7379da47434292deeb8d472ebb0c';
-                    // this.userId = userId();
+                    // this.userId = '56ed7379da47434292deeb8d472ebb0c';
+                    this.userId = userId();
                     if(!this.userId){
-                        // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+                        window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                     }else{
                         axios.defaults.headers.common["uid"] = this.userId;
                         var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
@@ -173,7 +173,7 @@
                         var resData = res.data;
                         if(resData.code == 200){
                             that.showSearch = false;
-                            // that.avgSalary = resData.data
+                            that.avgSalary = resData.data.disciplineAvgSalary;
                             that.cityAvg = resData.data.positionCityAvgCount;
                             that.getCityList(true);
                         }else if(resData.code === 105){
