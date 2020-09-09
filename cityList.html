@@ -24,13 +24,33 @@
 
         <!-- 城市平均 -->
         <section class="avg">
-            <section><h1>城市平均数据</h1><p><span>{{cityAvg}}</span><em>对口职位在聘数</em></p><p><span><em>￥</em>{{avgSalary}}</span><em>平均薪酬</em></p></section>
+            <section>
+                <h1>城市平均数据</h1>
+                <section>
+                    <p>{{cityAvg}}</p>
+                    <p>对口职位在聘数</p>
+                </section>
+                <section>
+                    <p><span>￥</span>{{avgSalary}}</p>
+                    <p>平均薪酬</p>
+                </section>
+            </section>
         </section>
 
         <!-- 城市列表 -->
         <section class="list">
             <div v-for="item in cityList">
-                <section><h2>{{item.districtnname}}</h2><p><span>{{item.totalrequired}}</span><em>对口职位在聘数</em></p><p><span><em>￥</em>{{item.cityAvgSalary}}</span><em>平均薪酬</em></p></section>
+                <section>
+                    <h2>{{item.districtnname}}</h2>
+                    <section>
+                        <p>{{item.totalrequired}}</p>
+                        <p>对口职位在聘数</p>  
+                    </section>
+                    <section>
+                        <p><span>￥</span>{{item.cityAvgSalary}}</p>
+                        <p>平均薪酬</p>
+                    </section>
+                </section>
                 <ul>
                     <li><span>房租收入比</span><em>{{item.rentIncome}}%</em></li>
                     <li><span>月人均消费</span><em>{{item.monthlyPerCapitaConsumption}}元</em></li>

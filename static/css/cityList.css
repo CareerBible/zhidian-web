@@ -78,7 +78,7 @@ header > section > ul {
     z-index: 3;
 }
 
-.avg section {
+.avg > section {
     background-image: linear-gradient(to right, #e53698 , #f78e6e);
     color: #fff;
     height: 136px;
@@ -92,35 +92,29 @@ header > section > ul {
     margin-bottom: 40px;
 }
 
-.avg section h1 {
+.avg > section > h1 {
     font-size: 36px;
     float: left;
     line-height: 136px;
 }
 
-.avg section p {
+.avg > section > section {
     text-align: center;
     float: right;
     padding-left: 28px;
 }
 
-.avg section p span {
-    display: block;
-    width: 100%;
-    font-size: 46px;
-    line-height: 56px;
-    -webkit-text-stroke: 2px;
-    padding-top: 28px;
-}
-
-.avg section p span em {
-    font-size: 24px;
-    -webkit-text-stroke: 0;
+.avg > section > section > p:first-child {
+    font-size: 36px;
     font-weight: bold;
+    padding-top: 28px;
+    -webkit-text-stroke: 2px;
 }
 
-.avg section p > em {
-    display: inline-block;
+.avg > section > section > p > span {
+    font-size: 20px;
+    padding-right: 4px;
+    -webkit-text-stroke: 0;
 }
 
 .list {
@@ -134,7 +128,7 @@ header > section > ul {
     margin: 0 0 0 30px;
 }
 
-.list section {
+.list > div > section {
     float: left;
     width: 100%;
     background: #3589fc;
@@ -149,34 +143,32 @@ header > section > ul {
     overflow: hidden;
 }
 
-.list section h2 {
+.list > div > section > h2 {
     float: left;
     font-size: 42px;
     line-height: 78px;
     padding-top: 20px
-
 }
 
-.list section p {
+.list > div > section > section {
     text-align: center;
     float: right;
+    padding-left: 20px;
 }
 
-.list section p span {
-    display: block;
-    width: 100%;
-    font-size: 36px;
-    line-height: 40px;
-    -webkit-text-stroke: 2px;
-    padding-top: 30px;
+.list > div > section > section > p:first-child {
+    font-size: 30px;
+    font-weight: bold;
+    padding-top: 26px;
+    -webkit-text-stroke: 1px;
 }
 
-.list section p em {
-    display: block;
-    width: 100%;
-    font-size: 17px;
-    padding-right: 10px;
+.list > div > section > section > p > span {
+    font-size: 20px;
+    padding-right: 4px;
+    -webkit-text-stroke: 0;
 }
+
 
 .list ul {
     float: left;
