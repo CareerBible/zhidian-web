@@ -104,6 +104,14 @@ header > section > ul {
     padding-left: 28px;
 }
 
+.avg > section > section:nth-child(2) {
+    margin-right: 28px;
+}
+
+.avg > section > section:nth-child(3) p:last-child {
+    padding-left: 22px;
+}
+
 .avg > section > section > p:first-child {
     font-size: 36px;
     font-weight: bold;
@@ -138,6 +146,7 @@ header > section > ul {
     box-shadow: 0 4px 10px rgba(12, 49, 158, 0.3);
     padding: 0 30px 0 40px;
     box-sizing: border-box;
+    position: relative;
     z-index: 2;
     margin-top: 30px;
     overflow: hidden;
@@ -154,6 +163,10 @@ header > section > ul {
     text-align: center;
     float: right;
     padding-left: 20px;
+}
+
+.list > div > section > section:nth-child(3) p:last-child {
+    padding-left: 22px;
 }
 
 .list > div > section > section > p:first-child {
@@ -180,7 +193,7 @@ header > section > ul {
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     z-index: 1;
-    padding: 50px 0 46px;
+    padding: 36px 0 20px;
 }
 
 .list ul li {
@@ -197,23 +210,24 @@ header > section > ul {
 }
 
 .list ul li span {
-    display: inline-block;
+    float: left;
     width: 125px;
-    height: 45px;
-    line-height: 45px;
+    height: 43px;
+    line-height: 41px;
     border-radius: 45px;
     background: #68a7fd;
     color: #fff;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     margin-right: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .list ul li em {
-    font-size: 24px;
+    font-size: 22px;
     color: #333;
-    vertical-align: middle;
+    padding: 7px 0 0 4px;
+    float: left;
 }
 
 /*回到顶部样式*/
