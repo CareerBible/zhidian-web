@@ -47,14 +47,14 @@
                         <p>对口职位在聘数</p>  
                     </section>
                     <section>
-                        <p><span>￥</span>{{item.cityAvgSalary}}</p>
+                        <p><span>￥</span>{{parseInt(item.cityAvgSalary)}}</p>
                         <p>平均薪酬</p>
                     </section>
                 </section>
                 <ul>
-                    <li><span>房租收入比</span><em>{{item.rentIncome}}%</em></li>
-                    <li><span>月人均消费</span><em>{{item.monthlyPerCapitaConsumption}}元</em></li>
-                    <li><span>净流入人才</span><em>+{{item.netInflowOfTalents/1000}}k</em></li>
+                    <li><span>房租收入比</span><em>{{(item.rentIncome*100).toFixed(1)}}%</em></li>
+                    <li><span>月人均消费</span><em>{{parseInt(item.monthlyPerCapitaConsumption)}}元</em></li>
+                    <li><span>净流入人才</span><em>+{{parseInt(item.netInflowOfTalents/1000)}}k</em></li>
                     <li><span>平均房价</span><em>{{item.averageHousePrice}}元/m²</em></li>
                 </ul>
             </div>
@@ -127,7 +127,6 @@
                 this.$nextTick(function() { 
                     this.clientH = document.documentElement.clientHeight;
                     this.Dom = document.getElementById('cityList');//获取页面DOM的id
-                    
                     this.userId = '56ed7379da47434292deeb8d472ebb0c';
                     // this.userId = userId();
                     if(!this.userId){
@@ -193,7 +192,7 @@
                     axios.get(url,{params:params}).then(function(res) {
                         var resData = res.data;
                         that.isVip = res.headers.isvip; //是否为会员
-                        console.log(that.isVip,777777)
+                        console.log(that.isVip);
                         if(resData.code == 200){
                             var arr = resData.data.listCityPosition;
                             that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
@@ -263,7 +262,7 @@
                     }
                 },
                 backTo: function(){//返回上一页
-                    window.history.back(-1);
+                    window.location.href = '/index.html';
                 },
                 closeSuccess: function(msg){  //关闭支付成功
                     this.showMask = false;

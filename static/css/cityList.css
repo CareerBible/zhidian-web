@@ -228,7 +228,6 @@ header > section > ul {
     box-shadow: 0 0 10px rgba(39, 38, 54, 0.2);
     border: none;
     border-radius: 96px;
-    display: none;
   }
   
   .top img {
