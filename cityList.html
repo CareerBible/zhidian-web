@@ -165,7 +165,7 @@
                     var url = domain() + '/api/cityDiscipline/positionCityAvgCount', that = this;
                     id!=''? this.professionId = id:this.professionId = '18';
                     name!=''? this.titleName = name:this.titleName = '哲学';
-                    window.document.title = this.titleName;
+                    window.document.title = decodeURIComponent(this.titleName);
                     this.searchTxt = decodeURIComponent(this.titleName);
 
                     var params = {disciplineId: this.professionId}
