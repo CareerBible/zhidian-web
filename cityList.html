@@ -10,75 +10,45 @@
     <script src="/static/js/common.js"></script>
 </head>
 <body>
-    <div id="cityList">
+    <div id="cityList" @click="showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
         <!-- 头部 -->
         <header>
             <button @click="backTo"> <img src="/static/img/back.svg" alt="">返回</button>
             <section>
                 <input type="text" placeholder="填专业，选就业高薪城市" v-model="searchTxt" @input="getSearchTxt">
                 <ul v-show="showSearch">
-                    <li v-for="item in professList" @click.stop="getProfession(item.id,true, item.name)">{{item.name}}</li>
+                    <li v-for="item in professList" @click.stop="getCityAvg(item.id, item.name)">{{item.name}}</li>
                 </ul>
             </section>
         </header>
 
         <!-- 城市平均 -->
         <section class="avg">
-            <section><h1>城市平均数据</h1><p><span>54658</span><em>对口职位在聘数</em></p></section>
+            <section><h1>城市平均数据</h1><p><span>{{cityAvg}}</span><em>对口职位在聘数</em></p><p><span><em>￥</em>{{avgSalary}}</span><em>平均薪酬</em></p></section>
         </section>
 
         <!-- 城市列表 -->
         <section class="list">
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
+            <div v-for="item in cityList">
+                <section><h2>{{item.districtnname}}</h2><p><span>{{item.totalrequired}}</span><em>对口职位在聘数</em></p><p><span><em>￥</em>{{item.cityAvgSalary}}</span><em>平均薪酬</em></p></section>
                 <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
+                    <li><span>房租收入比</span><em>{{item.rentIncome}}%</em></li>
+                    <li><span>月人均消费</span><em>{{item.monthlyPerCapitaConsumption}}元</em></li>
+                    <li><span>净流入人才</span><em>+{{item.netInflowOfTalents/1000}}k</em></li>
+                    <li><span>平均房价</span><em>{{item.averageHousePrice}}元/m²</em></li>
                 </ul>
             </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            <div>
-                <section><h2>重庆</h2><p><span>54658</span><em>对口职位在聘数</em></p></section>
-                <ul>
-                    <li><span>房租收入比</span><em>20%</em></li>
-                    <li><span>月人均消费</span><em>1500元</em></li>
-                </ul>
-            </div>
-            
+        </section>
+
+        <p class="bottom" v-show="showLogin"><img src="/static//img/load.svg" alt=""> 加载中...</p>
+        <p class="bottom" v-show="showTxt">—  不止诗与远方  —</p>
+        <section class="loading" v-show="showLoading">
+        <img src="/static/img/loading.svg" alt="">
+        <p>正在加载...</p>
+        </section>
+        <section class="no-data" v-show="showNoData">
+        <img src="/static/img/zanwu_02.png" alt="">
+        <p v-text="note"></p>
         </section>
 
         <!---top按钮--->
@@ -100,6 +70,7 @@
     <script src="/static/js/toTop.js"></script>
     <script>
         var data = {
+            isVip: false, //是否为会员
             showToTop: false,
             professList:[
                 {
@@ -113,46 +84,42 @@
             showPayPop: false,
             showSuccess: false,
             showSearch: false,
+            showLoading: false,
+            showNoData: false,
+            showLogin: false,
+            showTxt: false,
+            note: '',
             searchTxt: '',
-            titleName: '哲学'
+            titleName: '',
+            cityAvg: 0,
+            clientH:'',
+            avgSalary: 0,
+            limit: 5,
+            page: 0,
+            professionId: '',
+            totalPage: 0,
+            cityList: []
         }
         var vm = new Vue({
             el: "#cityList",    //挂载元素
             data: data,
             mounted: function(){
                 this.$nextTick(function() { 
+                    this.clientH = document.documentElement.clientHeight;
+                    this.Dom = document.getElementById('cityList');//获取页面DOM的id
+                    
                     this.userId = '56ed7379da47434292deeb8d472ebb0c';
                     // this.userId = userId();
                     if(!this.userId){
                         // window.location.href = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb3417997b07e0f2e&redirect_uri=https%3A%2F%2Fzhidian.dookbook.info%2Fwx_auth.html&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
                     }else{
                         axios.defaults.headers.common["uid"] = this.userId;
-                        window.document.title = this.titleName; //初始页面title
+                        var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
+                        this.getCityAvg(id, name);
                     }
                 })
             },
             methods: {
-                backTo: function(){
-                    window.history.back(-1);
-                },
-                closeSuccess: function(msg){  //关闭支付成功
-                    this.showMask = false;
-                    this.showSuccess = false;
-                },
-                closePayPop: function(msg){
-                    this.showPayPop = false;
-                    this.showMask = false;
-                },
-                initData: function(bool){
-                    if(bool){
-                        //初始"哲学"数据
-                        this.titleName = '哲学';
-                        document.activeElement.blur();
-                    }else {
-                        this.showMask = true;
-                        this.showSuccess = true;
-                    }
-                },
                 getSearchTxt: debounce(function(){ //按照专业名称搜索文字  获取专业列表
                     var reg = new RegExp("[\\u4E00-\\u9FFF]+","g");
                     if(!reg.test(this.searchTxt)){    //非中文
@@ -175,6 +142,128 @@
                         });
                     }
                 },50),
+                getCityAvg: function(id,name){ //获取城市平均数据
+                    var url = domain() + '/api/cityDiscipline/positionCityAvgCount', that = this;
+                    id!=''? this.professionId = id:this.professionId = '18';
+                    name!=''? this.titleName = name:this.titleName = '哲学';
+                    window.document.title = this.titleName;
+
+                    var params = {disciplineId: this.professionId}
+                    axios.get(url,{params:params}).then(function(res) {
+                        var resData = res.data;
+                        if(resData.code == 200){
+                            that.showSearch = false;
+                            // that.avgSalary = resData.data
+                            that.cityAvg = resData.data.positionCityAvgCount;
+                            that.getCityList(true);
+                        }else if(resData.code === 105){
+                            if(that.showPayPop){return;}
+                            that.showMask = true;
+                            that.showPayPop = true;
+                        }
+                    })
+                },
+                getCityList: function(isSearch){    //获取城市列表
+                    var url = domain() + '/api/cityDiscipline/listPage', that = this;
+                    var params = {
+                        disciplineId: this.professionId,
+                        limit: this.limit,
+                        page: this.page
+                    }
+                    axios.get(url,{params:params}).then(function(res) {
+                        var resData = res.data;
+                        that.isVip = res.headers.isvip; //是否为会员
+                        console.log(that.isVip,777777)
+                        if(resData.code == 200){
+                            var arr = resData.data.listCityPosition;
+                            that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
+                            if(arr.length == 0){//显示暂无数据
+                                that.showNoData = true;
+                                that.cityList = [];
+                                that.note = "暂无数据";
+                                that.showTxt = false;
+                            }else{
+                                that.showNoData = false;
+                                if(isSearch){   //是否搜索来的
+                                    that.cityList = [];
+                                }
+                                for(var i = 0; i < arr.length; i++){
+                                    that.cityList.push(arr[i]);
+                                }
+                            }
+                            
+                            if(isSearch && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
+                                var time = null; 
+                                time = setTimeout(function(){
+                                    that.showMask = true;
+                                    that.showPayPop = true;
+                                }, 10000);
+                            }
+                        }else if(resData.code === 105){
+                            if(that.showPayPop){return;}
+                            that.showMask = true;
+                            that.showPayPop = true;
+                        }
+                    })
+                },
+                viewmore: throttle(function() {  //加载更多
+                    var domH = this.clientH;
+                    var domScrollH = this.Dom.scrollHeight;
+                    var domScrollTop = Math.ceil(this.Dom.scrollTop);
+                    var scrollArea = parseInt(domScrollH - domH);
+                    
+                    //划到底部刷新
+                    if(domScrollTop == scrollArea){ 
+                        this.turnPage();
+                    }
+
+                    //安卓手机默认直接刷新翻页
+                    var u = navigator.userAgent;
+                    if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+                        this.turnPage();
+                    }
+
+                    //置顶按钮设置
+                    if(domScrollTop < 600){
+                        this.showToTop = false;
+                    }else{
+                        this.showToTop = true;
+                    }
+                },50),
+                turnPage: function(){//翻页
+                    if(this.page == this.totalPage){ //最后一页
+                        this.showLogin = false;
+                        this.showTxt = true;
+                        return;
+                    }else {
+                        this.showLogin = true;
+                        this.showTxt = false;
+                        this.page++;
+                        this.getCityList(false);
+                    }
+                },
+                backTo: function(){//返回上一页
+                    window.history.back(-1);
+                },
+                closeSuccess: function(msg){  //关闭支付成功
+                    this.showMask = false;
+                    this.showSuccess = false;
+                },
+                closePayPop: function(msg){//关闭支付弹窗
+                    this.showPayPop = false;
+                    this.showMask = false;
+                },
+                initData: function(bool){//初始数据
+                    if(bool){
+                        //初始"哲学"数据
+                        this.titleName = '哲学';
+                        this.getCityAvg('18','哲学');
+                        document.activeElement.blur();
+                    }else {
+                        this.showMask = true;
+                        this.showSuccess = true;
+                    }
+                }
             }
         })
     </script>

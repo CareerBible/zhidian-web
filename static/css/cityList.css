@@ -56,7 +56,6 @@ header > section > input[type="text"] {
 }
 
 header > section > ul {
-    display: none;
     position: absolute;
     top: 84px;
     right: 0;
@@ -94,7 +93,7 @@ header > section > ul {
 }
 
 .avg section h1 {
-    font-size: 45px;
+    font-size: 36px;
     float: left;
     line-height: 136px;
 }
@@ -102,34 +101,42 @@ header > section > ul {
 .avg section p {
     text-align: center;
     float: right;
+    padding-left: 28px;
 }
 
 .avg section p span {
     display: block;
     width: 100%;
-    font-size: 56px;
+    font-size: 46px;
     line-height: 56px;
     -webkit-text-stroke: 2px;
     padding-top: 28px;
 }
 
-.avg section p em {
-    display: block;
-    width: 100%;
-    font-size: 17px;
+.avg section p span em {
+    font-size: 24px;
+    -webkit-text-stroke: 0;
+    font-weight: bold;
+}
+
+.avg section p > em {
+    display: inline-block;
 }
 
 .list {
-    margin: 275px 0 50px;
+    margin: 240px 0 50px;
     width: 100%;
+    float: left;
 }
 
 .list div{
     width: calc(100% - 60px);
-    margin: 0 30px;
+    margin: 0 0 0 30px;
 }
 
 .list section {
+    float: left;
+    width: 100%;
     background: #3589fc;
     color: #fff;
     height: 120px;
@@ -140,12 +147,11 @@ header > section > ul {
     z-index: 2;
     margin-top: 30px;
     overflow: hidden;
-    position: relative;
 }
 
 .list section h2 {
     float: left;
-    font-size: 50px;
+    font-size: 42px;
     line-height: 78px;
     padding-top: 20px
 
@@ -159,7 +165,7 @@ header > section > ul {
 .list section p span {
     display: block;
     width: 100%;
-    font-size: 40px;
+    font-size: 36px;
     line-height: 40px;
     -webkit-text-stroke: 2px;
     padding-top: 30px;
@@ -173,29 +179,29 @@ header > section > ul {
 }
 
 .list ul {
+    float: left;
     width: calc(100% - 40px);
     margin: 0 20px;
-    height: 144px;
     box-sizing: border-box;
-    padding-left: 5px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    padding-left: 30px;
     z-index: 1;
+    padding: 50px 0 46px;
 }
 
 .list ul li {
     float: left;
     font-size: 18px;
     color: #999;
-    padding: 50px 0 46px;
-    margin-left: 40px;
+    height: 45px;
+    margin-bottom: 20px;
 }
 
-.list ul li:first-child {
-    margin-left: 0;
+.list ul li:nth-child(odd){
+    width: 40%;
+    padding: 0 15px 0 20px;
 }
 
 .list ul li span {
@@ -208,12 +214,12 @@ header > section > ul {
     color: #fff;
     font-size: 18px;
     text-align: center;
-    margin-right: 10px;
+    margin-right: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 
 .list ul li em {
-    font-size: 28px;
+    font-size: 24px;
     color: #333;
     vertical-align: middle;
 }
@@ -235,4 +241,70 @@ header > section > ul {
   
   .top img {
     width: 75px;
+  }
+
+  /*底部加载中样式*/
+.bottom {
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    z-index: -1;
+  }
+  
+  .bottom img {
+    width: 32px;
+    vertical-align: middle;
+  }
+  
+  /*暂无数据样式*/
+  .no-data {
+    position: fixed;
+    padding: 0 20px;
+    text-align: center;
+    color: #999;
+    top: 50%;
+    margin-top: -200px;
+  }
+  
+  .no-data p {
+    margin-top: -100px;
+    font-size: 22px;
+  }
+  
+  .no-data img {
+    width: 100%;
+  }
+  
+  /*数据正在加载中样式*/
+  .loading {
+    position: fixed;
+    width: 160px;
+    height: 160px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    left: 50%;
+    top: 50%;
+    margin: -80px 0 0 -80px;
+    font-size: 22px;
+  }
+  
+  .loading img {
+    width: 65px;
+    margin: 25px 0 5px;
+    animation: Spin 2s infinite;
+  }
+  
+  @keyframes Spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }

@@ -561,7 +561,7 @@ var vm = new Vue({
           }
         },
         goToCityList: function(){
-          window.location.href = '/cityList.html'
+          window.location.href = '/cityList.html?professionId=' + this.jobId + '&professionName=' + this.titleName;
         }
     },
     watch: {
