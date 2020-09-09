@@ -15,7 +15,7 @@
         <header>
             <button @click="backTo"> <img src="/static/img/back.svg" alt="">返回</button>
             <section>
-                <input type="text" placeholder="填专业，选就业高薪城市" v-model="searchTxt" @input="getSearchTxt">
+                <input type="text" placeholder="填专业，选就业高薪城市" v-model="searchTxt" @focus="clearTxt" @input="getSearchTxt">
                 <ul v-show="showSearch">
                     <li v-for="item in professList" @click.stop="getCityAvg(item.id, item.name)">{{item.name}}</li>
                 </ul>
@@ -166,6 +166,7 @@
                     id!=''? this.professionId = id:this.professionId = '18';
                     name!=''? this.titleName = name:this.titleName = '哲学';
                     window.document.title = this.titleName;
+                    this.searchTxt = decodeURIComponent(this.titleName);
 
                     var params = {disciplineId: this.professionId}
                     axios.get(url,{params:params}).then(function(res) {
@@ -192,7 +193,6 @@
                     axios.get(url,{params:params}).then(function(res) {
                         var resData = res.data;
                         that.isVip = res.headers.isvip; //是否为会员
-                        console.log(that.isVip);
                         if(resData.code == 200){
                             var arr = resData.data.listCityPosition;
                             that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
@@ -282,6 +282,9 @@
                         this.showMask = true;
                         this.showSuccess = true;
                     }
+                },
+                clearTxt: function(){
+                    this.searchTxt = "";
                 }
             }
         })

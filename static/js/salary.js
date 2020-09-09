@@ -214,9 +214,7 @@ var vm = new Vue({
             const that = this;
             if(this.searchTxt){
                 var params = {'search': this.searchTxt};
-                axios.get(url,{
-                    params:params
-                }).then(function(res) {
+                axios.get(url,{params:params}).then(function(res) {
                     var resData = res.data;
                     if(resData.code === 200){
                         that.professList = resData.data.list;
@@ -232,7 +230,6 @@ var vm = new Vue({
         getProfession: function(id, onOff, name){ //选择专业获取行业数据
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
             this.onOff = onOff;
-            this.searchTxt = '';//搜索完成情况搜索框内容
             this.jobId = id;//职业id获取
             var url = domain() + '/api/statistical/listDiscipline';
             const that = this;
@@ -247,6 +244,7 @@ var vm = new Vue({
               that.titleName = name;
               window.document.title = that.titleName; 
             }
+            this.searchTxt = decodeURIComponent(this.titleName);//搜索完成情况搜索框内容
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 if(resData.code === 200){
@@ -562,6 +560,9 @@ var vm = new Vue({
         },
         goToCityList: function(){
           window.location.href = '/cityList.html?professionId=' + this.jobId + '&professionName=' + this.titleName;
+        },
+        clearTxt: function(){
+          this.searchTxt = "";
         }
     },
     watch: {
