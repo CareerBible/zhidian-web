@@ -31,11 +31,16 @@ var data = {
     cityList: [],
     chartOption: {
         backgroundColor: '#fff',
-        color:['#e53698','#3589fc','#22c3aa','#e6b600','#516b91'],
+        color:['#e53698','#22c3ab','#516b91'],
         tooltip: {},
         legend: {
-            data: ['重庆', '北京', '长沙', '上海', '广州'],
-             width: "100%"
+            data: ['北京', '上海', '广州'],
+            width: "100%",
+            left:"1%",
+            textStyle: {
+            fontSize: 16
+            },
+            itemGap: 14
         },
         radar: {
             name: {
@@ -43,7 +48,8 @@ var data = {
                     color: '#fff',
                     backgroundColor: '#3589fc',
                     borderRadius: 3,
-                    padding: [6, 5]
+                    padding: [7, 6],
+                    fontSize: 16
                 }
             },
             indicator: [
@@ -60,16 +66,8 @@ var data = {
             type: 'radar',
             data: [
                 {
-                    name: '重庆',
-                    value: [7293, 46049, 49.3, 1949, 412, 56267]
-                },
-                {
                     name: '北京',
                     value: [16662, 17154, 24.1, 1949, 43, 51849]
-                },
-                {
-                    name: '长沙',
-                    value: [8575, 12777, 34.4, 784, 28, 21466]
                 },
                 {
                     name: '上海',
@@ -81,7 +79,7 @@ var data = {
                 }
             ],
             lineStyle: {
-              width: 3
+            width: 3
             }
         }]
     }

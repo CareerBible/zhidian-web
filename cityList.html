@@ -24,7 +24,7 @@
 
         <!-- 城市平均 -->
         <section class="avg">
-            <section>
+            <section hidden>
                 <h1>城市平均数据</h1>
                 <section>
                     <p>{{cityAvg}}</p>
@@ -35,9 +35,12 @@
                     <p>平均薪酬</p>
                 </section>
             </section>
+            <section>
+                <div id="chart"></div>
+                <button>一键取消</button>
+            </section>
         </section>
 
-        <div id="chart"></div>
 
         <!-- 城市列表 -->
         <section class="list">
@@ -59,6 +62,7 @@
                     <li><span>净流入人才数</span><em>{{item.netInflowOfTalents < 0 ? parseInt(item.netInflowOfTalents/1000) : '+' + parseInt(item.netInflowOfTalents/1000)}}k</em></li>
                     <li><span>平均房价</span><em>{{item.averageHousePrice}}元/m²</em></li>
                 </ul>
+                <button>+对比</button>
             </div>
         </section>
 

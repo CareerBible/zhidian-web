@@ -78,7 +78,7 @@ header > section > ul {
     z-index: 3;
 }
 
-.avg > section {
+.avg > section:first-child {
     background-image: linear-gradient(to right, #e53698 , #f78e6e);
     color: #fff;
     height: 136px;
@@ -89,40 +89,71 @@ header > section > ul {
     position: relative;
     z-index: 2;
     overflow: hidden;
-    margin-bottom: 40px;
 }
 
-.avg > section > h1 {
+.avg > section:first-child > h1 {
     font-size: 36px;
     float: left;
     line-height: 136px;
 }
 
-.avg > section > section {
+.avg > section:first-child > section {
     text-align: center;
     float: right;
     padding-left: 28px;
 }
 
-.avg > section > section:nth-child(2) {
+.avg > section:first-child > section:nth-child(2) {
     margin-right: 28px;
 }
 
-.avg > section > section:nth-child(3) p:last-child {
+.avg > section:first-child > section:nth-child(3) p:last-child {
     padding-left: 22px;
 }
 
-.avg > section > section > p:first-child {
+.avg > section:first-child > section > p:first-child {
     font-size: 36px;
     font-weight: bold;
     padding-top: 28px;
     -webkit-text-stroke: 2px;
 }
 
-.avg > section > section > p > span {
+.avg > section:first-child > section > p > span {
     font-size: 20px;
     padding-right: 4px;
     -webkit-text-stroke: 0;
+}
+
+.avg > section:last-child {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    box-sizing: border-box;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    border-radius: 0 0 15px 15px;
+    z-index: 1;
+    padding: 20px 0;
+    position: relative;
+}
+
+.avg > section:last-child button {
+    font-size: 22px;
+    color: #fff;
+    background: #e53698;
+    width: 100px;
+    height: 40px;
+    text-align: center;
+    line-height: 40px;
+    border: none;
+    border-radius: 4px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#chart {
+    width: 300px;
+    height: 300px;
 }
 
 .list {
@@ -131,9 +162,16 @@ header > section > ul {
     float: left;
 }
 
-.list div{
+/* 图表显示的top值 */
+.list {
+    margin-top: 445px;
+}
+
+.list div {
     width: calc(100% - 60px);
     margin: 0 0 0 30px;
+    display: inline-block;
+    position: relative;
 }
 
 .list > div > section {
@@ -182,6 +220,21 @@ header > section > ul {
     -webkit-text-stroke: 0;
 }
 
+.list button {
+    width: 100px;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    background: #3589fc;
+    font-size: 22px;
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+}
+
 
 .list ul {
     float: left;
@@ -190,10 +243,9 @@ header > section > ul {
     box-sizing: border-box;
     background: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-radius: 0 0 15px 15px;
     z-index: 1;
-    padding: 36px 0 20px;
+    padding: 36px 0 40px;
 }
 
 .list ul li {
