@@ -57,15 +57,15 @@ var data = {
                 }
             },
             indicator: [
-                { name: '平均薪酬', max: 100000},
-                { name: '对口职业在聘数', max: 100000},
+                { name: '平均薪酬', max: 50000},
+                { name: '对口职业在聘数', max: 50000},
                 { name: '房租收入比', max: 100},
                 { name: '月人均消费', max: 10000},
-                { name: '净流入人才数', max: 1000},
+                { name: '净流入人才数', max: 800},
                 { name: '平均房价', max: 100000}
             ],
-            center: ["50%", "59%"],
-            radius: "62%"
+            center: ["50%", "55%"],
+            radius: "68%"
         },
         series: [{
             name: '城市平均数据',
@@ -122,6 +122,7 @@ var vm = new Vue({
         },50),
         getCityAvg: function(id,name){ //获取城市平均数据
             var url = domain() + '/api/cityDiscipline/positionCityAvgCount', that = this;
+            this.clearChart();
             id!=''? this.professionId = id:this.professionId = '18';
             name!=''? this.titleName = name:this.titleName = '哲学';
             window.document.title = decodeURIComponent(this.titleName);
@@ -247,6 +248,29 @@ var vm = new Vue({
                         item.averageHousePrice//平均房价
                     ]
             })
+            this.modifyIndicator();
+        },
+        modifyIndicator: function(){    //修改最大值
+            var arr = this.chartOption.series[0].data;
+            if(arr.length == 1){return;}
+            for(var j = 0; j < 6; j++){
+                if(j==2){continue;}//房租收入比不计算
+                var maxArr = []; 
+                for(var i = 0; i < arr.length; i++){
+                    maxArr.push(arr[i].value[j]);
+                }
+                var maxVal = maxArr.sort(function(a,b){
+                    return b-a;
+                })[0];
+                this.chartOption.radar.indicator[j].max = this.getMax(maxVal);
+            }
+        },
+        getMax: function(val){
+            var str = val.toString();
+            var arr = str.split('');
+            var n = arr.length-1;
+            var num = (Number(arr[0])+1) * Math.pow(10,n);
+            return num
         },
         removeRecord: function(item){//删除记录
             var arr = this.chartOption.legend.data,
