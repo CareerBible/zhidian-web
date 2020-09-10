@@ -415,7 +415,6 @@ var vm = new Vue({
               this.jobList[i].jobSalary[k].maxSalary = parseFloat(arr[i].jobSalary[2].maxSalary * this.yearSalaryRatio[k].ratio).toFixed(1);
               //区间值中的最大值小于最小值的情况
               if(parseFloat(arr[i].jobSalary[k].minSalary) > parseFloat(arr[i].jobSalary[k].maxSalary)){
-                console.log(1111111)
                 this.jobList[i].jobSalary[k].maxSalary = parseFloat(arr[i].jobSalary[k].minSalary) + 1;
               }
             }

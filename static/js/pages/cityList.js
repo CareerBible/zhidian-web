@@ -30,46 +30,59 @@ var data = {
     totalPage: 0,
     cityList: [],
     chartOption: {
-        title: {
-            text: '基础雷达图'
-        },
+        backgroundColor: '#fff',
+        color:['#e53698','#3589fc','#22c3aa','#e6b600','#516b91'],
         tooltip: {},
         legend: {
-            data: ['预算分配（Allocated Budget）', '实际开销（Actual Spending）']
+            data: ['重庆', '北京', '长沙', '上海', '广州'],
+             width: "100%"
         },
         radar: {
-            // shape: 'circle',
             name: {
                 textStyle: {
                     color: '#fff',
-                    backgroundColor: '#999',
+                    backgroundColor: '#3589fc',
                     borderRadius: 3,
-                    padding: [3, 5]
+                    padding: [6, 5]
                 }
             },
             indicator: [
-                { name: '销售（sales）', max: 6500},
-                { name: '管理（Administration）', max: 16000},
-                { name: '信息技术（Information Techology）', max: 30000},
-                { name: '客服（Customer Support）', max: 38000},
-                { name: '研发（Development）', max: 52000},
-                { name: '市场（Marketing）', max: 25000}
+                { name: '平均薪酬', max: 100000},
+                { name: '对口职业在聘数', max: 100000},
+                { name: '房租收入比', max: 100},
+                { name: '月人均消费', max: 10000},
+                { name: '净流入人才数', max: 1000},
+                { name: '平均房价', max: 100000}
             ]
         },
         series: [{
-            name: '预算 vs 开销（Budget vs spending）',
+            name: '城市平均数据',
             type: 'radar',
-            // areaStyle: {normal: {}},
             data: [
                 {
-                    value: [4300, 10000, 28000, 35000, 50000, 19000],
-                    name: '预算分配（Allocated Budget）'
+                    name: '重庆',
+                    value: [7293, 46049, 49.3, 1949, 412, 56267]
                 },
                 {
-                    value: [5000, 14000, 28000, 31000, 42000, 21000],
-                    name: '实际开销（Actual Spending）'
+                    name: '北京',
+                    value: [16662, 17154, 24.1, 1949, 43, 51849]
+                },
+                {
+                    name: '长沙',
+                    value: [8575, 12777, 34.4, 784, 28, 21466]
+                },
+                {
+                    name: '上海',
+                    value: [8671, 12754, 34.5, 1098, 63, 28731]
+                },
+                {
+                    name: '广州',
+                    value: [7407, 9371, 26.5, 689, 199, 12623]
                 }
-            ]
+            ],
+            lineStyle: {
+              width: 3
+            }
         }]
     }
 }
@@ -162,6 +175,7 @@ var vm = new Vue({
                             that.cityList = [];
                         }
                         for(var i = 0; i < arr.length; i++){
+                            that.$set(arr[i], 'compareBtn', true); //加一个对比/取消的自定义属性
                             that.cityList.push(arr[i]);
                         }
                     }
