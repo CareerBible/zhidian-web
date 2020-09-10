@@ -152,8 +152,9 @@ header > section > ul {
 }
 
 #chart {
-    width: 300px;
-    height: 300px;
+    width: 530px;
+    height: 380px;
+    margin: 0 auto;
 }
 
 .list {
@@ -163,10 +164,6 @@ header > section > ul {
 }
 
 /* 图表显示的top值 */
-.list {
-    margin-top: 445px;
-}
-
 .list div {
     width: calc(100% - 60px);
     margin: 0 0 0 30px;
@@ -233,6 +230,10 @@ header > section > ul {
     position: absolute;
     bottom: 0;
     right: 20px;
+}
+
+.list button.active {
+    background: #e53898;
 }
 
 

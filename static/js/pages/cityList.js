@@ -29,16 +29,20 @@ var data = {
     professionId: '',
     totalPage: 0,
     cityList: [],
+    showChart: false,
     chartOption: {
         backgroundColor: '#fff',
         color:['#e53698','#22c3ab','#516b91'],
         tooltip: {},
+        grid: {
+            top: "10"
+        },
         legend: {
-            data: ['北京', '上海', '广州'],
+            data: [],
             width: "100%",
             left:"1%",
             textStyle: {
-            fontSize: 16
+                fontSize: 16
             },
             itemGap: 14
         },
@@ -59,27 +63,16 @@ var data = {
                 { name: '月人均消费', max: 10000},
                 { name: '净流入人才数', max: 1000},
                 { name: '平均房价', max: 100000}
-            ]
+            ],
+            center: ["50%", "59%"],
+            radius: "62%"
         },
         series: [{
             name: '城市平均数据',
             type: 'radar',
-            data: [
-                {
-                    name: '北京',
-                    value: [16662, 17154, 24.1, 1949, 43, 51849]
-                },
-                {
-                    name: '上海',
-                    value: [8671, 12754, 34.5, 1098, 63, 28731]
-                },
-                {
-                    name: '广州',
-                    value: [7407, 9371, 26.5, 689, 199, 12623]
-                }
-            ],
+            data: [],
             lineStyle: {
-            width: 3
+                width: 3
             }
         }]
     }
@@ -99,7 +92,8 @@ var vm = new Vue({
                 axios.defaults.headers.common["uid"] = this.userId;
                 var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
                 this.getCityAvg(id, name);
-                this.cityChart = echarts.init(document.getElementById('chart')); 
+                this.cityChart = echarts.init(document.getElementById('chart'));
+                this.cityChart.setOption(this.chartOption);
             }
         })
     },
@@ -228,6 +222,50 @@ var vm = new Vue({
                 this.getCityList(false);
             }
         },
+        CompareOrNot: debounce(function(item){//对比or取消
+            if(item.compareBtn) {
+                this.addRecord(item);
+            }else {
+                this.removeRecord(item);
+            }
+        },200),
+        addRecord: function(item){  //添加记录
+            this.showChart = true;//显示图表
+            this.$set(item, 'compareBtn', false);//按钮变色
+            if(this.chartOption.legend.data.length == 3){//最多对比三个
+                alert('最多只能对比三个城市')
+                return;
+            }
+            this.chartOption.legend.data.push(item.districtnname);//添加图表示例
+            this.chartOption.series[0].data.push({
+                name: item.districtnname,
+                value:[parseInt(item.cityAvgSalary),//城市平均薪酬
+                        item.totalrequired,//在聘职位数 
+                        parseFloat((item.rentIncome*100).toFixed(1)),//房租收入比
+                        parseInt(item.monthlyPerCapitaConsumption),//月人均消费
+                        parseInt(item.netInflowOfTalents/1000),//净流入人才
+                        item.averageHousePrice//平均房价
+                    ]
+            })
+        },
+        removeRecord: function(item){//删除记录
+            var arr = this.chartOption.legend.data,
+              index = arr.indexOf(item.districtnname);//找到要删除的数据的下标
+            this.$set(item, 'compareBtn', true);//按钮变色
+            this.chartOption.legend.data.splice(index, 1);//去掉图表对应名称
+            this.chartOption.series[0].data.splice(index, 1);
+            if(this.chartOption.legend.data.length == 0){ //如果数据只剩下行业平均则清空图表
+                this.clearChart();
+            }
+        },
+        clearChart: debounce(function(){ //清空图表数据并关闭
+            for(var i = 0; i < this.cityList.length; i++){
+              this.$set(this.cityList[i], 'compareBtn',true);
+            }
+            this.chartOption.legend.data = [];
+            this.chartOption.series[0].data = [];
+            this.showChart = false;
+        },50),
         backTo: function(){//返回上一页
             window.location.href = '/index.html';
         },
@@ -255,19 +293,28 @@ var vm = new Vue({
         }
     },
     watch: {
-    'chartOption': {
-        handler: function(newVal, oldVal) {
-        if (this.cityChart) {
-            if (newVal) {
-            this.cityChart.setOption(newVal,true);
-            } else {
-            this.cityChart.setOption(oldVal,true);
-            }
-        } else {
-            this.init();
-        }
+        'chartOption': {
+            handler: function(newVal, oldVal) {
+                if (this.cityChart) {
+                    if (newVal) {
+                    this.cityChart.setOption(newVal,true);
+                    } else {
+                    this.cityChart.setOption(oldVal,true);
+                    }
+                } else {
+                    this.init();
+                }
+            },
+            deep: true //对象内部属性的监听，关键。
         },
-        deep: true //对象内部属性的监听，关键。
-    }
+        'showChart': function(newVal,oldVal){
+            var position = document.querySelector(".list");
+            if(newVal){
+                position.style.marginTop = '520px';
+            }else{
+                this.clearChart();
+                position.style.marginTop = '240px';
+            }
+        }
     }
 })
