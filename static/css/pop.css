@@ -1,4 +1,75 @@
 /*支付弹窗*/
+.payPop {
+  width: 100%;
+  height: 366px;
+  background: linear-gradient(to right, #ff6f89 , #ff4861);
+  border-radius: 10px 10px 0 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.payPop div {
+  width: calc(100% - 60px);
+  margin: 30px;
+  height: 192px;
+  background: url(/static/img/ticket.png) no-repeat;
+  background-size: 100% 100%;
+}
+
+.payPop div p{
+  width: 50%;
+  float: left;
+  color: #fff;
+  text-align: center;
+}
+
+.payPop div p:first-child {
+  font-size: 22px;
+  margin-top: 40px;
+}
+
+.payPop div p:first-child em {
+  width: 100%;
+  display: block;
+  font-size: 35px;
+  margin-bottom: 25px;
+}
+
+.payPop div p:first-child span {
+  text-decoration: line-through;
+}
+
+.payPop div p:nth-child(2) {
+  font-size: 22px;
+}
+
+.payPop div p:nth-child(2) span {
+  display: block;
+  font-size: 26px;
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+
+.payPop div p:nth-child(2) span em {
+  -webkit-text-stroke: 2px #fff;
+  font-size: 68px;
+}
+
+.payPop button {
+  display: block;
+  width: calc(100% - 60px);
+  height: 80px;
+  line-height: 80px;
+  margin: 0 auto;
+  border: none;
+  border-radius: 10px;
+  color: #ff4860;
+  font-size: 28px;
+}
+
+/*支付成功*/
 .mask {
     position: fixed;
     background: rgba(0, 0, 0, 0.9);
@@ -8,7 +79,6 @@
     z-index: 4;
   }
   
-  .pop-box,
   .success-box {
     height: 690px;
     position: fixed;
@@ -19,7 +89,6 @@
     z-index: 5;
   }
   
-  .pop-ups,
   .success {
     width: 100%;
     position: relative;
@@ -30,7 +99,6 @@
     overflow: hidden;
   }
   
-  .pop-ups::before,
   .success::before {
     content: '';
     width: 790px;
@@ -40,111 +108,6 @@
     top: -25%;
     left: -25%;
     border-radius: 100%;
-  }
-  
-  .pop-ups > p:first-child {
-    font-size: 26px;
-    color: #fff;
-    padding-top: 25px;
-    position: relative;
-    z-index: 1;
-    text-shadow: 0 0 10px rgba(12, 49, 158, 0.4);
-  }
-  
-  .pop-ups > p:first-child span {
-    font-weight: bolder;
-    font-size: 46px;
-    padding-left: 10px;
-  }
-  
-  .pop-ups > p:nth-child(2) {
-    font-size: 30px;
-    color: #666;
-    margin-top: 56px;
-  }
-  
-  .pop-ups > p:nth-child(2) span {
-    font-size: 80px;
-    color: #db0303;
-    padding-right: 10px;
-  }
-  
-  .pop-ups > p:nth-child(3) {
-    color: #ccc;
-    font-size: 20px;
-    letter-spacing: 1px;
-    margin-top: -13px;
-  }
-  
-  .pop-ups > p:nth-child(4) {
-    font-size: 26px;
-    color: #666;
-    padding-top: 20px;
-  }
-  
-  .pop-ups > p:nth-child(4) em {
-    padding: 0 12px;
-  }
-  
-  .pop-ups > p:nth-child(4) span {
-    display: inline-block;
-    width: 40px;
-    height: 2px;
-    background: #666;
-    vertical-align: middle;
-  }
-  
-  .pop-ups ul {
-    width: 82%;
-    display: inline-block;
-    margin-top: 30px;
-  }
-  
-  .pop-ups ul li {
-    float: left;
-    width: 125px;
-    height: 107px;
-    border: 1px solid #ccc;
-    text-align: center;
-    margin-left: 27px;
-  }
-  
-  .pop-ups ul li:first-child {
-    margin-left: 0;
-  }
-  
-  .pop-ups ul li img {
-    width: 50px;
-    vertical-align: middle;
-  }
-  
-  .pop-ups ul li:nth-child(2) img {
-    width: 60px;
-  }
-  
-  .pop-ups ul li p:first-child {
-    height: 75px;
-    line-height: 75px;
-  }
-  
-  .pop-ups ul li p:last-child {
-    height: 30px;
-    line-height: 30px;
-    border-top: 1px solid #ccc;
-    color: #666;
-  }
-  
-  .pop-ups button {
-    height: 85px;
-    background: #3589fc;
-    border: none;
-    color: #fff;
-    font-size: 38px;
-    letter-spacing: 7px;
-    border-radius: 10px;
-    width: 82%;
-    margin-top: 30px;
-    box-shadow: 0 4px 10px rgba(12, 49, 158, 0.4);
   }
   
   .logo {

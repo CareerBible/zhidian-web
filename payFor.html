@@ -19,7 +19,7 @@
                 </div>
                 <div>
                     <p>选择，让努力事半功倍</p>
-                    <button>立即购买</button>
+                    <button @click="goToPay">立即购买</button>
                 </div>
             </section>
         </header>
@@ -27,14 +27,25 @@
         <section class="logos">
             <h3>职典会员权益</h3>
             <ul>
-                <li><img src="/static/img/" alt=""><span>查对口职业</span></li>
-                <li><img src="" alt=""><span>看职业薪资</span></li>
-                <li><img src="" alt=""><span>观增长曲线</span></li>
-                <li><img src="" alt=""><span>搜高薪城市</span></li>
-                <li><img src="" alt=""><span>查就业难度</span></li>
-                <li><img src="" alt=""><span>六维对比图</span></li>
+                <li><img src="/static/img/icon-03.svg" alt=""><span>查对口职业</span></li>
+                <li><img src="/static/img/icon-04.svg" alt=""><span>看职业薪资</span></li>
+                <li><img src="/static/img/icon-05.svg" alt=""><span>观增长曲线</span></li>
+                <li><img src="/static/img/icon-10.svg" alt=""><span>搜高薪城市</span></li>
+                <li><img src="/static/img/icon-11.svg" alt=""><span>查就业难度</span></li>
+                <li><img src="/static/img/icon-12.svg" alt=""><span>六维对比图</span></li>
             </ul>
         </section>
+
+        <section class="tags">
+            <h3>职典数据来源</h3>
+            <span>国家统计局</span><span>中国指数研究院</span><span>北京市统计局</span><span>数据中国</span>
+            <span>全球经济数据网</span><span>上海市统计局</span><span>国家数据</span><span>TalkingData</span>
+            <span>中国互联网络信息中心</span><em>...</em>
+        </section>
+
+        <footer>
+            <span>职场的捷近就是不走弯路</span>
+        </footer>
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
