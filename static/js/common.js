@@ -13,20 +13,9 @@ document.addEventListener('DOMContentLoaded', function(){//页面加载完成之
     loadingDiv.remove();
 })
 
-
 //全局域名
 function domain (){
-  return 'https://zhidian.dookbook.info'
-}
-
-//获取用户名
-function userId(){
-  var userId = window.localStorage.getItem('uid');
-  if(!userId){
-    return ''
-  }else {
-    return userId;
-  }
+  return 'https://zhidian.dookbook.info';
 }
 
 //获取url中参数
@@ -40,7 +29,7 @@ function getQueryVariable(param){
   return ''
 }
 
-     /**
+/**
  * 函数防抖，debounce
  * 基本思路就是把多个信号合并为一个信号
  * 
