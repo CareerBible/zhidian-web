@@ -10,99 +10,15 @@
     <script src="/static/js/common.js"></script>
 </head>
 <body>
-    <div id="salaryAnalysis" @click="showProvince=false;showCity=false;showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
-        <!---头部--->
-        <header>
-            <div @click.stop="getAreaOption($event)">{{area}}</div>
-            <ul class="province" v-if="showProvince">
-              <li :class="{'active': item.show}" v-for="item in areaList" @click.stop="selecteProvince(item)">{{item.name}}</li>
-            </ul>
-            <ul class="city" v-if="showCity">
-              <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
-            </ul>
-            <section>
-              <input type="text" placeholder="填专业，搜对口职业薪酬" @focus="clearTxt" v-model="searchTxt" @input="getSearchTxt">
-              <ul v-show="showSearch">
-                <li v-for="item in professList" @click.stop="getProfession(item.id,true, item.name)">{{item.name}}</li>
-              </ul>
-            </section>
-        </header>
+    <div id="index">
 
-        <main>
-          <!---行业--->
-          <section id="profession" v-show="!showNoData">
-            <section v-show="!showChart"><h1>对口职业平均薪酬</h1><span><em>¥</em>{{parseInt(professionAvg)}}</span></section>
-            <section>
-              <ul v-show="!showChart">
-                <li v-for="item in professionSalaryList">
-                  <p>{{item.avgSalary}}k</p>
-                  <p>{{item.workAge}}</p>
-                </li>
-              </ul>
-              <div id="chart" v-show="showChart"></div>
-              <button class="one-key" v-show="showChart" @click="clearChart">一键取消</button>
-            </section>
-          </section>
-
-          <div class="zhiwei">
-          <!---职位--->
-          <section v-for="item in jobList">
-            <section>
-              <h2>{{item.name}}
-                <p>
-                  <span>专业对口匹配度</span>
-                  <img v-for="star in item.star" src="/static/img/icon-01.svg" alt="">
-                </p>
-              </h2>
-              <section class="average-value">
-                <span><em>¥</em>{{parseInt(item.positionavgsalary*1000)}}</span>
-                <p>平均值</p>
-              </section>
-            </section>
-            <section>
-              <ul>
-                <li v-for="obj in item.jobSalary"><img src="/static/img/icon-07.svg" alt="">{{obj.workAge}}<span v-if="obj.minSalary!='none'">{{obj.minSalary}}k-{{obj.maxSalary}}k</span><span v-if="obj.minSalary=='none'">无</span></li>
-              </ul>
-              <button @click="CompareOrNot(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
-            </section>
-          </section>
-          </div>
-          <!---top按钮--->
-          <totop dom="salaryAnalysis" :show="showToTop"></totop>
-          <button class="top switch" @click="goToCityList">切换<br />城市</button>
-
-          <!---底部--->
-          <p class="bottom" v-show="showLogin"><img src="/static//img/load.svg" alt=""> 加载中...</p>
-          <p class="bottom" v-show="showTxt">—  不止诗与远方  —</p>
-          <section class="loading" v-show="showLoading">
-            <img src="/static/img/loading.svg" alt="">
-            <p>正在加载...</p>
-          </section>
-          <section class="no-data" v-show="showNoData">
-            <img src="/static/img/zanwu_02.png" alt="">
-            <p v-text="note"></p>
-          </section>
-        </main>
-
-        <div class="mask" v-if="showMask"></div>
-
-        <!--支付-立即开通弹窗-->
-        <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
-
-        <!--支付-支付成功弹窗-->
-        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess>  
-        
     </div>
+
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/interceptor.js"></script>
-    <script src="/static/js/components/paypop.js"></script>
-    <script src="/static/js/components/paySuccessPop.js"></script>
-    <script src="/static/js/components/toTop.js"></script>
     <script src="/static/js/share.js"></script>
-    <script src="/static/js/echarts.min.js"></script>
-    <script src="/static/js/pages/salary.js"></script>
-    
+    <script src="/static/js/pages/index.js"></script>
 </body>
 </html>
