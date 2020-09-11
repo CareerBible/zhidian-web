@@ -290,6 +290,9 @@ var vm = new Vue({
             this.chartOption.series[0].data = [];
             this.showChart = false;
         },50),
+        goToSalary: function(){
+            window.location.href = '/index.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
+        },
         backTo: function(){//返回上一页
             window.location.href = '/index.html';
         },

@@ -132,7 +132,8 @@ var vm = new Vue({
           }else{
             axios.defaults.headers.common["uid"] = this.userId;
             window.document.title = this.titleName; //初始页面title
-            this.getProfession('18', false, '哲学');//初始"哲学"数据
+            var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
+            this.getProfession(id, false, name);
             this.salaryChart = echarts.init(document.getElementById('chart')); 
           }
         })
@@ -228,9 +229,10 @@ var vm = new Vue({
             }
         },50),
         getProfession: function(id, onOff, name){ //选择专业获取行业数据
+            id!=''? this.jobId = id:this.jobId = '18';
+            name!=''? this.titleName = name:this.titleName = '哲学';
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
             this.onOff = onOff;
-            this.jobId = id;//职业id获取
             var url = domain() + '/api/statistical/listDiscipline';
             const that = this;
             var params = {  //默认全国数据

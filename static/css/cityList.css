@@ -296,6 +296,15 @@ header > section > ul {
     border: none;
     border-radius: 96px;
   }
+
+  .switch {
+    display: block;
+    bottom: 20%;
+    font-size: 20px;
+    color: #3589fc;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+    letter-spacing: 4px;
+  } 
   
   .top img {
     width: 75px;
