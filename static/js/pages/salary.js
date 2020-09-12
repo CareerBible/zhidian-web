@@ -215,7 +215,6 @@ var vm = new Vue({
             }
         },50),
         getProfession: function(id, onOff, name){ //选择专业获取行业数据
-            var that = this;
             id!=''? this.jobId = id:this.jobId = '18';
             name!=''? this.titleName = name:this.titleName = '哲学';
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
