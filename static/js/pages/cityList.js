@@ -124,7 +124,10 @@ var vm = new Vue({
                     that.avgSalary = resData.data.disciplineAvgSalary;
                     that.cityAvg = resData.data.positionCityAvgCount;
                     that.getCityList(true);
-                }
+                }else if(resData.code == 105){
+                    if(that.showPayPop){return};
+                    that.showPayPop = true;
+                  }
             })
         },
         getCityList: function(isSearch){    //获取城市列表
@@ -264,7 +267,7 @@ var vm = new Vue({
             this.showChart = false;
         },50),
         goToSalary: function(){
-            window.location.href = '/salaryList.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
+            window.location.href = '/index.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
         },
         toIndex: function(){//返回上一页
             window.location.href = '/index.html';
