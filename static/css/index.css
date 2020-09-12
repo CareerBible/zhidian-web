@@ -43,11 +43,27 @@ body {
     color: rgba(255, 255, 255, 0.7);
     margin: 0 10px;
     padding: 10px 0;
+    display: inline-block;
+    position: relative;
+}
+
+#index section .tabs span:first-child {
+    margin-right: 150px;
+}
+
+#index section .tabs span.active::before {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    height: 2px;
+    width: 50px;
+    background: #fff;
+    left: 50%;
+    margin-left: -25px;
 }
 
 #index section .tabs span.active {
     color: #fff;
-    border-bottom: 2px solid #fff;
 }
 
 #index section .search {
