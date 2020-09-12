@@ -10,6 +10,14 @@
   z-index: 10;
 }
 
+.payPop > span {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+  color: #fff;
+  font-size: 28px;
+}
+
 .payPop div {
   width: calc(100% - 60px);
   margin: 30px;

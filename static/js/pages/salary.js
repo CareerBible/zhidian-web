@@ -22,10 +22,8 @@
     showNoData: false,   //显示“没有数据”
     showProvince: false,  //显示省
     showCity: false,  //显示市
-    showMask: false,
     showPayPop: false,//显示支付弹窗
     onOff: false, //是否搜索来的
-    showSuccess: false,
     jobId: '18',
     page: 0,  //页码
     limit: '5', //每页显示多少条数据
@@ -149,10 +147,6 @@ var vm = new Vue({
                     for(var i = 0; i<that.areaList.length; i++){
                       that.$set(that.areaList[i], 'show', false);
                     }
-                }else if(resData.code === 105){
-                  if(that.showPayPop){return;}
-                  that.showMask = true;
-                  that.showPayPop = true;
                 }
             });
         },
@@ -213,10 +207,6 @@ var vm = new Vue({
                     if(resData.code === 200){
                         that.professList = resData.data.list;
                         that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
-                    }else if(resData.code === 105){
-                      if(that.showPayPop){return;}
-                      that.showMask = true;
-                      that.showPayPop = true;
                     }
                 });
             }
@@ -243,6 +233,7 @@ var vm = new Vue({
             this.searchTxt = decodeURIComponent(this.titleName);//搜索完成情况搜索框内容
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
+                that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
                   that.showSearch = false;//关闭专业列表
                   that.professionAvg = (resData.data.disciplineAvgSalary * that.ratio * 1000);//行业平均值
@@ -263,10 +254,6 @@ var vm = new Vue({
                   }
 
                   that.getJodData(true, true);//获取行业相关职业数据
-                }else if(resData.code === 105){//未支付，非会员
-                  if(that.showPayPop){return;}
-                  that.showMask = true;
-                  that.showPayPop = true;
                 }
             });
         },
@@ -293,6 +280,7 @@ var vm = new Vue({
             var url = domain() + '/api/statistical/listPage';
             const that = this;
             if(init){this.page=0;}
+            if(that.isVip == 'false'){ this.page = 0}
             var params = {
               disciplineId: this.jobId,
               limit: this.limit,
@@ -304,7 +292,7 @@ var vm = new Vue({
             // }
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
-                that.isVip = res.headers.isvip; //是否为会员
+                
                 if(resData.code === 200){
                     that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
                     var arr = resData.data.listPositionAvgSalary;
@@ -321,17 +309,6 @@ var vm = new Vue({
                         }
                         that.modifyData(arr);
                     }
-                    if(that.onOff && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
-                      var time = null; 
-                      time = setTimeout(function(){
-                          that.showMask = true;
-                          that.showPayPop = true;
-                      }, 10000);
-                    }
-                }else if(resData.code === 105){
-                  if(that.showPayPop){return;}
-                  that.showMask = true;
-                  that.showPayPop = true;
                 } else{
                   that.showNoData = true;
                   that.note = "访问失败";
@@ -433,16 +410,17 @@ var vm = new Vue({
 	          var domScrollH = this.Dom.scrollHeight;
 	          var domScrollTop = Math.ceil(this.Dom.scrollTop);
 	          var scrollArea = parseInt(domScrollH - domH);
-            
-            //划到底部刷新
-            if(domScrollTop == scrollArea){ 
-              this.turnPage();
-            }
 
-            //安卓手机默认直接刷新翻页
-            var u = navigator.userAgent;
-            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+            if(domScrollTop >= scrollArea){
+              if(this.isVip == 'false') {
+                this.showPayPop = true;
+                return;
+              }else {
+                this.showPayPop = false;
+              }
               this.turnPage();
+            }else{
+              this.showPayPop = false;
             }
 
             //置顶按钮设置
@@ -531,33 +509,14 @@ var vm = new Vue({
               this.clearChart();
           }
         },
-        closeSuccess: function(msg){  //关闭支付成功
-          this.showMask = false;
-          this.showSuccess = false;
-        },
-        closePayPop: function(msg){
-          this.showPayPop = false;
-          this.showMask = false;
-        },
-        initData: function(bool){
-          if(bool){
-            //初始"哲学"数据
-            this.getProfession('18', false, '哲学'); 
-            this.titleName = '哲学';
-            document.activeElement.blur();
-            if(this.showChart){//图表关闭
-                this.clearChart();
-            }
-          }else {
-            this.showMask = true;
-            this.showSuccess = true;
-          }
-        },
         goToCityList: function(){
           window.location.href = '/cityList.html?professionId=' + this.jobId + '&professionName=' + this.titleName;
         },
         clearTxt: function(){
           this.searchTxt = "";
+        },
+        toIndex: function(){//回到首页
+          window.location.href = '/index.html';
         }
     },
     watch: {

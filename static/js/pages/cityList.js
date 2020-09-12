@@ -9,9 +9,7 @@ var data = {
         }
     ],
     userId: '',
-    showMask: false,
     showPayPop: false,
-    showSuccess: false,
     showSearch: false,
     showLoading: false,
     showNoData: false,
@@ -105,10 +103,6 @@ var vm = new Vue({
                     if(resData.code === 200){
                         that.professList = resData.data.list;
                         that.professList.length == 0 ? that.showSearch = false:that.showSearch = true;
-                    }else if(resData.code === 105){
-                        if(that.showPayPop){return;}
-                        that.showMask = true;
-                        that.showPayPop = true;
                     }
                 });
             }
@@ -124,15 +118,12 @@ var vm = new Vue({
             var params = {disciplineId: this.professionId}
             axios.get(url,{params:params}).then(function(res) {
                 var resData = res.data;
+                that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code == 200){
                     that.showSearch = false;
                     that.avgSalary = resData.data.disciplineAvgSalary;
                     that.cityAvg = resData.data.positionCityAvgCount;
                     that.getCityList(true);
-                }else if(resData.code === 105){
-                    if(that.showPayPop){return;}
-                    that.showMask = true;
-                    that.showPayPop = true;
                 }
             })
         },
@@ -146,7 +137,7 @@ var vm = new Vue({
             }
             axios.get(url,{params:params}).then(function(res) {
                 var resData = res.data;
-                that.isVip = res.headers.isvip; //是否为会员
+                
                 if(resData.code == 200){
                     var arr = resData.data.listCityPosition;
                     that.totalPage = Math.ceil(resData.data.totaCount/that.limit)-1;//总页数
@@ -165,18 +156,6 @@ var vm = new Vue({
                             that.cityList.push(arr[i]);
                         }
                     }
-                    
-                    if(isSearch && that.isVip === 'false'){ //onOff为true:搜索来的; isVip为false:非会员
-                        var time = null; 
-                        time = setTimeout(function(){
-                            that.showMask = true;
-                            that.showPayPop = true;
-                        }, 10000);
-                    }
-                }else if(resData.code === 105){
-                    if(that.showPayPop){return;}
-                    that.showMask = true;
-                    that.showPayPop = true;
                 }
             })
         },
@@ -185,16 +164,17 @@ var vm = new Vue({
             var domScrollH = this.Dom.scrollHeight;
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
-            
-            //划到底部刷新
-            if(domScrollTop == scrollArea){ 
-                this.turnPage();
-            }
 
-            //安卓手机默认直接刷新翻页
-            var u = navigator.userAgent;
-            if(u.indexOf('Android') > -1 || u.indexOf('Linux') > -1){
+            if(domScrollTop >= scrollArea){
+                if(this.isVip == 'false') {
+                  this.showPayPop = true;
+                  return;
+                }else {
+                  this.showPayPop = false;
+                }
                 this.turnPage();
+            }else{
+                this.showPayPop = false;
             }
 
             //置顶按钮设置
@@ -286,27 +266,8 @@ var vm = new Vue({
         goToSalary: function(){
             window.location.href = '/salaryList.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
         },
-        backTo: function(){//返回上一页
-            window.location.href = '/salaryList.html';
-        },
-        closeSuccess: function(msg){  //关闭支付成功
-            this.showMask = false;
-            this.showSuccess = false;
-        },
-        closePayPop: function(msg){//关闭支付弹窗
-            this.showPayPop = false;
-            this.showMask = false;
-        },
-        initData: function(bool){//初始数据
-            if(bool){
-                //初始"哲学"数据
-                this.titleName = '哲学';
-                this.getCityAvg('18','哲学');
-                document.activeElement.blur();
-            }else {
-                this.showMask = true;
-                this.showSuccess = true;
-            }
+        toIndex: function(){//返回上一页
+            window.location.href = '/index.html';
         },
         clearTxt: function(){
             this.searchTxt = "";

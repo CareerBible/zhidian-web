@@ -111,6 +111,8 @@
                 })
             },
             loginOut: function(){   //登出
+                window.localStorage.removeItem('id');
+                window.localStorage.removeItem('name');
                 WeixinJSBridge.call('closeWindow');
             }
         }  

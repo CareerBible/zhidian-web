@@ -13,15 +13,16 @@
     <div id="salaryAnalysis" @click="showProvince=false;showCity=false;showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
         <!---头部--->
         <header>
-            <div @click.stop="getAreaOption($event)">{{area}}</div>
-            <ul class="province" v-if="showProvince">
-              <li :class="{'active': item.show}" v-for="item in areaList" @click.stop="selecteProvince(item)">{{item.name}}</li>
-            </ul>
-            <ul class="city" v-if="showCity">
-              <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
-            </ul>
+            <button @click="toIndex"><img src="/static/img/index.svg" alt=""></button>
             <section>
               <input type="text" placeholder="填专业，搜对口职业薪酬" @focus="clearTxt" v-model="searchTxt" @input="getSearchTxt">
+              <div @click.stop="getAreaOption($event)">{{area}}</div>
+              <ul class="province" v-if="showProvince">
+                <li :class="{'active': item.show}" v-for="item in areaList" @click.stop="selecteProvince(item)">{{item.name}}</li>
+              </ul>
+              <ul class="city" v-if="showCity">
+                <li :class="{'active': obj.show}" @click.stop="selectCity(obj)" v-for="obj in cityList">{{obj.name}}</li>
+              </ul>
               <ul v-show="showSearch">
                 <li v-for="item in professList" @click.stop="getProfession(item.id,true, item.name)">{{item.name}}</li>
               </ul>
@@ -84,13 +85,8 @@
           </section>
         </main>
 
-        <div class="mask" v-if="showMask"></div>
-
         <!--支付-立即开通弹窗-->
-        <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
-
-        <!--支付-支付成功弹窗-->
-        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess>  
+        <paypop :show="showPayPop"></paypop>
         
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
@@ -98,7 +94,6 @@
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/interceptor.js"></script>
     <script src="/static/js/components/paypop.js"></script>
-    <script src="/static/js/components/paySuccessPop.js"></script>
     <script src="/static/js/components/toTop.js"></script>
     <script src="/static/js/share.js"></script>
     <script src="/static/js/echarts.min.js"></script>

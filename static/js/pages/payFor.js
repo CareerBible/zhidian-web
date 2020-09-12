@@ -1,7 +1,8 @@
 var vm = new Vue({
     el: "#payFor",    //挂载元素
     data: {
-        userId: ''
+        userId: '',
+        showSuccess: false
     },
     mounted: function(){
         this.$nextTick(function() {
@@ -35,7 +36,7 @@ var vm = new Vue({
                 "paySign": data.paySign 
             },function(res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    alert('支付成功');
+                    that.showSuccess = true;//弹出支付成功窗口
                     that.getOrder(data.outTradeNo);//支付成功后查询订单
                 }else {
                     alert('支付失败');
@@ -52,20 +53,15 @@ var vm = new Vue({
                 that.payForToWx();
             }
         },
-        getOrder: function(orderCode){ //查询订单
+        getOrder: function(orderCode){ //查询订单，告诉后端该用户已经成为会员
             var url = domain() + '/api/orderQuery/order';
             const that = this;
             var params = {"outTradeNo": orderCode};
-            axios.get(url,{params: params}).then(function(res) {
-              var resData = res.data;
-              if(resData.code === 200){
-                var isVip = resData.data.isVip;
-                // if(isVip){
-                  // that.showMask = true;
-                  // that.showSuccess = true;
-                // }
-              }
-            })
+            axios.get(url,{params: params}).then(function(res) {})
+        },
+        closeSuccess: function(){//关闭支付成功弹窗并返回上一页
+            that.showSuccess = false;
+            window.history.back(-1);
         }
     }
 })

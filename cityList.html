@@ -13,7 +13,7 @@
     <div id="cityList" @click="showSearch=false" :style="{height:clientH + 'px'}" @scroll="viewmore">
         <!-- 头部 -->
         <header>
-            <button @click="backTo"> <img src="/static/img/back.svg" alt="">返回</button>
+            <button @click="toIndex"><img src="/static/img/index.svg" alt=""></button>
             <section>
                 <input type="text" placeholder="填专业，选就业高薪城市" v-model="searchTxt" @focus="clearTxt" @input="getSearchTxt">
                 <ul v-show="showSearch">
@@ -81,20 +81,14 @@
         <totop dom="cityList" :show="showToTop"></totop>
         <button class="top switch" @click="goToSalary">切换<br />薪酬</button>
 
-        <div class="mask" v-if="showMask"></div>
-
         <!--支付-立即开通弹窗-->
-        <paypop @close="closePayPop" :show="showPayPop" @init="initData"></paypop>
-
-        <!--支付-支付成功弹窗-->
-        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess> 
+        <paypop :show="showPayPop"></paypop>
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/interceptor.js"></script>
     <script src="/static/js/components/payPop.js"></script>
-    <script src="/static/js/components/paySuccessPop.js"></script>
     <script src="/static/js/components/toTop.js"></script>
     <script src="/static/js/share.js"></script>
     <script src="/static/js/echarts.min.js"></script>

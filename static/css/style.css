@@ -21,6 +21,20 @@ header section {
   flex: 1;
 }
 
+header > button {
+  width: 64px;
+  height: 64px;
+  background: #3589fd;
+  border: none;
+  border-radius: 5px;
+  margin-right: 24px;
+}
+
+header > button img {
+  width: 32px;
+  height: 30px;
+}
+
 header section input[type="text"] {
   width: 100%;
   border-radius: 64px;
@@ -28,10 +42,10 @@ header section input[type="text"] {
   line-height: 64px;
   border: 1px solid #999;
   box-sizing: border-box;
-  padding: 0 20px 0 30px;
+  padding: 0 120px 0 60px;
   font-size: 24px;
   color: #333;
-  background: url('/static/img/search.svg') no-repeat 96%;
+  background: url('/static/img/search.svg') no-repeat 4%;
   background-size: 42px;
 }
 
@@ -50,30 +64,35 @@ header section ul {
   color: #999;
 }
 
-header > div {
+header section div {
+  position: absolute;
+  right: 0;
+  top: 0;
   width: 120px;
-  border: 1px solid #999;
-  border-radius: 10px;
-  height: 54px;
-  line-height: 54px;
+  border-radius: 64px;
+  height: 64px;
+  line-height: 64px;
   font-size: 24px;
   box-sizing: border-box;
-  padding: 0 20px;
-  margin: 5px 20px 0 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 0 20px 0 25px;
   background: url('/static/img/down.svg') no-repeat 85px;
   background-size: 30px;
   color: #333;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
+  z-index: 10;
 }
 
 .province {
+  width: 120px;
   background: #fff;
   border: 1px solid #ccc;
   position: absolute;
   z-index: 3;
   top: 90px;
+  right: 0;
   border-radius: 10px;
   text-align: center;
   padding: 10px 0;
@@ -102,7 +121,7 @@ header > div {
   position: absolute;
   z-index: 3;
   top: 90px;
-  left: 170px;
+  right: 130px;
   border-radius: 10px;
   text-align: center;
   overflow-y: auto;

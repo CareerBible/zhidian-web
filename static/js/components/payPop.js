@@ -1,6 +1,7 @@
 
 Vue.component('paypop', {
     template: '<section class="payPop" v-if="showPop">'+
+    '<span @click="showPop=false">×</span>'+
     '<div>'+
         '<p><em>解锁所有数据</em>每天2分钱 · 原价：<span>30元/月</span></p>'+
         '<p><span><em>9.9</em>元/年</span>找个好工作，年薪10万起</p>'+
@@ -9,7 +10,6 @@ Vue.component('paypop', {
 '</section>',
     data: function(){
         return {
-            userId: '',
             showPop: false
         }
     },
@@ -21,7 +21,6 @@ Vue.component('paypop', {
     },
     mounted: function() {
         this.$nextTick(function() {
-            this.userId = userId();
             this.showPop = this.show;
         })
     },
