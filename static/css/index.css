@@ -15,7 +15,7 @@ body {
     padding: 0 30px;
     margin: 0 auto;
     position: absolute;
-    top: 30%;
+    top: 25%;
     left: 0;
 }
 
@@ -91,4 +91,10 @@ body {
     line-height: 48px;
     font-size: 24px;
     color: #999;
+}
+
+#index section .search ul li {
+    height: 20px;
+    line-height: 20px;
+    padding: 12px 0;
 }
