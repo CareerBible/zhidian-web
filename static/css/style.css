@@ -98,6 +98,7 @@ header section div {
   padding: 10px 0;
   height: 365px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .province li {
@@ -129,6 +130,7 @@ header section div {
   padding: 10px 0;
   height: 365px;
   overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .city li {
