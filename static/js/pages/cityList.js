@@ -124,10 +124,7 @@ var vm = new Vue({
                     that.avgSalary = resData.data.disciplineAvgSalary;
                     that.cityAvg = resData.data.positionCityAvgCount;
                     that.getCityList(true);
-                }else if(resData.code == 105){
-                    if(that.showPayPop){return};
-                    that.showPayPop = true;
-                  }
+                }
             })
         },
         getCityList: function(isSearch){    //获取城市列表

@@ -145,9 +145,6 @@ var vm = new Vue({
                     for(var i = 0; i<that.areaList.length; i++){
                       that.$set(that.areaList[i], 'show', false);
                     }
-                }else if(resData.code == 105){
-                  if(that.showPayPop){return};
-                  that.showPayPop = true;
                 }
             });
         },
@@ -251,9 +248,6 @@ var vm = new Vue({
                   }
 
                   that.getJodData(true, true);//获取行业相关职业数据
-                }else if(resData.code == 105){
-                  if(that.showPayPop){return};
-                  that.showPayPop = true;
                 }
             });
         },

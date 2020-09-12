@@ -4,7 +4,7 @@ var vm = new Vue({
     el: "#index",    //挂载元素
     data: {
         tabs:[
-            {name: '查职业', check: true, type: 'salary', text:'输入专业名，搜专业对口的职业薪酬'},
+            {name: '查薪酬', check: true, type: 'salary', text:'输入专业名，搜专业对口的职业薪酬'},
             {name: '查城市', check: false, type: 'city', text:'输入专业名，选就业高薪城市'}
         ],
         placeholder: '输入专业名，搜专业对口的职业薪酬',
@@ -12,11 +12,6 @@ var vm = new Vue({
         searchTxt: '',
         searchType: 'salary',
         professList: []
-    },
-    mounted: function(){
-        this.$nextTick(function() {
-                    
-        })
     },
     methods: {
         tabSearch: function(item){  //tab交互
