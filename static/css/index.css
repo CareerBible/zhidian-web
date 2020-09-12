@@ -1,0 +1,79 @@
+
+body {
+    background: #3388f4;
+    background-image: url(/static/img/index-background.png);
+    background-repeat: repeat;
+}
+
+#index {
+    color: #fff;
+    
+}
+
+#index section {
+    width: calc(100% - 60px);
+    padding: 0 30px;
+    margin: 0 auto;
+    position: absolute;
+    top: 30%;
+    left: 0;
+}
+
+#index section h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 24px;
+    font-weight: normal;
+    letter-spacing: 2px;
+}
+
+#index section h1 em {
+    font-size: 48px;
+    padding-right: 20px;
+}
+
+#index section .tabs {
+    width: 100%;
+    text-align: center;
+    margin: 60px 0;
+    font-size: 28px;
+}
+
+#index section .tabs span {
+    color: rgba(255, 255, 255, 0.7);
+    margin: 0 10px;
+    padding: 10px 0;
+}
+
+#index section .tabs span.active {
+    color: #fff;
+    border-bottom: 2px solid #fff;
+}
+
+#index section .search {
+    position: relative;
+}
+
+#index section .search input[type="text"] {
+    width: calc(100% - 95px);
+    height: 80px;
+    line-height: 80px;
+    border: none;
+    border-radius: 20px;
+    padding: 0 10px 0 85px;
+    background: #fff;
+    color: #333;
+    font-size: 24px;
+}
+
+#index section .search input[type="text"]::placeholder {
+    color: rgba(51,136,244,0.6);
+}
+
+#index section .search img {
+    width: 44px;
+    height: 46px;
+    position: absolute;
+    top: 18px;
+    left: 4%;
+}
