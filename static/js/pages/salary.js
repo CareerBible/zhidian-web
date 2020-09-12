@@ -218,7 +218,6 @@ var vm = new Vue({
             id!=''? this.jobId = id:this.jobId = '18';
             name!=''? this.titleName = name:this.titleName = '哲学';
             if(onOff){this.page=0;}//如果是搜索来的，页码初始化
-            that.showSearch = false;//关闭专业列表
             this.onOff = onOff;
             var url = domain() + '/api/statistical/listDiscipline';
             const that = this;
@@ -229,16 +228,13 @@ var vm = new Vue({
             // if(this.districtId != 0){//判断是否存地区id
             //    params.districtId = this.districtId; 
             // }
+            that.showSearch = false;//关闭专业列表
+            window.document.title = decodeURIComponent(this.titleName);
+            this.searchTxt = decodeURIComponent(this.titleName);//搜索完成情况搜索框内容
             axios.get(url,{params: params}).then(function(res) {
                 var resData = res.data;
                 that.isVip = res.headers.isvip; //是否为会员
                 if(resData.code === 200){
-                  if(name!=''){//判断title
-                    that.titleName = name;
-                    window.document.title = that.titleName; 
-                  }
-                  window.document.title = decodeURIComponent(this.titleName);
-                  this.searchTxt = decodeURIComponent(this.titleName);//搜索完成情况搜索框内容
                   that.professionAvg = (resData.data.disciplineAvgSalary * that.ratio * 1000);//行业平均值
                   var arr = resData.data.listDisciplineAvgSalaryWorkingYears;
                   if(resData.data.disciplineAvgSalary === 0) {//行业平均值为空显示没有数据
