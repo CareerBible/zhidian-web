@@ -50,8 +50,9 @@
                 axios.post(url,params).then(function(res) {
                     var resData = res.data;
                     if(resData.code === 200){//您账号或密码输入错误，请重新输入
-                        var uid = resData.data.uid
+                        var uid = resData.data.uid, name = resData.data.name
                         window.localStorage.setItem('id' , uid);
+                        window.localStorage.setItem('name' , name);
                         window.location.href = '/staffOnly.html';
                     }
                 })

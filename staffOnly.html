@@ -13,7 +13,7 @@
     <div id="staff">
         <header>
             <section><img src="/static/img/logo.png" alt="">职典</section>
-            <section><span>{{staffCode}}</span><button @click="loginOut">退出</button></section>
+            <section><span>{{staffName}}</span><button @click="loginOut">退出</button></section>
           </header>
           <main>
             <h2>数据总览</h2>
@@ -75,7 +75,7 @@
         data: {
             domain:'https://zhidian.dookbook.info',
             staffId: 0,    //员工id
-            staffCode: "001",  //员工编号
+            staffName: '',
             visitorNum: 0,  //访问人数
             payForNum:0,   //付费人数
             searchNum:0,    //搜索人数
@@ -87,6 +87,7 @@
         mounted: function(){
             this.$nextTick(function() { 
                 this.staffId = window.localStorage.getItem('id');
+                this.staffName = window.localStorage.getItem('name');
                 axios.defaults.headers.common["uid"] = this.staffId;
                 this.getData();
             })
