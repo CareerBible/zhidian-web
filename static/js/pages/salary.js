@@ -120,8 +120,6 @@ var vm = new Vue({
         this.$nextTick(function() { 
             this.clientH = document.documentElement.clientHeight;
             this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
-            this.referreId = getQueryVariable('referreId');//获取推广id
-            if(this.referreId != ''){window.sessionStorage.setItem('referreId',this.referreId)}
             this.getRatioArr();
             window.document.title = this.titleName; //初始页面title
             var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');

@@ -77,3 +77,18 @@ body {
     top: 18px;
     left: 4%;
 }
+
+#index section .search ul {
+    width: 100%;
+    background: #fff;
+    padding: 20px 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    position: absolute;
+    box-sizing: border-box;
+    right: 0;
+    top: 84px;
+    line-height: 48px;
+    font-size: 24px;
+    color: #999;
+}
