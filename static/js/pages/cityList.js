@@ -28,6 +28,7 @@ var data = {
     totalPage: 0,
     cityList: [],
     showChart: false,
+    pageId: 'd4c5158a4e5e4ddeb873c71bd0406386',
     chartOption: {
         backgroundColor: '#fff',
         color:['#e53698','#22c3ab','#516b91'],

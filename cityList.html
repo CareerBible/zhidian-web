@@ -82,7 +82,7 @@
         <button class="top switch" @click="goToSalary">切换<br />薪酬</button>
 
         <!--支付-立即开通弹窗-->
-        <paypop :show="showPayPop"></paypop>
+        <paypop :show="showPayPop" :txt="pageId"></paypop>
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>

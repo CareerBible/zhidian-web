@@ -33,7 +33,6 @@ window.onload = function(){
               link: strWxCurUrl,// 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
               imgUrl: shareData.imgUrl,
               success: function () {
-                // 设置成功
                 shareRecord();
                 console.log('分享成功')
               }
@@ -45,7 +44,6 @@ window.onload = function(){
               link: strWxCurUrl,
               imgUrl: shareData.imgUrl,
               success: function () {
-                // 设置成功
                 shareRecord();
                 console.log('分享成功')
               }
@@ -62,8 +60,6 @@ window.onload = function(){
     //记录分享次数
     function shareRecord(){
       var url = domain() + '/api/compared/clickShar';
-      axios.get(url).then(function(res) {
-        console.log(res,99999999)
-      })
+      axios.get(url).then(function(res) {})
     }
   }

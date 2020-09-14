@@ -2,11 +2,13 @@ var vm = new Vue({
     el: "#payFor",    //挂载元素
     data: {
         userId: '',
-        showSuccess: false
+        showSuccess: false,
+        pageId: ''
     },
     mounted: function(){
         this.$nextTick(function() {
             this.userId = window.localStorage.getItem('uid');
+            this.pageId = getQueryVariable('pageId');
         })
     },
     methods: {
@@ -15,7 +17,8 @@ var vm = new Vue({
             const that = this;
             var data = {
               userId: this.userId,
-              tradeType: 'JSAPI'
+              tradeType: 'JSAPI',
+              pageId: this.pageId
             }
             axios.post(url,data).then(function(res) {
                 var resData = res.data;

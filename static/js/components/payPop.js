@@ -10,23 +10,29 @@ Vue.component('paypop', {
 '</section>',
     data: function(){
         return {
-            showPop: false
+            showPop: false,
+            pageId: ''
         }
     },
     props:{
         show:{
             type: Boolean,
             default: false
+        },
+        txt:{
+            type: String,
+            default: ''
         }
     },
     mounted: function() {
         this.$nextTick(function() {
             this.showPop = this.show;
+            this.pageId = this.txt;
         })
     },
     methods: {
         goToPayFor: function(){//跳转支付页面
-            window.location.href = '/payFor.html';
+            window.location.href = '/payFor.html?pageId=' + this.pageId;
         }
     },
     watch: {

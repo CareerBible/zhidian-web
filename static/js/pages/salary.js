@@ -64,6 +64,7 @@
     yearSalaryRatio:[],
     ratio: 1,
     referreId: '',
+    pageId: 'da5e84ee3e394e798e7bad0831f05bd6',
     chartOption: {
       color: ['#e53698','#f5e8c8','#3589fc','#22c3aa','#e6b600','#516b91'],
       tooltip: {
