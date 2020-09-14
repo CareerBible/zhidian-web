@@ -13,6 +13,24 @@ document.addEventListener('DOMContentLoaded', function(){//页面加载完成之
     loadingDiv.remove();
 })
 
+//websocket轮询
+function wsPolling(userId,num){
+  var ws = new WebSocket("ws://192.168.0.114:8080/websocket/"+userId);
+  
+  ws.onopen = function(evt) { 
+      console.log("Connection open ..."); 
+      ws.send("我是连接"+num);
+  };
+  
+  ws.onmessage = function(evt) {
+      console.log( "连接"+ num+ "Received Message: " + evt.data);
+  };
+  
+  ws.onclose = function(evt) {
+      console.log("连接"+num+"Connection closed.");
+  }; 
+}
+
 //全局域名
 function domain (){
   return 'https://zhidian.dookbook.info';

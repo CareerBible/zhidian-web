@@ -271,7 +271,7 @@ var vm = new Vue({
             this.showChart = false;
         },50),
         goToSalary: function(){
-            window.location.href = '/index.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
+            window.location.href = '/salaryList.html?professionId=' + this.professionId + '&professionName=' + this.titleName;
         },
         toIndex: function(){//返回上一页
             window.location.href = '/index.html';
