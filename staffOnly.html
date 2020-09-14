@@ -17,56 +17,101 @@
           </header>
           <main>
             <h2>数据总览</h2>
-            <table cellspacing="0" cellpadding="0">
-              <thead>
+            <table class="row3" cellspacing="0" cellpadding="0">
                 <tr>
-                  <th>访问人数</th>
-                  <th>付费人数</th>
-                  <th>占比</th>
-                </tr>
-              </thead>
-              <tbody>
+                  <th>总访问人数</th>
+                  <th>上周新增人数</th>
+                  <th>总访问次数</th>
+                </tr> 
                 <tr>
                   <td>{{visitorNum}}</td>
                   <td>{{payForNum}}</td>
                   <td>{{(parseFloat(payForNum/visitorNum)*100).toFixed(2)}}%</td>
                 </tr>
-              </tbody>
+                <tr>
+                  <th>总付费人数</th>
+                  <th>上周新增人数</th>
+                  <th>付费率</th>
+                </tr>
+                <tr>
+                  <td>111</td>
+                  <td>222</td>
+                  <td>333</td>
+                </tr>
             </table>
-            <h2>付费概况</h2>
-            <table cellspacing="0" cellpadding="0">
-              <thead>
+            
+            <h2>首页</h2>
+            <table class="row2" cellspacing="0" cellpadding="0">
                 <tr>
-                  <th>搜索人数</th>
-                  <th>未付费人数</th>
-                  <th>占比</th>
+                  <th>首页跳出率</th>
+                  <th>内容页点击次数</th>
                 </tr>
-              </thead>
-              <tbody>
                 <tr>
-                  <td>{{searchNum}}</td>
-                  <td>{{notPayNum}}</td>
-                  <td>{{(parseFloat((searchNum-notPayNum)/searchNum)*100).toFixed(2)}}%</td>
+                  <td>444</td>
+                  <td>555</td>
                 </tr>
-              </tbody>
+                <tr>
+                  <th>薪酬搜索次数</th>
+                  <th>城市搜索次数</th>
+                </tr>
+                <tr>
+                  <td>777</td>
+                  <td>666</td>
+                </tr>
             </table>
-            <h2>行为概况</h2>
-            <table cellspacing="0" cellpadding="0">
-              <thead>
-                <tr>
-                  <th>切换城市</th>
-                  <th>点击对比</th>
-                  <th>分享链接</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{{switchCityNum}}</td>
-                  <td>{{clickCompare}}</td>
-                  <td>{{shareLink}}</td>
-                </tr>
-              </tbody>
+
+            <h2>付费页</h2>
+            <table class="row4" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>打开次数总和</th>
+                <th>来源-城市</th>
+                <th>来源-薪酬</th>
+                <th>来源-详情</th>
+              </tr> 
+              <tr>
+                <td>22222</td>
+                <td>11111</td>
+                <td>33333</td>
+                <td>44444</td>
+              </tr>
             </table>
+            <table class="row2" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>问卷填写人数</th>
+                <th>分享链接次数</th>
+              </tr> 
+              <tr>
+                <td>22222</td>
+                <td>11111</td>
+              </tr>
+            </table>
+
+            <h2>薪酬页</h2>
+            <table class="row3" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>停留时间</th>
+                <th>对比使用次数</th>
+                <th>详情页停留时间</th>
+              </tr> 
+              <tr>
+                <td>22222</td>
+                <td>3333</td>
+                <td>4444</td>
+              </tr>
+            </table>
+
+            <h2>城市页</h2>
+            <table class="row2" cellspacing="0" cellpadding="0">
+              <tr>
+                <th>停留时间</th>
+                <th>对比使用次数</th>
+              </tr> 
+              <tr>
+                <td>22222</td>
+                <td>11111</td>
+              </tr>
+            </table>
+            
           </main>
     </div>
     <script>

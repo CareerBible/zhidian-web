@@ -74,7 +74,7 @@
   }
   
   #staff h2 {
-    font-size: 42px;
+    font-size: 34px;
     text-align: center;
     width: 100%;
     color: #333;
@@ -126,25 +126,38 @@
     text-align: center;
     line-height: 80px;
     border: 1px solid #bbb;
-    font-size: 28px;
+    border-bottom: none;
+    font-size: 23px;
+  }
+
+  #staff table.row3 th {
+    width: 33.3%;
+  }
+
+  #staff table.row2 th {
+    width: 50%;
+  }
+
+  #staff table.row4 th {
+    width: 25%;
   }
   
-  #staff table thead th {
-    width: 33.3%;
+  #staff table th {
     border-bottom: 1px solid #bbb;
     border-left: 1px solid #bbb;
     color: #333;
   }
   
-  #staff table thead th:first-child {
+  #staff table th:first-child {
     border-left: none;
   }
   
-  #staff table tbody td {
+  #staff table td {
     border-left: 1px solid #bbb;
+    border-bottom: 1px solid #bbb;
     color: #666;
   }
   
-  #staff table tbody td:first-child {
+  #staff table td:first-child {
     border-left: none;
   }
