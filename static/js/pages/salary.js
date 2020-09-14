@@ -402,9 +402,13 @@ var vm = new Vue({
         viewmore: throttle(function() {  //加载更多
             var domH = this.clientH;
 	          var domScrollH = this.Dom.scrollHeight;
-	          var domScrollTop = Math.ceil(this.Dom.scrollTop);
+	          var domScrollTop = parseInt(this.Dom.scrollTop);
 	          var scrollArea = parseInt(domScrollH - domH);
-
+            var u = navigator.userAgent;
+            if (u.indexOf("Android") > -1 || u.indexOf("Linux") > -1) {
+              domScrollTop = domScrollTop + 1;
+            }
+            
             if(domScrollTop >= scrollArea){
               if(this.isVip == 'false') {
                 this.showPayPop = true;
