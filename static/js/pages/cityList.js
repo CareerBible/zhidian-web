@@ -165,6 +165,11 @@ var vm = new Vue({
             var domScrollTop = Math.ceil(this.Dom.scrollTop);
             var scrollArea = parseInt(domScrollH - domH);
 
+            var u = navigator.userAgent;
+            if (u.indexOf("Android") > -1 || u.indexOf("Linux") > -1) {
+              domScrollTop = domScrollTop + 1;
+            }
+
             if(domScrollTop >= scrollArea){
                 if(this.isVip == 'false') {
                   this.showPayPop = true;
@@ -198,6 +203,7 @@ var vm = new Vue({
         },
         CompareOrNot: debounce(function(item){//对比or取消
             if(item.compareBtn) {
+                this.compareRecord();
                 this.addRecord(item);
             }else {
                 this.removeRecord(item);
@@ -271,6 +277,10 @@ var vm = new Vue({
         },
         clearTxt: function(){
             this.searchTxt = "";
+        },
+        compareRecord: function(){  //记录对比次数
+            var url = domain() + '/api/compared/clickComparedCity';
+            axios.get(url).then(function(res) {})
         }
     },
     watch: {

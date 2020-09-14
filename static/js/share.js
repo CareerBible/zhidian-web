@@ -1,5 +1,6 @@
 window.onload = function(){
     shareLink();
+    //分享
     function shareLink(){
       var url = domain() + '/api/wechat/share';
       var strWxCurUrl = window.location.href;
@@ -33,6 +34,7 @@ window.onload = function(){
               imgUrl: shareData.imgUrl,
               success: function () {
                 // 设置成功
+                shareRecord();
                 console.log('分享成功')
               }
             })
@@ -44,6 +46,7 @@ window.onload = function(){
               imgUrl: shareData.imgUrl,
               success: function () {
                 // 设置成功
+                shareRecord();
                 console.log('分享成功')
               }
             })
@@ -53,6 +56,14 @@ window.onload = function(){
             // alert(res.errMsg);//错误提示
           });
         }
+      })
+    }
+
+    //记录分享次数
+    function shareRecord(){
+      var url = domain() + '/api/compared/clickShar';
+      axios.get(url).then(function(res) {
+        console.log(res,99999999)
       })
     }
   }
