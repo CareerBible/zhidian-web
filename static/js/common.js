@@ -1,17 +1,45 @@
-Loading();
+var ifFirst = sessionStorage.getItem('first');
+var PageHeight = document.documentElement.clientHeight,
+    PageWidth = document.documentElement.clientWidth;
+var page = window.location.href;
+var ifIndex = page.indexOf('index.html')
+  if(ifIndex != -1 && !ifFirst){ //第一次进入首页
+    open();
+    sessionStorage.setItem('first', true);
+  }else {
+    Loading();
+    document.addEventListener('DOMContentLoaded', function(){//页面加载完成之后移除遮罩层
+      removeDiv();
+    })
+  }
+
+
+//开屏海报
+function open(){
+    var LoadingHtml = '<img id="loadingDiv" src="/static/img/poster.jpg"'
+    +'style="position:fixed; left:0; width:' + PageWidth + 'px; height:' + PageHeight + 'px; top:0; background:#fff; opacity:1; z-index:10000;">';
+    document.write(LoadingHtml);
+
+    setTimeout(function(){
+      removeDiv();
+    },3000)
+}
+
+//加载页面
 function Loading(){
-    var PageHeight = document.documentElement.clientHeight,
-        PageWidth = document.documentElement.clientWidth;
     var LoadingHtml = '<div id="loadingDiv"'
     +'style="position:absolute; left:0; width:100%; height:' + PageHeight + 'px; top:0; background:#fff; opacity:1; filter:alpha(opacity=80); z-index:10000;">'
     +'<div id="loadingMask" style="position: absolute; cursor: wait; left: 50%; top: 50%; text-align:center; margin: -75px 0 0 -100px; color: #000; font-family:\'Microsoft YaHei\';"><img src="/static/img/logo.png" alt="" style="display:inline-block; width:120px" ><p style="font-size:26px;letter-spacing: 4px;color:#666">查职业<span style="padding:0 6px;">·</span>查薪酬</p></div></div>';
     document.write(LoadingHtml);
 }
 
-document.addEventListener('DOMContentLoaded', function(){//页面加载完成之后移除遮罩层
-    var loadingDiv = document.querySelector('#loadingDiv');
-    loadingDiv.remove();
-})
+//删除loading div
+function removeDiv(){
+  var loadingDiv = document.querySelector('#loadingDiv');
+  loadingDiv.remove();
+}
+
+
 
 //websocket轮询
 function wsPolling(userId,num){
