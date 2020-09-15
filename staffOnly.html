@@ -24,9 +24,9 @@
                   <th>总访问次数</th>
                 </tr> 
                 <tr>
-                  <td>{{visitorNum}}</td>
-                  <td>暂无数据</td>
-                  <td>暂无数据</td>
+                  <td>{{data.totalCount}}</td>
+                  <td>{{data.weekCount}}</td>
+                  <td>{{data.totalAccessCount}}</td>
                 </tr>
                 <tr>
                   <th>总付费人数</th>
@@ -34,9 +34,9 @@
                   <th>付费率</th>
                 </tr>
                 <tr>
-                  <td>{{payForNum}}</td>
-                  <td>暂无数据</td>
-                  <td>暂无数据</td>
+                  <td>{{data.paid}}</td>
+                  <td>{{data.payWeekCout}}</td>
+                  <td>{{Number((data.paid/data.totalCount)*100).toFixed(1)}}%</td>
                 </tr>
             </table>
             
@@ -47,7 +47,7 @@
                   <th>内容页点击次数</th>
                 </tr>
                 <tr>
-                  <td>暂无数据</td>
+                  <td>{{(data.homePageBounceRate*100).toFixed(1)}}%</td>
                   <td>暂无数据</td>
                 </tr>
                 <tr>
@@ -55,8 +55,8 @@
                   <th>城市搜索次数</th>
                 </tr>
                 <tr>
-                  <td>暂无数据</td>
-                  <td>暂无数据</td>
+                  <td>{{data.salarySearchCount}}</td>
+                  <td>{{data.citySearchCount}}</td>
                 </tr>
             </table>
 
@@ -69,10 +69,10 @@
                 <th>来源-详情</th>
               </tr> 
               <tr>
-                <td>暂无数据</td>
-                <td>暂无数据</td>
-                <td>暂无数据</td>
-                <td>暂无数据</td>
+                <td>{{data.payCount}}</td>
+                <td>{{data.cityPayCout}}</td>
+                <td>{{data.salaryPayCout}}</td>
+                <td>{{data.salaryDetailsPayCout}}</td>
               </tr>
             </table>
             <table class="row2" cellspacing="0" cellpadding="0">
@@ -81,8 +81,8 @@
                 <th>分享链接次数</th>
               </tr> 
               <tr>
-                <td>暂无数据</td>
-                <td>暂无数据</td>
+                <td>{{data.employmentSurveyCount}}</td>
+                <td>{{data.sharCount}}</td>
               </tr>
             </table>
 
@@ -95,7 +95,7 @@
               </tr> 
               <tr>
                 <td>暂无数据</td>
-                <td>暂无数据</td>
+                <td>{{data.salaryComparedCount}}</td>
                 <td>暂无数据</td>
               </tr>
             </table>
@@ -108,7 +108,7 @@
               </tr> 
               <tr>
                 <td>暂无数据</td>
-                <td>暂无数据</td>
+                <td>{{data.cityComparedCount}}</td>
               </tr>
             </table>
             
@@ -121,13 +121,7 @@
             domain:'https://zhidian.dookbook.info',
             staffId: 0,    //员工id
             staffName: '',
-            visitorNum: 0,  //访问人数
-            payForNum:0,   //付费人数
-            searchNum:0,    //搜索人数
-            notPayNum:0,    //未付费人数
-            switchCityNum: 0,   //切换城市
-            clickCompare: 0,    //点击对比
-            shareLink: '暂无数据'    //分享链接
+            data: {}
         },
         mounted: function(){
             this.$nextTick(function() { 
@@ -144,14 +138,7 @@
                 axios.get(url).then(function(res) {
                     var resData = res.data;
                     if(resData.code === 200){
-                        var data = resData.data;
-                        that.visitorNum = data.count;
-                        that.searchNum = data.searchCount;
-                        that.payForNum = data.paid;
-                        that.notPayNum = data.unpaid;
-                        that.switchCityNum = data.areaCount;
-                        that.clickCompare = data.countCompared;
-                        // that.shareLink = data.shareLink;
+                        that.data = resData.data;
                     }
                 })
             },
