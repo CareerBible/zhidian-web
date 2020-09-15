@@ -44,7 +44,7 @@ var limitConnect = 3;  // 断线重连次数
 var timeConnect = 0;
 //websocket轮询
 function wsPolling(userId,pageId){
-  var ws = new WebSocket("ws://192.168.0.114:8080/api/websocket/"+userId);
+  var ws = new WebSocket("ws://zhidian.dookbook.info/api/websocket/"+userId);
   
   ws.onopen = function(evt) { 
       // ws.send("我是连接");
