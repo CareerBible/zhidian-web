@@ -84,6 +84,8 @@ var vm = new Vue({
             this.clientH = document.documentElement.clientHeight;
             this.Dom = document.getElementById('cityList');//获取页面DOM的id
             var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
+            var uid = localStorage.getItem('uid');
+            wsPolling(uid,this.pageId);
             this.getCityAvg(id, name);
             this.cityChart = echarts.init(document.getElementById('chart'));
             this.cityChart.setOption(this.chartOption);

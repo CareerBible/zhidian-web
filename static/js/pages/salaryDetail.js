@@ -7,6 +7,7 @@ var vm = new Vue({
     mounted: function(){
         this.$nextTick(function() {
             this.userId = window.localStorage.getItem('uid');
+            wsPolling(this.userId,this.pageId);
         })
     }
 })

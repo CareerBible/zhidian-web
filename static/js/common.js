@@ -40,24 +40,62 @@ function removeDiv(){
 }
 
 
-
+var limitConnect = 3;  // 断线重连次数
+var timeConnect = 0;
 //websocket轮询
-function wsPolling(userId,num){
-  var ws = new WebSocket("ws://192.168.0.114:8080/websocket/"+userId);
+function wsPolling(userId,pageId){
+  var ws = new WebSocket("ws://192.168.0.114:8080/api/websocket/"+userId);
   
   ws.onopen = function(evt) { 
-      console.log("Connection open ..."); 
-      ws.send("我是连接"+num);
+      // ws.send("我是连接");
   };
   
   ws.onmessage = function(evt) {
-      console.log( "连接"+ num+ "Received Message: " + evt.data);
+      var markId = JSON.parse(evt.data).data.markId;
+      if(markId){
+         var params = {
+          pageId: pageId,
+          usreId: userId,
+          markId: markId
+        }
+        params = JSON.stringify(params);
+        setInterval(function(){
+          ws.send(params);
+        }, 1000);
+      }
   };
   
-  ws.onclose = function(evt) {
-      console.log("连接"+num+"Connection closed.");
+  ws.onclose = function () {
+    console.log('服务器已经断开');
+    reconnect();
+  };
+
+  ws.onerror = function (err) {
+    console.log("服务器报错：" + err);
+    reconnect();
   }; 
 }
+
+// 重连
+function reconnect() {
+  // lockReconnect加锁，防止onclose、onerror两次重连
+  if(limitConnect>0){
+    if(localStorage.getItem('lockReconnect')!=true){
+      localStorage.setItem("lockReconnect",1);
+      limitConnect --;
+      timeConnect ++;
+      console.log("第"+timeConnect+"次重连");
+      // 进行重连
+      setTimeout(function(){
+        wsPolling(userId,pageId);
+        localStorage.removeItem("lockReconnect");
+      },2000);
+    }
+  }else{
+    console.log("TCP连接已超时");
+  }
+}
+
 
 //全局域名
 function domain (){

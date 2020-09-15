@@ -123,7 +123,9 @@ var vm = new Vue({
             this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
             this.getRatioArr();
             window.document.title = this.titleName; //初始页面title
+            var uid = localStorage.getItem('uid');
             var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
+            wsPolling(uid,this.pageId);
             this.getProfession(id, false, name);
             this.salaryChart = echarts.init(document.getElementById('chart')); 
         })

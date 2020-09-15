@@ -1,0 +1,97 @@
+
+body {
+    background: #f8faff;
+}
+
+header {
+    width: 100%;
+    height: 456px;
+    background: #5297fc;
+}
+
+header section {
+    width: calc(100% - 60px);
+    height: 355px;
+    padding: 0 30px;
+    background: url('/static/img/detail-background.png') no-repeat;
+    background-size: 100% 100%;
+    position: relative;
+}
+
+header section h1 {
+    width: 100%;
+    text-align: center;
+    font-size: 38px;
+    color: #fff;
+    position: absolute;
+    top: 140px;
+    left: 0;
+    font-weight: normal;
+    letter-spacing: px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+header section h1 em {
+    width: 100%;
+    display: block;
+    font-size: 48px;
+    margin-bottom: 20px;
+    -webkit-text-stroke: 2px #fff;
+}
+
+main {
+    border-radius: 30px;
+    width: calc(100% - 60px);
+    margin: -103px 30px 0;
+    padding-top: 50px;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+}
+
+main ul {
+    width: calc(100% - 80px);
+    margin: 0 40px;
+    padding-bottom: 60px;
+}
+
+main ul li {
+    display: inline-block;
+    width: 210px;
+    height: 230px;
+    border-radius: 15px;
+}
+
+main ul li:first-child {
+    background: #4f95fc;
+}
+
+main ul li:nth-child(2) {
+    background: #f957a4;
+    margin-left: 75px;
+}
+
+main ul li img {
+    display: block;
+    width: 70px;
+    height: 70px;
+    margin: 35px auto 10px;
+}
+
+main ul li span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 22px;
+    color: #fff;
+}
+
+main ul li span em {
+    width: 100%;
+    display: block;
+    font-size: 38px;
+    text-align: center;
+}
+
+main ul li span em i {
+    font-style: normal;
+}
