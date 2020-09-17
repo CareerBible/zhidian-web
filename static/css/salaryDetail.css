@@ -9,7 +9,7 @@ header {
     background: #5297fc;
 }
 
-header section {
+header > section {
     width: calc(100% - 60px);
     height: 355px;
     padding: 0 30px;
@@ -18,7 +18,7 @@ header section {
     position: relative;
 }
 
-header section h1 {
+header > section > h1 {
     width: 100%;
     text-align: center;
     font-size: 38px;
@@ -31,7 +31,7 @@ header section h1 {
     text-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-header section h1 em {
+header > section > h1 > em {
     width: 100%;
     display: block;
     font-size: 48px;
@@ -42,42 +42,42 @@ header section h1 em {
 main {
     border-radius: 30px;
     width: calc(100% - 60px);
-    margin: -103px 30px 0;
+    margin: -103px 30px 50px;
     padding-top: 50px;
     background: #fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
-main ul {
+main > ul {
     width: calc(100% - 80px);
     margin: 0 40px;
     padding-bottom: 30px;
 }
 
-main ul li {
+main > ul > li {
     display: inline-block;
     width: 210px;
     height: 230px;
     border-radius: 15px;
 }
 
-main ul li:first-child {
+main > ul > li:first-child {
     background: #4f95fc;
 }
 
-main ul li:nth-child(2) {
+main > ul > li:nth-child(2) {
     background: #f957a4;
-    margin-left: 75px;
+    margin-left: 70px;
 }
 
-main ul li img {
+main > ul > li > img {
     display: block;
     width: 70px;
     height: 70px;
     margin: 35px auto 10px;
 }
 
-main ul li span {
+main > ul > li > span {
     display: block;
     width: 100%;
     text-align: center;
@@ -85,36 +85,88 @@ main ul li span {
     color: #fff;
 }
 
-main ul li span em {
+main > ul > li > span > em {
     width: 100%;
     display: block;
     font-size: 38px;
     text-align: center;
 }
 
-main ul li span em i {
+main > ul > li > span > em > i {
     font-style: normal;
 }
 
-main section {
+main > section {
     width: calc(100% - 80px);
-    padding: 0 40px 30px;
+    padding: 0 40px 60px;
 }
 
-main section h2 {
+main > section > h2 {
     height: 80px;
     line-height: 80px;
     font-size: 30px;
     font-weight: normal;
+    clear: both;
 }
 
-main section #chart1 {
+main > section > #chart1 {
     width: 100%;
     height: 295px;
 }
 
-main section p {
+main > section > p {
+    clear: both;
+    width: 100%;
     color: #555;
-    font-size: 20px;
+    font-size: 14px;
     line-height: 30px;
+}
+
+footer {
+    width: 100%;
+    height: 186px;
+    background: #37a3da;
+}
+
+footer p {
+    height: 64px;
+    line-height: 70px;
+    color: #fff;
+    font-size: 22px;
+    padding-left: 30px;
+}
+
+footer div {
+    width: calc(100% - 60px);
+    margin: 0 30px;
+    display: flex;
+}
+
+footer div input[type="text"]{
+    flex: 1;
+    margin-right: 20px;
+    border: none;
+    background: #fff;
+    border-radius: 10px;
+    height: 70px;
+    line-height: 70px;
+    padding: 0 20px;
+    font-size: 24px;
+}
+
+footer div input[type="text"]::placeholder {
+    color: #ccc;
+    font-size: 24px;
+}
+
+footer button {
+    width: 100px;
+    height: 70px;
+    line-height: 70px;
+    background: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 24px;
+    color: #37a3da;
+    text-align: center;
 }

@@ -1,0 +1,121 @@
+.bar {
+    width: 100%;
+    height: 70px;
+    line-height: 70px;
+    background: #fff;
+    margin-bottom: 20px;
+}
+
+.bar span {
+    float: left;
+    height: 70px;
+    display: block;
+    width: 20%;
+}
+
+.bar span:nth-child(1){
+    background: #9ee6b7;
+}
+
+.bar span:nth-child(2){
+    background: #67e0e3;
+}
+
+.bar span:nth-child(3){
+    background: #32c5e9;
+}
+
+.bar span:nth-child(4){
+    background: #ff9f7f;
+}
+
+.bar span:nth-child(5){
+    background: #37a3da;
+}
+
+.explain {
+    float: left;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.explain p {
+    float: left;
+    width: 50%;
+    height: 35px;
+    line-height: 35px;
+    margin-bottom: 10px;
+    font-size: 18px;
+    color: #333;
+}
+
+.explain p span {
+    float: left;
+    display: block;
+    width: 80px;
+    height: 35px;
+    margin-right: 20px;
+    background: #333;
+}
+
+.explain p:nth-child(1) span{
+    background: #9ee6b7;
+}
+
+.explain p:nth-child(2) span{
+    background: #67e0e3;
+}
+
+.explain p:nth-child(3) span{
+    background: #32c5e9;
+}
+
+.explain p:nth-child(4) span{
+    background: #ff9f7f;
+}
+
+.explain p:nth-child(5) span{
+    background: #37a3da;
+}
+
+.thinBar {
+    float: left;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.thinBar li {
+    float: left;
+    width: 20%;
+    text-align: center;
+}
+
+.thinBar li span {
+    display: block;
+    width: 100%;
+    height: 28px;
+    background: #333;
+}
+
+.thinBar li i , .thinBar li em {
+    font-style: normal;
+    line-height: 42px;
+    font-size: 18px;
+}
+
+.thinBar li:nth-child(1) span {
+    background: #9ee6b7;
+}
+
+.thinBar li:nth-child(2) span {
+    background: #67e0e3;
+}
+.thinBar li:nth-child(3) span {
+    background: #32c5e9;
+}
+.thinBar li:nth-child(4) span {
+    background: #ff9f7f;
+}
+.thinBar li:nth-child(5) span {
+    background: #37a3da;
+}

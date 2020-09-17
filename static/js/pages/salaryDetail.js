@@ -1,12 +1,17 @@
 var vm = new Vue({
     el: "#salaryDetail",    //挂载元素
     data: {
-        userId: '',
         pageId: '97a16a2f45c444178ed73134e838a378',
         Chart1: null,
+        Chart2: null,
         chartOption: {
-            boundaryGap:false,
+            boundaryGap: false,
             backgroundColor:'#fff',
+            grid: {
+                left: 0,
+                right: 0,
+                top: 0
+            },
             xAxis: {
                 type: 'category',
                 data: ['最高值', '最低值', '平均值', '中位值']
@@ -52,17 +57,28 @@ var vm = new Vue({
                 roundCap: true
             }
           ]
-        }
+        },
+        positionId: ''
     },
     mounted: function(){
         this.$nextTick(function() {
-            this.userId = window.localStorage.getItem('uid');
+            this.positionId = '891f9ca0ef1611eaa4388438355448de';
+            this.getSalaryDetail();
             this.Chart1 = echarts.init(document.getElementById('chart1'));
             this.Chart1.setOption(this.chartOption);
             // wsPolling(this.userId,this.pageId);
         })
     },
     methods: {
-        
+        getSalaryDetail: function(){//获取页面数据
+            var url = domain() + '/api/salary/salaryDetails';
+            var params = {positionId: this.positionId}
+            axios.get(url,params).then(function(res) {
+                var resData = res.data;
+                if(resData.code === 200){
+                    console.log(resData,9999)
+                }
+            })
+        }
     }
 })

@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="/static/css/common.css"/>
         <link rel="stylesheet" href="/static/css/salaryDetail.css"/>
         <link rel="stylesheet" href="/static/css/pop.css">
+        <link rel="stylesheet" href="/static/css/progessBar.css">
         <script src="/static/js/common.js"></script>
     </head>
 <body>
@@ -26,13 +27,50 @@
                 <div id="chart1"></div>
                 <p>职典：平均数是常规样本中最有代表性的统计量。但在偏态分布时，用中位数更有实际意义。</p>
             </section>
+            <section>
+                <h2>招聘学历分析</h2>
+                <progressbar></progressbar>
+                <p>职典：公司招聘时的学历要求，高学历占比越高，说明该职业越注重学历，比如科研与医生。</p>
+            </section>
+            <section>
+                <h2>学历与薪酬</h2>
+                <thinbar></thinbar>
+                <p>职典：毕业生的岗位薪酬与学历基本呈正相关趋势，学历越高，薪酬越高。</p>
+            </section>
+            <section>
+                <h2>招聘工作经验分析</h2>
+                <progressbar></progressbar>
+                <p>职典：当低经验占比偏多时，说明该职业整体属于上升期。</p>
+            </section>
+            <section>
+                <h2>工作经验与薪酬</h2>
+                <thinbar></thinbar>
+                <p>职典：从大数据和理论上，工作经验越多，也就越值钱，但实际情况会出现差异。</p>
+            </section>
+            <section>
+                <h2>薪酬频度</h2>
+                <progressbar></progressbar>
+                <p>职典：高薪酬出现的概率越高，一定程度说明该职业的整体水平越好。</p>
+            </section>
+            <section>
+                <h2>薪酬水平</h2>
+                <div id="chart2"></div>
+                <p>职典：通俗的说，这六项数据代表着该职业的菜鸟，入门，普通，高手，大师的薪酬与职业平均薪酬。</p>
+            </section>
         </main>
+
+        <footer>
+            <p>你还想看到该职业的哪些数据与内容？</p>
+            <div><input type="text" placeholder="请输入内容"><button>提交</button></div>
+        </footer>
     </div>
     
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/interceptor.js"></script>
+    <script src="/static/js/components/progressBar.js"></script>
+    <script src="/static/js/components/thinBar.js"></script>
     <script src="/static/js/echarts.min.js"></script>
     <script src="/static/js/pages/salaryDetail.js"></script>
 </body>
