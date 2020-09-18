@@ -59,7 +59,7 @@ var vm = new Vue({
         getOrder: function(orderCode){ //查询订单，告诉后端该用户已经成为会员
             var url = domain() + '/api/orderQuery/order';
             const that = this;
-            var params = {"outTradeNo": orderCode};
+            var params = {"outTradeNo": orderCode, "type": 2};
             axios.get(url,{params: params}).then(function(res) {})
         },
         closeSuccess: function(){//关闭支付成功弹窗并返回上一页

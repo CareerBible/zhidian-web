@@ -1,29 +1,30 @@
 Vue.component('progressbar', {
     template: '<section>'+
     '<div class="bar">'+
-        '<span></span>'+
-        '<span></span>'+
-        '<span></span>'+
-        '<span></span>'+
-        '<span></span>'+
+        '<span v-for="item in barData" :style="{width:item.value}"></span>'+
     '</div>'+
     '<div class="explain">'+
-        '<p><span></span>高中50%</p>'+
-        '<p><span></span>大专50%</p>'+
-        '<p><span></span>本科50%</p>'+
-        '<p><span></span>硕士50%</p>'+
-        '<p><span></span>博士50%</p>'+
+        '<p v-for="item in barData"><span></span>{{item.name+item.value}}</p>'+
     '</div>'+
 '</section>',
     data: function(){
         return {
-            
+            barData: []
         }
     },
-    mounted: function(){
-
+    props: {
+        data: {
+            'data': {
+                type: Array,
+                default:function(){
+                    return [];
+                } 
+            }
+        }
     },
-    methods: {
-
+    watch: {
+        'data': function(newVal, oldVal) {
+            this.barData = newVal;
+        }
     }
 })

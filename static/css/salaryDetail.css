@@ -55,19 +55,20 @@ main > ul {
 }
 
 main > ul > li {
-    display: inline-block;
     width: 210px;
     height: 230px;
     border-radius: 15px;
+    margin-bottom: 30px;
 }
 
 main > ul > li:first-child {
+    float: left;
     background: #4f95fc;
 }
 
 main > ul > li:nth-child(2) {
+    float: right;
     background: #f957a4;
-    margin-left: 70px;
 }
 
 main > ul > li > img {
@@ -94,11 +95,13 @@ main > ul > li > span > em {
 
 main > ul > li > span > em > i {
     font-style: normal;
+    font-size: 24px;
 }
 
 main > section {
+    clear: both;
     width: calc(100% - 80px);
-    padding: 0 40px 60px;
+    padding: 30px 40px;
 }
 
 main > section > h2 {
@@ -109,7 +112,7 @@ main > section > h2 {
     clear: both;
 }
 
-main > section > #chart1 {
+main > section > #chart {
     width: 100%;
     height: 295px;
 }
