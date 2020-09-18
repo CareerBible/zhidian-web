@@ -23,6 +23,7 @@
     showProvince: false,  //显示省
     showCity: false,  //显示市
     showPayPop: false,//显示支付弹窗
+    showSuccess: false,
     onOff: false, //是否搜索来的
     jobId: '18',
     page: 0,  //页码

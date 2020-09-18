@@ -83,12 +83,18 @@
 
         <!--支付-立即开通弹窗-->
         <paypop :show="showPayPop" :txt="pageId"></paypop>
+
+        <!--支付-支付成功弹窗-->
+        <div class="mask" v-if="showSuccess"></div>
+        <paysuccess @close="closeSuccess" :show="showSuccess"></paysuccess>
+        
     </div>
     <script src="https://res2.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script src="/static/js/vue.js"></script>
     <script src="/static/js/axios.js"></script>
     <script src="/static/js/interceptor.js"></script>
     <script src="/static/js/components/payPop.js"></script>
+    <script src="/static/js/components/paySuccessPop.js"></script>
     <script src="/static/js/components/toTop.js"></script>
     <script src="/static/js/share.js"></script>
     <script src="/static/js/echarts.min.js"></script>

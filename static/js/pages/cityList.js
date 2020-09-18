@@ -15,6 +15,7 @@ var data = {
     showNoData: false,
     showLogin: false,
     showTxt: false,
+    showSuccess: false,
     note: '',
     searchTxt: '',
     titleName: '',
