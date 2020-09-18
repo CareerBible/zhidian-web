@@ -13,7 +13,7 @@
     <div id="salaryDetail">
         <header>
             <section>
-                <h1><em>软件测试工程师</em>薪酬报告</h1>
+                <h1><em>{{positionName}}</em>薪酬报告</h1>
             </section>
         </header>
         <main>
@@ -23,7 +23,7 @@
             </ul>
             <section>
                 <h2>薪酬总体分析</h2>
-                <bar :data="salaryData"></bar>
+                <div id="chart1"></div>
                 <p>职典：平均数是常规样本中最有代表性的统计量。但在偏态分布时，用中位数更有实际意义。</p>
             </section>
             <section>
@@ -53,14 +53,14 @@
             </section>
             <section>
                 <h2>薪酬水平</h2>
-                <bar></bar>
+                <div id="chart2"></div>
                 <p>职典：通俗的说，这六项数据代表着该职业的菜鸟，入门，普通，高手，大师的薪酬与职业平均薪酬。</p>
             </section>
         </main>
 
         <footer>
             <p>你还想看到该职业的哪些数据与内容？</p>
-            <div><input type="text" placeholder="请输入内容"><button>提交</button></div>
+            <div><input type="text" v-model="suggest" placeholder="请输入内容"><button @click="getSeggestion">提交</button></div>
         </footer>
     </div>
     
@@ -70,8 +70,8 @@
     <script src="/static/js/interceptor.js"></script>
     <script src="/static/js/components/progressBar.js"></script>
     <script src="/static/js/components/thinBar.js"></script>
-    <script src="/static/js/components/bar.js"></script>
     <script src="/static/js/echarts.min.js"></script>
+    <script src="/static/js/components/bar.js"></script>
     <script src="/static/js/pages/salaryDetail.js"></script>
 </body>
 </html>

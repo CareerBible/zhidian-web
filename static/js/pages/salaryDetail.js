@@ -2,6 +2,7 @@ var vm = new Vue({
     el: "#salaryDetail",    //挂载元素
     data: {
         pageId: '97a16a2f45c444178ed73134e838a378',
+        positionName: '',
         positionSalaryAvg: 0,
         requiredCount: 0,
         salaryData: [],
@@ -9,33 +10,24 @@ var vm = new Vue({
         educationSalaryAvg:[],
         listWorkingYearsSalaryAvgList: [],
         listWorkExperienceDistributed: [],
-        salaryFrequency: [
-            {
-                name: '2k-5k',
-                value: 0
-            },
-            {
-                name: '2k以下',
-                value: 0
-            },
-            {
-                name: '5k-10k',
-                value: 0
-            },
-            {
-                name: '10k-15k',
-                value: 0
-            },
-            {
-                name: '15k以上',
-                value: 0
-            }
-        ],
-        positionId: '891f9ca0ef1611eaa4388438355448de'
+        salaryFrequency: [],
+        quantile: [],
+        positionId: '',
+        chart1: null,
+        chartOption1: option1,
+        chart2: null,
+        chartOption2: option2,
+        suggest: ''
     },
     mounted: function(){
         this.$nextTick(function() {
+            this.positionId = getQueryVariable('positionId');
+            this.positionName = decodeURIComponent(getQueryVariable('positionName'));
             this.getSalaryDetail();
+            this.chart1 = echarts.init(document.getElementById('chart1'));
+            this.chart2 = echarts.init(document.getElementById('chart2'));
+            this.chart1.setOption(this.chartOption1);
+            this.chart2.setOption(this.chartOption2);
             // wsPolling(this.userId,this.pageId);
         })
     },
@@ -51,6 +43,7 @@ var vm = new Vue({
                     that.requiredCount = data.requiredCount;
                     //薪酬总体分析
                     that.salaryData = [data.maxSalary,data.minSalary,data.positionSalaryAvg,data.median];
+                    that.chartOption1.series[0].data = that.salaryData;
 
                     //招聘学历分析
                     for(var i = 0; i < data.listEducationPercentage.length; i++){
@@ -90,8 +83,53 @@ var vm = new Vue({
                             name: keys[i]
                         })
                     }
+
+                    //薪酬水平
+                    that.quantile = Object.values(data.quantile);
+                    that.quantile.push(that.positionSalaryAvg);
+                    that.chartOption2.series[0].data = that.quantile;
                 }
             })
+        },
+        getSeggestion: function(){//提交建议
+            var url = domain() + '/api/compared/collectSuggestions',that = this;
+            var params = {suggestions: this.suggest}
+            axios.get(url,{params:params}).then(function(res) {
+                var resData = res.data;
+                if(resData.code === 200){
+                    alert('感谢您宝贵的建议！')
+                }
+            })
+        }
+    },
+    watch: {
+        'chartOption1': {
+            handler: function(newVal, oldVal) {
+                if (this.chart1) {
+                    if (newVal) {
+                        this.chart1.setOption(newVal,true);
+                    } else {
+                        this.chart1.setOption(oldVal,true);
+                    }
+                } else {
+                    this.init();
+                }
+            },
+            deep: true //对象内部属性的监听，关键。
+        },
+        'chartOption2': {
+            handler: function(newVal, oldVal) {
+                if (this.chart2) {
+                    if (newVal) {
+                        this.chart2.setOption(newVal,true);
+                    } else {
+                        this.chart2.setOption(oldVal,true);
+                    }
+                } else {
+                    this.init();
+                }
+            },
+            deep: true //对象内部属性的监听，关键。
         }
     }
 })

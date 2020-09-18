@@ -285,12 +285,19 @@ main > section:first-child ul li:nth-child(5) p:first-child {
   color: #fff;
   border: none;
   border-radius: 4px;
-  width: 100px;
+  width: 120px;
   height: 46px;
   text-align: center;
   font-size: 20px;
   position: absolute;
   right: 0;
+  bottom: 0;
+}
+
+.zhiwei > section > section:last-child button:nth-child(2){
+  width: 100px;
+  position: absolute;
+  right: 140px;
   bottom: 0;
 }
 

@@ -4,7 +4,7 @@ Vue.component('progressbar', {
         '<span v-for="item in barData" :style="{width:item.value}"></span>'+
     '</div>'+
     '<div class="explain">'+
-        '<p v-for="item in barData"><span></span>{{item.name+item.value}}</p>'+
+        '<p v-for="item in barData"><span></span>{{item.name+ " " +item.value}}</p>'+
     '</div>'+
 '</section>',
     data: function(){

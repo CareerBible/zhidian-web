@@ -1,4 +1,4 @@
-var option = {
+var option1 = {
     boundaryGap: false,
     backgroundColor:'#fff',
     grid: {
@@ -53,42 +53,57 @@ var option = {
   ]
 }
 
-Vue.component('bar', {
-    template: '<div id="chart"></div>',
-    data: function(){
-        return {
-            chart: null,
-            chartOption: option,
-        }
+var option2 = {
+    boundaryGap: false,
+    backgroundColor:'#fff',
+    grid: {
+        left: 0,
+        right: 0,
+        top: 0
     },
-    props: {
-        'data': {
-            type: Array,
-            default:function(){
-                return [5000, 3000, 4000, 3500];
-            } 
-        }
+    xAxis: {
+        type: 'category',
+        data: ['10分位', '25分位', '50分位', '75分位','90分位','平均值']
+        
     },
-    mounted: function(){
-        this.chart = echarts.init(document.getElementById('chart'));
+    tooltip: {
+        trigger: "axis"
     },
-    watch: {
-        'data': function() {
-            this.chartOption.series[0].data = this.data;
+    yAxis: {
+        type: 'value',
+        axisLine:{
+            show:true,
+            lineStyle: {
+                color: '#fff'
+            }
         },
-        'chartOption': {
-            handler: function(newVal, oldVal) {
-                if (this.chart) {
-                    if (newVal) {
-                        this.chart.setOption(newVal,true);
-                    } else {
-                        this.chart.setOption(oldVal,true);
-                    }
-                } else {
-                    this.init();
-                }
-            },
-            deep: true //对象内部属性的监听，关键。
+        splitLine: {
+            show: true,
+            lineStyle: {
+                color: ['#ccc']
+            }  
         }
+    },
+    series : [
+    {
+        name: '薪酬',
+        type: 'bar',
+        itemStyle: {
+            normal: {
+                color: function(params) {
+                    var colorList = ['#9ee6b7', '#67e0e3', '#32c5e9', '#ff9f7f', '#37a3da', '#ffd95a'];
+                    return colorList[params.dataIndex]
+                },
+            }
+        },
+        barWidth: '50%',
+        data:[],
+        label: {
+            show: true,
+            position: 'top',
+            color: 'rgba(0, 0, 0, 0.5)'
+        },
+        roundCap: true
     }
-})
+  ]
+}

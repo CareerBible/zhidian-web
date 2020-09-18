@@ -65,6 +65,7 @@
                 <li v-for="obj in item.jobSalary"><img src="/static/img/icon-07.svg" alt="">{{obj.workAge}}<span v-if="obj.minSalary!='none'">{{obj.minSalary}}k-{{obj.maxSalary}}k</span><span v-if="obj.minSalary=='none'">无</span></li>
               </ul>
               <button @click="CompareOrNot(item)" :class="{active:!item.compareBtn}" >{{item.compareBtn ? "+对比": "取消" }}</button>
+              <button @click="goToDetail(item.positionid, item.name)">查看详情</button>
             </section>
           </section>
           </div>
