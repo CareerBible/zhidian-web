@@ -123,6 +123,10 @@ var vm = new Vue({
             this.clientH = document.documentElement.clientHeight;
             this.Dom = document.getElementById('salaryAnalysis');//获取页面DOM的id
             this.getRatioArr();
+            var bool = sessionStorage.getItem('showSuccess');
+            if(bool){
+                this.showSuccess = true;
+            }
             window.document.title = this.titleName; //初始页面title
             var uid = localStorage.getItem('uid');
             var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');

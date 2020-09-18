@@ -90,14 +90,16 @@
   
   .success-box {
     position: fixed;
-    top: 6%;
+    top: 24%;
     left: 8%;
     width: 84%;
     z-index: 5;
+    height: 915px;
   }
   
   .success {
     width: 100%;
+    height: 915px;
     position: relative;
     background: #4f95fc;
     border-radius: 20px;

@@ -13,7 +13,7 @@ Vue.component('paysuccess', {
          '</div>'+
     '</div>'+
         '<span class="xian"></span>'+
-        '<img src="/static/img/shut-down.svg" alt="" class="shut-down">'+
+        '<img src="/static/img/shut-down.svg" alt="" class="shut-down" @click="closeSuccessPop">'+
 '</div>',
     data: function(){
         return {

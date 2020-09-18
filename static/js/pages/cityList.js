@@ -87,6 +87,10 @@ var vm = new Vue({
             var id = getQueryVariable('professionId'), name = getQueryVariable('professionName');
             var uid = localStorage.getItem('uid');
             // wsPolling(uid,this.pageId);
+            var bool = sessionStorage.getItem('showSuccess');
+            if(bool){
+                this.showSuccess = true;
+            }
             this.getCityAvg(id, name);
             this.cityChart = echarts.init(document.getElementById('chart'));
             this.cityChart.setOption(this.chartOption);

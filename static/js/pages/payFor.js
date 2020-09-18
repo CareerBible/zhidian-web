@@ -38,6 +38,8 @@ var vm = new Vue({
                 "paySign": data.paySign 
             },function(res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
+                    window.history.back();  
+                    sessionStorage.setItem('showSuccess', true);
                     that.getOrder(data.outTradeNo);//支付成功后查询订单
                 }else {
                     alert('支付失败');
@@ -58,16 +60,10 @@ var vm = new Vue({
             var url = domain() + '/api/orderQuery/order';
             const that = this;
             var params = {"outTradeNo": orderCode, "type": 2};
-            axios.get(url,{params: params}).then(function(res) {
-                var resData = res.data;
-                if(resData.code == 200){
-                    console.log(resData.data)
-                }
-            })
+            axios.get(url,{params: params}).then(function(res) {})
         },
         closeSuccess: function(){//关闭支付成功弹窗并返回上一页
-            that.showSuccess = false;
-            window.history.back(-1);
+            this.showSuccess = false;
         }
     }
 })
