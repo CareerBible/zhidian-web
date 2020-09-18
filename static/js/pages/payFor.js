@@ -2,7 +2,6 @@ var vm = new Vue({
     el: "#payFor",    //挂载元素
     data: {
         userId: '',
-        showSuccess: false,
         pageId: ''
     },
     mounted: function(){
@@ -39,7 +38,6 @@ var vm = new Vue({
                 "paySign": data.paySign 
             },function(res) {
                 if (res.err_msg == "get_brand_wcpay_request:ok") {
-                    that.showSuccess = true;//弹出支付成功窗口
                     that.getOrder(data.outTradeNo);//支付成功后查询订单
                 }else {
                     alert('支付失败');
@@ -60,7 +58,12 @@ var vm = new Vue({
             var url = domain() + '/api/orderQuery/order';
             const that = this;
             var params = {"outTradeNo": orderCode, "type": 2};
-            axios.get(url,{params: params}).then(function(res) {})
+            axios.get(url,{params: params}).then(function(res) {
+                var resData = res.data;
+                if(resData.code == 200){
+                    console.log(resData.data)
+                }
+            })
         },
         closeSuccess: function(){//关闭支付成功弹窗并返回上一页
             that.showSuccess = false;

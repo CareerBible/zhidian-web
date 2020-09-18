@@ -285,6 +285,9 @@ var vm = new Vue({
         compareRecord: function(){  //记录对比次数
             var url = domain() + '/api/compared/clickComparedCity';
             axios.get(url).then(function(res) {})
+        },
+        closeSuccess: function(){
+            this.showSuccess = false;
         }
     },
     watch: {

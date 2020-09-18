@@ -522,6 +522,9 @@ var vm = new Vue({
         },
         goToDetail: function(id,name){//去详情页
           window.location.href = '/salaryDetail.html?positionId=' + id + '&positionName='+name;
+        },
+        closeSuccess: function(){
+          this.showSuccess = false;
         }
     },
     watch: {
